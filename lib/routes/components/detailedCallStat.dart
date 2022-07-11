@@ -79,137 +79,16 @@ class _DetailedCallStatsState extends State<DetailedCallStats> {
                     .substring(0, 10),
                 Icons.calendar_month_outlined,
               ),
-              SizedBox(height: 20.0),
-              // Graph
-              Text(
-                "Call Type Analysis",
-                style: TextStyle(
-                  fontSize: 18.0,
-                ),
-              ),
-              SizedBox(height: 20.0),
-              Container(
-                width: 250.0,
-                height: 250.0,
-                padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
-                decoration: BoxDecoration(
-                  color: Colors.grey[100],
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.white,
-                      blurRadius: 15.0,
-                      spreadRadius: 5.0,
-                    )
-                  ],
-                  // border: Border.all(color: Colors.blueGrey),
-                  borderRadius: BorderRadius.all(Radius.circular(300.0)),
-                ),
-                child: PieChart(
-                  PieChartData(
-                    sections: [
-                      PieChartSectionData(
-                        color: Colors.pinkAccent,
-                        title: widget.curCall["numOfMissedCalls"].toString(),
-                        value: double.parse(
-                            widget.curCall["numOfMissedCalls"].toString()),
-                        titleStyle: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                      PieChartSectionData(
-                        color: Colors.greenAccent,
-                        title: widget.curCall["numOfIncomingCalls"].toString(),
-                        value: double.parse(
-                            widget.curCall["numOfIncomingCalls"].toString()),
-                        titleStyle: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                      PieChartSectionData(
-                        color: Colors.blue,
-                        title: widget.curCall["numOfOutgoingCalls"].toString(),
-                        value: double.parse(
-                            widget.curCall["numOfOutgoingCalls"].toString()),
-                        titleStyle: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                      PieChartSectionData(
-                        color: Colors.red,
-                        title: widget.curCall["numOfRejectedCalls"].toString(),
-                        value: double.parse(
-                            widget.curCall["numOfRejectedCalls"].toString()),
-                        titleStyle: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                      PieChartSectionData(
-                        color: Colors.black,
-                        title: widget.curCall["numOfBlockedCalls"].toString(),
-                        value: double.parse(
-                            widget.curCall["numOfBlockedCalls"].toString()),
-                        titleStyle: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                      PieChartSectionData(
-                        color: Colors.cyanAccent,
-                        title: widget.curCall["numOfUnknownCalls"].toString(),
-                        value: double.parse(
-                            widget.curCall["numOfUnknownCalls"].toString()),
-                        titleStyle: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 20.0),
-              // Indicators
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    graphIndicator(Colors.pinkAccent, "Missed"),
-                    graphIndicator(Colors.greenAccent, "Incoming"),
-                    graphIndicator(Colors.blue, "Outgoing"),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20.0),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    graphIndicator(Colors.red, "Rejected"),
-                    graphIndicator(Colors.black, "Blocked"),
-                    graphIndicator(Colors.cyanAccent, "Unknown"),
-                  ],
-                ),
-              ),
-              SizedBox(height: 100.0),
+              SizedBox(height: 0.0),
               // End
               Text(
-                "End of Analysis",
+                " ",
                 style: TextStyle(
                   fontSize: 14.0,
                   color: Colors.grey[400],
                 ),
               ),
-              SizedBox(height: 50.0),
+              SizedBox(height: 0.0),
             ],
           ),
         ),
@@ -217,7 +96,136 @@ class _DetailedCallStatsState extends State<DetailedCallStats> {
     );
   }
 
-// Date Detail
+  // Container
+  Container abc() {
+    return Container(
+      child: Column(children: [
+        // Graph
+        Text(
+          "Call Type Analysis",
+          style: TextStyle(
+            fontSize: 18.0,
+          ),
+        ),
+        SizedBox(height: 20.0),
+        Container(
+          width: 250.0,
+          height: 250.0,
+          padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
+          decoration: BoxDecoration(
+            color: Colors.grey[100],
+            boxShadow: [
+              BoxShadow(
+                color: Colors.white,
+                blurRadius: 15.0,
+                spreadRadius: 5.0,
+              )
+            ],
+            // border: Border.all(color: Colors.blueGrey),
+            borderRadius: BorderRadius.all(Radius.circular(300.0)),
+          ),
+          child: PieChart(
+            PieChartData(
+              sections: [
+                PieChartSectionData(
+                  color: Colors.pinkAccent,
+                  title: widget.curCall["numOfMissedCalls"].toString(),
+                  value: double.parse(
+                      widget.curCall["numOfMissedCalls"].toString()),
+                  titleStyle: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                PieChartSectionData(
+                  color: Colors.greenAccent,
+                  title: widget.curCall["numOfIncomingCalls"].toString(),
+                  value: double.parse(
+                      widget.curCall["numOfIncomingCalls"].toString()),
+                  titleStyle: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                PieChartSectionData(
+                  color: Colors.blue,
+                  title: widget.curCall["numOfOutgoingCalls"].toString(),
+                  value: double.parse(
+                      widget.curCall["numOfOutgoingCalls"].toString()),
+                  titleStyle: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                PieChartSectionData(
+                  color: Colors.red,
+                  title: widget.curCall["numOfRejectedCalls"].toString(),
+                  value: double.parse(
+                      widget.curCall["numOfRejectedCalls"].toString()),
+                  titleStyle: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                PieChartSectionData(
+                  color: Colors.black,
+                  title: widget.curCall["numOfBlockedCalls"].toString(),
+                  value: double.parse(
+                      widget.curCall["numOfBlockedCalls"].toString()),
+                  titleStyle: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                PieChartSectionData(
+                  color: Colors.cyanAccent,
+                  title: widget.curCall["numOfUnknownCalls"].toString(),
+                  value: double.parse(
+                      widget.curCall["numOfUnknownCalls"].toString()),
+                  titleStyle: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        SizedBox(height: 20.0),
+        // Indicators
+        Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              graphIndicator(Colors.pinkAccent, "Missed"),
+              graphIndicator(Colors.greenAccent, "Incoming"),
+              graphIndicator(Colors.blue, "Outgoing"),
+            ],
+          ),
+        ),
+        SizedBox(height: 20.0),
+        Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              graphIndicator(Colors.red, "Rejected"),
+              graphIndicator(Colors.black, "Blocked"),
+              graphIndicator(Colors.cyanAccent, "Unknown"),
+            ],
+          ),
+        ),
+        SizedBox(height: 100.0),
+      ]),
+    );
+  }
+
+  // Date Detail
   Container dateDetail(
       String title, String firstVal, String secondVal, IconData icon) {
     return Container(

@@ -4,6 +4,7 @@ import 'package:call_log/call_log.dart';
 import 'package:callstats/routes/components/callstats.dart';
 import 'package:callstats/routes/components/getcalls.dart';
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 
 import 'components/detailedCallStat.dart';
 
@@ -29,11 +30,51 @@ class _HomePageState extends State<HomePage> {
     'oldestDate',
     'newestDate'
   ];
+  Map callHistoryOverview = {
+    "totalMinDuration": 0.0,
+    "totalMinDurationMin": 0.0,
+    "totalMinDurationHour": 0.0,
+    "totalMaxDuration": 0.0,
+    "totalMaxDurationMin": 0.0,
+    "totalMaxDurationHour": 0.0,
+    "totalDuration": 0.0,
+    "totalDurationMin": 0.0,
+    "totalDurationHour": 0.0,
+    "totalNumOfCalls": 0,
+    "totalNumOfMissedCalls": 0,
+    "totalNumOfIncomingCalls": 0,
+    "totalNumOfOutgoingCalls": 0,
+    "totalNumOfRejectedCalls": 0,
+    "totalNumOfBlockedCalls": 0,
+    "totalNumOfUnknownCalls": 0,
+    "oldestDate": 0,
+    "newestDate": 0,
+  };
 
   // Reset
   void reset() {
     classifiedCallLogs = [];
     rawCallLog = [];
+    callHistoryOverview = {
+      "totalMinDuration": 0.0,
+      "totalMinDurationMin": 0.0,
+      "totalMinDurationHour": 0.0,
+      "totalMaxDuration": 0.0,
+      "totalMaxDurationMin": 0.0,
+      "totalMaxDurationHour": 0.0,
+      "totalDuration": 0.0,
+      "totalDurationMin": 0.0,
+      "totalDurationHour": 0.0,
+      "totalNumOfCalls": 0,
+      "totalNumOfMissedCalls": 0,
+      "totalNumOfIncomingCalls": 0,
+      "totalNumOfOutgoingCalls": 0,
+      "totalNumOfRejectedCalls": 0,
+      "totalNumOfBlockedCalls": 0,
+      "totalNumOfUnknownCalls": 0,
+      "oldestDate": 0,
+      "newestDate": 0,
+    };
   }
 
   // Fetch call history from device
@@ -82,6 +123,9 @@ class _HomePageState extends State<HomePage> {
     // Classify
     classify();
 
+    // Overview
+    getOverview();
+
     // Sort
     sort(sortTypes[sortIndex]);
 
@@ -89,6 +133,46 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       gotCalls = true;
     });
+  }
+
+  // Get Call History Overview
+  void getOverview() {
+    callHistoryOverview['oldestDate'] = classifiedCallLogs[0]['oldestDate'];
+    for (dynamic i in classifiedCallLogs) {
+      callHistoryOverview['totalMinDuration'] += i['minDuration'];
+      callHistoryOverview['totalMinDurationMin'] +=
+          double.parse(i['minDurationMinutes'].toString());
+      callHistoryOverview['totalMinDurationHour'] +=
+          double.parse(i['minDurationHours'].toString());
+      callHistoryOverview['totalMaxDuration'] +=
+          double.parse(i['maxDuration'].toString());
+      callHistoryOverview['totalMaxDurationMin'] +=
+          double.parse(i['maxDurationMinutes'].toString());
+      callHistoryOverview['totalMaxDurationHour'] +=
+          double.parse(i['maxDurationHours'].toString());
+      callHistoryOverview['totalDuration'] +=
+          double.parse(i['totalDuration'].toString());
+      callHistoryOverview['totalDurationMin'] +=
+          double.parse(i['totalDurationMinutes'].toString());
+      callHistoryOverview['totalDurationHour'] +=
+          double.parse(i['totalDurationHours'].toString());
+      callHistoryOverview['totalNumOfCalls'] += i['numOfAllCalls'];
+      callHistoryOverview['totalNumOfMissedCalls'] += i['numOfMissedCalls'];
+      callHistoryOverview['totalNumOfIncomingCalls'] += i['numOfIncomingCalls'];
+      callHistoryOverview['totalNumOfOutgoingCalls'] += i['numOfOutgoingCalls'];
+      callHistoryOverview['totalNumOfRejectedCalls'] += i['numOfRejectedCalls'];
+      callHistoryOverview['totalNumOfBlockedCalls'] += i['numOfBlockedCalls'];
+      callHistoryOverview['totalNumOfUnknownCalls'] += i['numOfUnknownCalls'];
+      callHistoryOverview['oldestDate'] =
+          i['oldestDate'] < callHistoryOverview['oldestDate']
+              ? i['oldestDate']
+              : callHistoryOverview['oldestDate'];
+      callHistoryOverview['newestDate'] =
+          i['newestDate'] > callHistoryOverview['newestDate']
+              ? i['newestDate']
+              : callHistoryOverview['newestDate'];
+    }
+    print(callHistoryOverview);
   }
 
   // Classify call history
@@ -189,16 +273,17 @@ class _HomePageState extends State<HomePage> {
   }
 
   // Sort Button
-  void swapSort() {
+  void swapSort(int sortInd) {
     getCallHistory();
-    sortIndex++;
-    if (sortIndex > sortTypes.length - 1) {
-      sortIndex = 0;
-    }
+    sortIndex = sortInd;
+    // sortIndex++;
+    // if (sortIndex > sortTypes.length - 1) {
+    //   sortIndex = 0;
+    // }
     setState(() {});
   }
 
-// Detailed Stat
+  // Detailed Stat
   void showDetail(curCall) {
     showModalBottomSheet(
       backgroundColor: Colors.transparent,
@@ -251,16 +336,9 @@ class _HomePageState extends State<HomePage> {
                     setState(() {});
                   },
                   icon: Icon(
-                    showNumber ? Icons.block : Icons.remove_red_eye_outlined,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 0.0),
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.sort,
-                    ),
-                    onPressed: swapSort,
+                    showNumber
+                        ? Ionicons.eye_off_outline
+                        : Ionicons.eye_outline,
                   ),
                 ),
               ]
@@ -272,6 +350,8 @@ class _HomePageState extends State<HomePage> {
               classifiedCallLogs: classifiedCallLogs,
               showNumber: showNumber,
               showDetail: showDetail,
+              callHistoryOverview: callHistoryOverview,
+              swapSort: swapSort,
             )
           : GetCalls(
               getCallHistory: getCallHistory,

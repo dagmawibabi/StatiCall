@@ -1,20 +1,28 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:math';
+
+import 'package:callstats/routes/components/graohIndicators.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class FullScreenDetail extends StatefulWidget {
-  const FullScreenDetail(
-      {Key? key, required this.curCall, required this.showNumber})
-      : super(key: key);
+  const FullScreenDetail({
+    Key? key,
+    required this.curCall,
+    required this.showNumber,
+    required this.allCalls,
+  }) : super(key: key);
   final Map curCall;
   final bool showNumber;
+  final Map allCalls;
 
   @override
   State<FullScreenDetail> createState() => _FullScreenDetailState();
 }
 
 class _FullScreenDetailState extends State<FullScreenDetail> {
+  int curPage = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,6 +60,7 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
         actions: [SizedBox(width: widget.showNumber ? 0.0 : 50.0)],
       ),
       body: ListView(
+        shrinkWrap: true,
         children: [
           Container(
             padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
@@ -65,10 +74,56 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
             ),
             child: Column(
               children: [
-                SizedBox(height: 5.0),
-                graph(),
                 SizedBox(height: 0.0),
-
+                Container(
+                  height: 470.0,
+                  child: PageView(
+                    scrollDirection: Axis.horizontal,
+                    pageSnapping: true,
+                    onPageChanged: (value) {
+                      curPage = value;
+                      setState(() {});
+                    },
+                    children: [
+                      graph(),
+                      barGraph(),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 0.0),
+                Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 5.0,
+                        height: 5.0,
+                        decoration: BoxDecoration(
+                          color: curPage == 0
+                              ? Colors.grey[500]
+                              : Colors.grey[300],
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(20.0),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 5.0),
+                      Container(
+                        width: 5.0,
+                        height: 5.0,
+                        decoration: BoxDecoration(
+                          color: curPage == 1
+                              ? Colors.grey[500]
+                              : Colors.grey[300],
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(20.0),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 0.0),
                 // Duration Stats
                 Container(
                   child: Column(children: [
@@ -106,7 +161,7 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                     ),
                   ]),
                 ),
-                SizedBox(height: 150.0),
+                SizedBox(height: 50.0),
                 // End
                 Text(
                   "End of Analysis",
@@ -115,7 +170,7 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                     color: Colors.grey[400],
                   ),
                 ),
-                SizedBox(height: 50.0),
+                SizedBox(height: 30.0),
               ],
             ),
           ),
@@ -129,94 +184,107 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
     return Container(
         child: Column(
       children: [
-        Container(
-          width: 250.0,
-          height: 250.0,
-          padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
-          decoration: BoxDecoration(
-            color: Colors.grey[100],
-            boxShadow: [
-              BoxShadow(
-                color: Colors.white,
-                blurRadius: 15.0,
-                spreadRadius: 5.0,
-              )
-            ],
-            // border: Border.all(color: Colors.blueGrey),
-            borderRadius: BorderRadius.all(Radius.circular(300.0)),
-          ),
-          child: PieChart(
-            PieChartData(
-              sections: [
-                PieChartSectionData(
-                  color: Colors.pinkAccent,
-                  title: widget.curCall["numOfMissedCalls"].toString(),
-                  value: double.parse(
-                      widget.curCall["numOfMissedCalls"].toString()),
-                  titleStyle: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
+        SizedBox(height: 18.0),
+        Stack(
+          alignment: AlignmentDirectional.center,
+          children: [
+            Container(
+              width: 250.0,
+              height: 250.0,
+              padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
+              decoration: BoxDecoration(
+                color: Colors.grey[100],
+                boxShadow: [
+                  BoxShadow(
                     color: Colors.white,
-                  ),
+                    blurRadius: 15.0,
+                    spreadRadius: 5.0,
+                  )
+                ],
+                // border: Border.all(color: Colors.blueGrey),
+                borderRadius: BorderRadius.all(Radius.circular(300.0)),
+              ),
+              child: PieChart(
+                PieChartData(
+                  sections: [
+                    PieChartSectionData(
+                      color: Colors.pinkAccent,
+                      title: widget.curCall["numOfMissedCalls"].toString(),
+                      value: double.parse(
+                          widget.curCall["numOfMissedCalls"].toString()),
+                      titleStyle: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    PieChartSectionData(
+                      color: Colors.greenAccent,
+                      title: widget.curCall["numOfIncomingCalls"].toString(),
+                      value: double.parse(
+                          widget.curCall["numOfIncomingCalls"].toString()),
+                      titleStyle: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    PieChartSectionData(
+                      color: Colors.blue,
+                      title: widget.curCall["numOfOutgoingCalls"].toString(),
+                      value: double.parse(
+                          widget.curCall["numOfOutgoingCalls"].toString()),
+                      titleStyle: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    PieChartSectionData(
+                      color: Colors.red,
+                      title: widget.curCall["numOfRejectedCalls"].toString(),
+                      value: double.parse(
+                          widget.curCall["numOfRejectedCalls"].toString()),
+                      titleStyle: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    PieChartSectionData(
+                      color: Colors.black,
+                      title: widget.curCall["numOfBlockedCalls"].toString(),
+                      value: double.parse(
+                          widget.curCall["numOfBlockedCalls"].toString()),
+                      titleStyle: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    PieChartSectionData(
+                      color: Colors.cyanAccent,
+                      title: widget.curCall["numOfUnknownCalls"].toString(),
+                      value: double.parse(
+                          widget.curCall["numOfUnknownCalls"].toString()),
+                      titleStyle: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
                 ),
-                PieChartSectionData(
-                  color: Colors.greenAccent,
-                  title: widget.curCall["numOfIncomingCalls"].toString(),
-                  value: double.parse(
-                      widget.curCall["numOfIncomingCalls"].toString()),
-                  titleStyle: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                PieChartSectionData(
-                  color: Colors.blue,
-                  title: widget.curCall["numOfOutgoingCalls"].toString(),
-                  value: double.parse(
-                      widget.curCall["numOfOutgoingCalls"].toString()),
-                  titleStyle: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                PieChartSectionData(
-                  color: Colors.red,
-                  title: widget.curCall["numOfRejectedCalls"].toString(),
-                  value: double.parse(
-                      widget.curCall["numOfRejectedCalls"].toString()),
-                  titleStyle: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                PieChartSectionData(
-                  color: Colors.black,
-                  title: widget.curCall["numOfBlockedCalls"].toString(),
-                  value: double.parse(
-                      widget.curCall["numOfBlockedCalls"].toString()),
-                  titleStyle: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                PieChartSectionData(
-                  color: Colors.cyanAccent,
-                  title: widget.curCall["numOfUnknownCalls"].toString(),
-                  value: double.parse(
-                      widget.curCall["numOfUnknownCalls"].toString()),
-                  titleStyle: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
+            Text(
+              widget.curCall['numOfAllCalls'].toString(),
+              style: TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
         ),
         SizedBox(height: 20.0),
         // Indicators
@@ -224,9 +292,9 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              graphIndicator(Colors.pinkAccent, "Missed"),
-              graphIndicator(Colors.greenAccent, "Incoming"),
-              graphIndicator(Colors.blue, "Outgoing"),
+              GraphIndicators(color: Colors.pinkAccent, text: "Missed"),
+              GraphIndicators(color: Colors.greenAccent, text: "Incoming"),
+              GraphIndicators(color: Colors.blue, text: "Outgoing"),
             ],
           ),
         ),
@@ -235,15 +303,24 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              graphIndicator(Colors.red, "Rejected"),
-              graphIndicator(Colors.black, "Blocked"),
-              graphIndicator(Colors.cyanAccent, "Unknown"),
+              GraphIndicators(color: Colors.red, text: "Rejected"),
+              GraphIndicators(color: Colors.black, text: "Blocked"),
+              GraphIndicators(color: Colors.cyanAccent, text: "Unknown"),
             ],
           ),
         ),
         SizedBox(height: 30.0),
       ],
     ));
+  }
+
+  // Line Graph
+  Container lineGraph() {
+    return Container(
+      child: Text(
+        "",
+      ),
+    );
   }
 
   // Duration Triplets
@@ -465,43 +542,239 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
     );
   }
 
-  // Graph Indicators
-  Container graphIndicator(Color color, String text) {
+  // Bar Graph
+  Container barGraph() {
     return Container(
-      width: 80.0,
-      height: 60.0,
-      padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
-      decoration: BoxDecoration(
-        color: Colors.grey[100],
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey[300]!,
-            blurRadius: 10.0,
-            spreadRadius: 4.0,
-          )
-        ],
-        // border: Border.all(color: Colors.blueGrey),
-        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-      ),
-      child: Column(
-        children: [
-          Container(
-            width: 18.0,
-            height: 18.0,
-            decoration: BoxDecoration(
-              color: color,
-              border: Border.all(color: Colors.blueGrey),
-              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+      child: Column(children: [
+        overViewGraph(widget.curCall, widget.allCalls),
+        SizedBox(height: 20.0),
+        // Indicators
+        Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              GraphIndicators(color: Colors.pinkAccent, text: "Missed"),
+              GraphIndicators(color: Colors.greenAccent, text: "Incoming"),
+              GraphIndicators(color: Colors.blue, text: "Outgoing"),
+            ],
+          ),
+        ),
+        SizedBox(height: 20.0),
+        Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              GraphIndicators(color: Colors.red, text: "Rejected"),
+              GraphIndicators(color: Colors.black, text: "Blocked"),
+              GraphIndicators(color: Colors.cyanAccent, text: "Unknown"),
+            ],
+          ),
+        ),
+        SizedBox(height: 30.0),
+      ]),
+    );
+  }
+
+  // Overview Graph
+  Container overViewGraph(Map curCall, Map callHistoryOverview) {
+    return Container(
+      height: 270.0,
+      width: 390.0,
+      child: BarChart(
+        BarChartData(
+          gridData:
+              FlGridData(drawVerticalLine: false, horizontalInterval: 100.0),
+          backgroundColor: Colors.grey[100],
+          titlesData: FlTitlesData(
+            topTitles: AxisTitles(
+              axisNameWidget: Text(
+                "",
+              ),
+            ),
+            bottomTitles: AxisTitles(
+              axisNameWidget: Text(
+                "",
+              ),
             ),
           ),
-          SizedBox(height: 8.0),
-          Text(
-            text,
-            style: TextStyle(
-              fontSize: 13.0,
+          minY: 0,
+          maxY: double.parse((([
+                            int.parse(
+                                callHistoryOverview['totalNumOfMissedCalls']
+                                    .toString()),
+                            int.parse(
+                                callHistoryOverview['totalNumOfIncomingCalls']
+                                    .toString()),
+                            int.parse(
+                                callHistoryOverview['totalNumOfOutgoingCalls']
+                                    .toString()),
+                            int.parse(
+                                callHistoryOverview['totalNumOfRejectedCalls']
+                                    .toString()),
+                            int.parse(
+                                callHistoryOverview['totalNumOfBlockedCalls']
+                                    .toString()),
+                            int.parse(
+                                callHistoryOverview['totalNumOfUnknownCalls']
+                                    .toString()),
+                          ].reduce(max)) +
+                          200)
+                      .toString())
+                  .roundToDouble() +
+              10,
+          barGroups: [
+            BarChartGroupData(
+              x: 2,
+              barRods: [
+                BarChartRodData(
+                  // color: Colors.pinkAccent,
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.pinkAccent,
+                      Colors.pink,
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                  width: 12.0,
+                  toY: double.parse((curCall['numOfMissedCalls']).toString()),
+                ),
+                BarChartRodData(
+                  // color: Colors.pinkAccent,
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.pinkAccent,
+                      Colors.pink,
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                  width: 12.0,
+                  toY: double.parse(
+                      (callHistoryOverview['totalNumOfMissedCalls'])
+                          .toString()),
+                ),
+              ],
             ),
-          ),
-        ],
+            BarChartGroupData(
+              x: 2,
+              barRods: [
+                BarChartRodData(
+                  width: 12.0,
+                  // color: Colors.greenAccent,
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.greenAccent,
+                      Colors.greenAccent[400]!,
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                  toY: double.parse((curCall['numOfIncomingCalls']).toString()),
+                ),
+                BarChartRodData(
+                  width: 12.0,
+                  // color: Colors.greenAccent,
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.greenAccent,
+                      Colors.greenAccent[400]!,
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                  toY: double.parse(
+                      (callHistoryOverview['totalNumOfIncomingCalls'])
+                          .toString()),
+                ),
+              ],
+            ),
+            BarChartGroupData(
+              x: 2,
+              barRods: [
+                BarChartRodData(
+                  width: 12.0,
+                  // color: Colors.blueAccent,
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.lightBlueAccent,
+                      Colors.blueAccent,
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                  toY: double.parse((curCall['numOfOutgoingCalls']).toString()),
+                ),
+                BarChartRodData(
+                  width: 12.0,
+                  // color: Colors.blueAccent,
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.lightBlueAccent,
+                      Colors.blueAccent,
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                  toY: double.parse(
+                      (callHistoryOverview['totalNumOfOutgoingCalls'])
+                          .toString()),
+                ),
+              ],
+            ),
+            BarChartGroupData(
+              x: 2,
+              barRods: [
+                BarChartRodData(
+                  width: 12.0,
+                  color: Colors.red,
+                  toY: double.parse((curCall['numOfRejectedCalls']).toString()),
+                ),
+                BarChartRodData(
+                  width: 12.0,
+                  color: Colors.red,
+                  toY: double.parse(
+                      (callHistoryOverview['totalNumOfRejectedCalls'])
+                          .toString()),
+                ),
+              ],
+            ),
+            BarChartGroupData(
+              x: 2,
+              barRods: [
+                BarChartRodData(
+                  width: 12.0,
+                  color: Colors.black,
+                  toY: double.parse((curCall['numOfBlockedCalls']).toString()),
+                ),
+                BarChartRodData(
+                  width: 12.0,
+                  color: Colors.black,
+                  toY: double.parse(
+                      (callHistoryOverview['totalNumOfBlockedCalls'])
+                          .toString()),
+                ),
+              ],
+            ),
+            BarChartGroupData(
+              x: 2,
+              barRods: [
+                BarChartRodData(
+                  width: 12.0,
+                  color: Colors.cyanAccent,
+                  toY: double.parse((curCall['numOfUnknownCalls']).toString()),
+                ),
+                BarChartRodData(
+                  width: 12.0,
+                  color: Colors.cyanAccent,
+                  toY: double.parse(
+                      (callHistoryOverview['totalNumOfUnknownCalls'])
+                          .toString()),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

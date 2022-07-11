@@ -11,11 +11,13 @@ class EachCallStatCard extends StatefulWidget {
     required this.index,
     required this.showNumber,
     required this.showDetail,
+    required this.allCalls,
   }) : super(key: key);
   final Map curCall;
   final int index;
   final bool showNumber;
   final Function showDetail;
+  final Map allCalls;
 
   @override
   State<EachCallStatCard> createState() => _EachCallStatCardState();
@@ -54,7 +56,10 @@ class _EachCallStatCardState extends State<EachCallStatCard> {
           context,
           MaterialPageRoute(
             builder: (context) => FullScreenDetail(
-                curCall: widget.curCall, showNumber: widget.showNumber),
+              curCall: widget.curCall,
+              showNumber: widget.showNumber,
+              allCalls: widget.allCalls,
+            ),
           ),
         );
       },
@@ -72,14 +77,18 @@ class _EachCallStatCardState extends State<EachCallStatCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Hero(
-                  key: UniqueKey(),
-                  tag: {"name": widget.curCall["name"]},
-                  child: Text(
-                    "${widget.index.toString()}. ${(widget.curCall['name'] == "" || widget.curCall['name'] == " " || widget.curCall['name'] == "null") ? "Unknown" : widget.curCall['name']}",
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w500,
+                Container(
+                  width: 220.0,
+                  child: Hero(
+                    key: UniqueKey(),
+                    tag: {"name": widget.curCall["name"]},
+                    child: Text(
+                      "${widget.index.toString()}. ${(widget.curCall['name'] == "" || widget.curCall['name'] == " " || widget.curCall['name'] == "null") ? "Unknown" : widget.curCall['name']}",
+                      maxLines: 1,
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                 ),
@@ -90,9 +99,18 @@ class _EachCallStatCardState extends State<EachCallStatCard> {
                     : Container(),
               ],
             ),
-            SizedBox(height: 10.0),
+            SizedBox(height: 5.0),
             // Number of calls
             Container(
+              padding:
+                  EdgeInsets.only(top: 8.0, bottom: 8.0, left: 8.0, right: 8.0),
+              margin:
+                  EdgeInsets.only(top: 2.0, bottom: 2.0, left: 0.0, right: 0.0),
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                // border: Border.all(color: Colors.black),
+                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              ),
               child: Column(
                 children: [
                   Row(
@@ -106,6 +124,7 @@ class _EachCallStatCardState extends State<EachCallStatCard> {
                       ),
                     ],
                   ),
+                  SizedBox(height: 4.0),
                   // Number of calls
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
