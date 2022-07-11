@@ -45,18 +45,16 @@ class _EachCallStatCardState extends State<EachCallStatCard> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+      onLongPress: () {
         // showDetail();
         widget.showDetail(widget.curCall);
       },
-      onLongPress: () {
-        FullScreenDetail(
-          curCall: widget.curCall,
-        );
+      onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => FullScreenDetail(curCall: widget.curCall),
+            builder: (context) => FullScreenDetail(
+                curCall: widget.curCall, showNumber: widget.showNumber),
           ),
         );
       },
@@ -64,7 +62,7 @@ class _EachCallStatCardState extends State<EachCallStatCard> {
         padding: EdgeInsets.only(top: 8.0, bottom: 8.0, left: 8.0, right: 8.0),
         margin: EdgeInsets.only(top: 2.0, bottom: 2.0, left: 5.0, right: 5.0),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Colors.grey[100],
           // border: Border.all(color: Colors.black),
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
         ),
@@ -74,8 +72,16 @@ class _EachCallStatCardState extends State<EachCallStatCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "${widget.index.toString()}.${(widget.curCall['name'] == "" || widget.curCall['name'] == " " || widget.curCall['name'] == "null") ? "Unknown" : widget.curCall['name']}",
+                Hero(
+                  key: UniqueKey(),
+                  tag: {"name": widget.curCall["name"]},
+                  child: Text(
+                    "${widget.index.toString()}. ${(widget.curCall['name'] == "" || widget.curCall['name'] == " " || widget.curCall['name'] == "null") ? "Unknown" : widget.curCall['name']}",
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                 ),
                 widget.showNumber
                     ? Text(
@@ -86,28 +92,34 @@ class _EachCallStatCardState extends State<EachCallStatCard> {
             ),
             SizedBox(height: 10.0),
             // Number of calls
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Total Calls",
-                ),
-                Text(
-                  widget.curCall['numOfAllCalls'].toString(),
-                ),
-              ],
-            ),
-            // Number of calls
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Overall Duration",
-                ),
-                Text(
-                  overallDuration.toString(),
-                ),
-              ],
+            Container(
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Total Calls",
+                      ),
+                      Text(
+                        widget.curCall['numOfAllCalls'].toString(),
+                      ),
+                    ],
+                  ),
+                  // Number of calls
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Overall Duration",
+                      ),
+                      Text(
+                        overallDuration.toString(),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ],
         ),

@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:callstats/routes/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -29,7 +31,19 @@ class _MyAppState extends State<MyApp> {
         '/': (context) => HomePage(),
       },
       theme: ThemeData(
-        scaffoldBackgroundColor: Colors.grey[200],
+        scaffoldBackgroundColor: Color(0xFFEEEEEE),
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.grey[200],
+          elevation: 0.0,
+          titleTextStyle: TextStyle(
+            color: Colors.black,
+            fontSize: 20.0,
+          ),
+          actionsIconTheme: IconThemeData(
+            color: Colors.black,
+          ),
+          foregroundColor: Colors.black,
+        ),
       ),
     );
   }

@@ -216,7 +216,10 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           clipBehavior: Clip.hardEdge,
-          child: DetailedCallStats(curCall: curCall),
+          child: DetailedCallStats(
+            curCall: curCall,
+            showNumber: showNumber,
+          ),
         );
       },
     );
@@ -226,21 +229,32 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Call Stats",
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              showNumber = !showNumber;
-              setState(() {});
-            },
-            icon: Icon(
-              showNumber ? Icons.block : Icons.remove_red_eye_outlined,
+        title: Row(
+          children: [
+            Icon(
+              Icons.call,
             ),
-          ),
-          gotCalls
-              ? Padding(
+            SizedBox(width: 10.0),
+            Text(
+              gotCalls ? "Call History Analyzer" : " ",
+              style: TextStyle(
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ],
+        ),
+        actions: gotCalls
+            ? [
+                IconButton(
+                  onPressed: () {
+                    showNumber = !showNumber;
+                    setState(() {});
+                  },
+                  icon: Icon(
+                    showNumber ? Icons.block : Icons.remove_red_eye_outlined,
+                  ),
+                ),
+                Padding(
                   padding: const EdgeInsets.only(right: 0.0),
                   child: IconButton(
                     icon: Icon(
@@ -248,9 +262,9 @@ class _HomePageState extends State<HomePage> {
                     ),
                     onPressed: swapSort,
                   ),
-                )
-              : Container(),
-        ],
+                ),
+              ]
+            : [],
       ),
       body: gotCalls
           ? CallStats(

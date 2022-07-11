@@ -27,11 +27,31 @@ class _CallStatsState extends State<CallStats> {
       child: ListView.builder(
         itemCount: widget.classifiedCallLogs.length,
         itemBuilder: (context, index) {
-          return EachCallStatCard(
-            curCall: widget.classifiedCallLogs[index],
-            index: index + 1,
-            showNumber: widget.showNumber,
-            showDetail: widget.showDetail,
+          return Column(
+            children: [
+              EachCallStatCard(
+                curCall: widget.classifiedCallLogs[index],
+                index: index + 1,
+                showNumber: widget.showNumber,
+                showDetail: widget.showDetail,
+              ),
+              index == widget.classifiedCallLogs.length - 1
+                  ? Container(
+                      child: Column(children: [
+                        SizedBox(height: 150.0),
+                        // End
+                        Text(
+                          "End of Contacts",
+                          style: TextStyle(
+                            fontSize: 14.0,
+                            color: Colors.grey[400],
+                          ),
+                        ),
+                        SizedBox(height: 50.0),
+                      ]),
+                    )
+                  : Container(),
+            ],
           );
         },
       ),
