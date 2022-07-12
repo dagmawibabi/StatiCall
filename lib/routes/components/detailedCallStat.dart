@@ -405,7 +405,7 @@ class _DetailedCallStatsState extends State<DetailedCallStats> {
                 Column(
                   children: [
                     Text(
-                      secondVal,
+                      '${(((double.parse(secondVal) * 60) / 60).floor().toInt()).toString().padLeft(2, "0")}:${(((double.parse(secondVal) * 60) % 60).floor().toInt()).toString().padLeft(2, "0")}',
                       style: TextStyle(
                         fontSize: 17.0,
                         fontWeight: FontWeight.w500,
@@ -423,7 +423,7 @@ class _DetailedCallStatsState extends State<DetailedCallStats> {
                 Column(
                   children: [
                     Text(
-                      thirdVal,
+                      '${(((double.parse(thirdVal) * 60) / 60).floor().toInt()).toString().padLeft(2, "0")}:${(((double.parse(thirdVal) * 60) % 60).floor().toInt()).toString().padLeft(2, "0")}',
                       style: TextStyle(
                         fontSize: 17.0,
                         fontWeight: FontWeight.w500,

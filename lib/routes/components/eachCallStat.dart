@@ -25,15 +25,18 @@ class EachCallStatCard extends StatefulWidget {
 
 class _EachCallStatCardState extends State<EachCallStatCard> {
   String overallDuration = "";
+  String timePhrase = "";
   // Pick the right duration metric
   void calculateOverallDuration() {
-    print(widget.curCall['totalDurationHours'] == "0.28");
     if (double.parse(widget.curCall['totalDurationHours']) >= 1.0) {
-      overallDuration = "${widget.curCall['totalDurationHours']} hr";
+      overallDuration = "${widget.curCall['totalDurationHours']}";
+      timePhrase = 'hr';
     } else if (double.parse(widget.curCall['totalDurationMinutes']) >= 1.0) {
-      overallDuration = "${widget.curCall['totalDurationMinutes']} min";
+      overallDuration = "${widget.curCall['totalDurationMinutes']}";
+      timePhrase = 'min';
     } else {
-      overallDuration = "${widget.curCall['totalDuration']} sec";
+      overallDuration = "${widget.curCall['totalDuration']}";
+      timePhrase = 'sec';
     }
   }
 
@@ -133,7 +136,7 @@ class _EachCallStatCardState extends State<EachCallStatCard> {
                         "Overall Duration",
                       ),
                       Text(
-                        overallDuration.toString(),
+                        '${(((double.parse(overallDuration) * 60) / 60).floor().toInt()).toString().padLeft(2, "0")}:${(((double.parse(overallDuration) * 60) % 60).floor().toInt()).toString().padLeft(2, "0")} $timePhrase',
                       ),
                     ],
                   ),

@@ -23,6 +23,7 @@ class _HomePageState extends State<HomePage> {
   List rawCallLog = [];
   bool gotCalls = false;
   bool showNumber = false;
+  bool isSorting = false;
   int sortIndex = 0;
   List sortTypes = [
     'numOfAllCalls',
@@ -284,6 +285,7 @@ class _HomePageState extends State<HomePage> {
   void swapSort(int sortInd) {
     getCallHistory();
     sortIndex = sortInd;
+    isSorting = true;
     setState(() {});
   }
 
@@ -410,14 +412,61 @@ class _HomePageState extends State<HomePage> {
             : [],
       ),
       body: gotCalls
-          ? CallStats(
-              rawCallLog: rawCallLog,
-              classifiedCallLogs: classifiedCallLogs,
-              showNumber: showNumber,
-              showDetail: showDetail,
-              callHistoryOverview: callHistoryOverview,
-              swapSort: swapSort,
-            )
+          ? (classifiedCallLogs.length == 0 && isSorting == false)
+              ? Center(
+                  // Error Page - No calls
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Spacer(),
+                      Image.asset('assets/illustrations/4.png'),
+                      SizedBox(height: 20.0),
+                      Text(
+                        "You have no call history",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      SizedBox(height: 10.0),
+                      Text(
+                        "Make some calls and come back.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 18.0,
+                        ),
+                      ),
+                      SizedBox(height: 10.0),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          fixedSize:
+                              MaterialStateProperty.all(Size(230.0, 45.0)),
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.grey[900]),
+                        ),
+                        onPressed: () {
+                          getCallHistory();
+                        },
+                        child: Text(
+                          "I've made some calls",
+                          style: TextStyle(
+                            fontSize: 18.0,
+                          ),
+                        ),
+                      ),
+                      Spacer(),
+                    ],
+                  ),
+                )
+              : CallStats(
+                  rawCallLog: rawCallLog,
+                  classifiedCallLogs: classifiedCallLogs,
+                  showNumber: showNumber,
+                  showDetail: showDetail,
+                  callHistoryOverview: callHistoryOverview,
+                  swapSort: swapSort,
+                )
           : GetCalls(
               getCallHistory: getCallHistory,
             ),
