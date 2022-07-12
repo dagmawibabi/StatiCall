@@ -32,11 +32,16 @@ class _DetailedCallStatsState extends State<DetailedCallStats> {
           child: Column(
             children: [
               SizedBox(height: 6.0),
-              Text(
-                widget.curCall["name"],
-                style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.w500,
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: Text(
+                  widget.curCall["name"],
+                  maxLines: 1,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
               SizedBox(height: 4.0),
@@ -88,7 +93,7 @@ class _DetailedCallStatsState extends State<DetailedCallStats> {
                   color: Colors.grey[400],
                 ),
               ),
-              SizedBox(height: 0.0),
+              SizedBox(height: 20.0),
             ],
           ),
         ),

@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:callstats/routes/homepage.dart';
+import 'package:callstats/routes/landingPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -28,7 +29,8 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => HomePage(),
+        '/': (context) => LandingPage(),
+        'homePage': (context) => HomePage(),
       },
       theme: ThemeData(
         scaffoldBackgroundColor: Color(0xFFEEEEEE),

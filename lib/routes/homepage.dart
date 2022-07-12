@@ -3,6 +3,8 @@
 import 'package:call_log/call_log.dart';
 import 'package:callstats/routes/components/callstats.dart';
 import 'package:callstats/routes/components/getcalls.dart';
+import 'package:callstats/routes/components/searchBottomSheet.dart';
+import 'package:callstats/routes/drafts.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
@@ -276,10 +278,6 @@ class _HomePageState extends State<HomePage> {
   void swapSort(int sortInd) {
     getCallHistory();
     sortIndex = sortInd;
-    // sortIndex++;
-    // if (sortIndex > sortTypes.length - 1) {
-    //   sortIndex = 0;
-    // }
     setState(() {});
   }
 
@@ -310,20 +308,69 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  // Search
+  List searchFunction(String searchTerm) {
+    List result = [];
+    for (dynamic i in classifiedCallLogs) {
+      if (i['name']
+              .toString()
+              .toLowerCase()
+              .contains(searchTerm.toLowerCase()) ||
+          i['number'].toString().contains(searchTerm.toLowerCase())) {
+        result.add(i);
+      }
+    }
+    return result;
+  }
+
+  // Search Stat
+  void showSearch() {
+    showModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      context: context,
+      anchorPoint: Offset(0, 100),
+      constraints:
+          BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.8),
+      isScrollControlled: true,
+      isDismissible: true,
+      enableDrag: true,
+      builder: (context) {
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20.0),
+              topRight: Radius.circular(20.0),
+            ),
+          ),
+          clipBehavior: Clip.hardEdge,
+          child: SearchBottomSheet(
+            searchFunction: searchFunction,
+            showDetail: showDetail,
+            allCalls: callHistoryOverview,
+            showNumber: showNumber,
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Row(
           children: [
-            Icon(
-              Icons.call,
-            ),
+            gotCalls
+                ? Icon(
+                    Icons.call,
+                  )
+                : Container(),
             SizedBox(width: 10.0),
             Text(
-              gotCalls ? "Call History Analyzer" : " ",
+              gotCalls ? "StatiCall" : " ",
               style: TextStyle(
                 fontWeight: FontWeight.w400,
+                fontSize: 18.0,
               ),
             ),
           ],
@@ -336,11 +383,23 @@ class _HomePageState extends State<HomePage> {
                     setState(() {});
                   },
                   icon: Icon(
+                    size: 22.0,
                     showNumber
                         ? Ionicons.eye_off_outline
                         : Ionicons.eye_outline,
                   ),
                 ),
+                IconButton(
+                  onPressed: () {
+                    showSearch();
+                    // setState(() {});
+                  },
+                  icon: Icon(
+                    Ionicons.search_outline,
+                    size: 20.0,
+                  ),
+                ),
+                SizedBox(width: 10.0),
               ]
             : [],
       ),

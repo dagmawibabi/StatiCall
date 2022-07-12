@@ -57,7 +57,9 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                 : Container(),
           ],
         ),
-        actions: [SizedBox(width: widget.showNumber ? 0.0 : 50.0)],
+        actions: [
+          SizedBox(width: widget.showNumber ? 0.0 : 50.0),
+        ],
       ),
       body: ListView(
         shrinkWrap: true,
@@ -91,6 +93,7 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                   ),
                 ),
                 SizedBox(height: 0.0),
+                // Page Indicator
                 Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -100,8 +103,8 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                         height: 5.0,
                         decoration: BoxDecoration(
                           color: curPage == 0
-                              ? Colors.grey[500]
-                              : Colors.grey[300],
+                              ? Colors.blueAccent
+                              : Colors.grey[400],
                           borderRadius: BorderRadius.all(
                             Radius.circular(20.0),
                           ),
@@ -113,8 +116,8 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                         height: 5.0,
                         decoration: BoxDecoration(
                           color: curPage == 1
-                              ? Colors.grey[500]
-                              : Colors.grey[300],
+                              ? Colors.blueAccent
+                              : Colors.grey[400],
                           borderRadius: BorderRadius.all(
                             Radius.circular(20.0),
                           ),
@@ -123,7 +126,7 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                     ],
                   ),
                 ),
-                SizedBox(height: 0.0),
+                SizedBox(height: 10.0),
                 // Duration Stats
                 Container(
                   child: Column(children: [

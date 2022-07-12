@@ -43,21 +43,36 @@ class _CallStatsState extends State<CallStats> {
               // Graph Title
               index == 0
                   ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 10.0, top: 5.0, bottom: 5.0),
-                          child: Icon(
-                            Icons.bar_chart,
-                            color: Colors.grey[600],
-                          ),
+                        Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 10.0, top: 5.0, bottom: 5.0),
+                              child: Icon(
+                                Icons.bar_chart,
+                                color: Colors.grey[600],
+                              ),
+                            ),
+                            SizedBox(width: 5.0),
+                            Text(
+                              "Graphs",
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                color: Colors.grey[700],
+                              ),
+                            ),
+                          ],
                         ),
-                        SizedBox(width: 5.0),
-                        Text(
-                          "Graphs",
-                          style: TextStyle(
-                            fontSize: 14.0,
-                            color: Colors.grey[700],
+                        Padding(
+                          padding: const EdgeInsets.only(right: 12.0),
+                          child: Text(
+                            "${curPage + 1}/2",
+                            style: TextStyle(
+                              fontSize: 12.0,
+                              color: Colors.grey[700],
+                            ),
                           ),
                         ),
                       ],
@@ -83,7 +98,7 @@ class _CallStatsState extends State<CallStats> {
               // Page Indicator
               index == 0
                   ? Container(
-                      padding: EdgeInsets.only(bottom: 10.0),
+                      padding: EdgeInsets.only(bottom: 30.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -92,8 +107,8 @@ class _CallStatsState extends State<CallStats> {
                             height: 5.0,
                             decoration: BoxDecoration(
                               color: curPage == 0
-                                  ? Colors.grey[500]
-                                  : Colors.grey[300],
+                                  ? Colors.blueAccent
+                                  : Colors.grey[400],
                               borderRadius: BorderRadius.all(
                                 Radius.circular(20.0),
                               ),
@@ -105,8 +120,8 @@ class _CallStatsState extends State<CallStats> {
                             height: 5.0,
                             decoration: BoxDecoration(
                               color: curPage == 1
-                                  ? Colors.grey[500]
-                                  : Colors.grey[300],
+                                  ? Colors.blueAccent
+                                  : Colors.grey[400],
                               borderRadius: BorderRadius.all(
                                 Radius.circular(20.0),
                               ),
