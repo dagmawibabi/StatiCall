@@ -602,6 +602,8 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
           ),
           minY: 0,
           maxY: double.parse((([
+                            int.parse(callHistoryOverview['totalNumOfCalls']
+                                .toString()),
                             int.parse(
                                 callHistoryOverview['totalNumOfMissedCalls']
                                     .toString()),
@@ -621,7 +623,7 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                                 callHistoryOverview['totalNumOfUnknownCalls']
                                     .toString()),
                           ].reduce(max)) +
-                          200)
+                          0)
                       .toString())
                   .roundToDouble() +
               10,

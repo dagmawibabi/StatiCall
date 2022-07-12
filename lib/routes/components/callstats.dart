@@ -315,6 +315,8 @@ class _CallStatsState extends State<CallStats> {
           ),
           minY: 0,
           maxY: double.parse((([
+                            int.parse(callHistoryOverview['totalNumOfCalls']
+                                .toString()),
                             int.parse(
                                 callHistoryOverview['totalNumOfMissedCalls']
                                     .toString()),
@@ -334,7 +336,7 @@ class _CallStatsState extends State<CallStats> {
                                 callHistoryOverview['totalNumOfUnknownCalls']
                                     .toString()),
                           ].reduce(max)) +
-                          100)
+                          0)
                       .toString())
                   .roundToDouble() +
               10,
