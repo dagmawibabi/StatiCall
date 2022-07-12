@@ -30,7 +30,13 @@ class _HomePageState extends State<HomePage> {
     'maxDuration',
     'minDuration',
     'oldestDate',
-    'newestDate'
+    'newestDate',
+    'numOfMissedCalls',
+    'numOfIncomingCalls',
+    'numOfOutgoingCalls',
+    'numOfRejectedCalls',
+    'numOfBlockedCalls',
+    'numOfUnknownCalls',
   ];
   Map callHistoryOverview = {
     "totalMinDuration": 0.0,

@@ -184,7 +184,43 @@ class _CallStatsState extends State<CallStats> {
                               DropdownMenuItem(
                                 value: 0,
                                 child: Text(
-                                  "Number Of Calls",
+                                  "All Calls",
+                                ),
+                              ),
+                              DropdownMenuItem(
+                                value: 6,
+                                child: Text(
+                                  "Missed Calls",
+                                ),
+                              ),
+                              DropdownMenuItem(
+                                value: 7,
+                                child: Text(
+                                  "Incoming Calls",
+                                ),
+                              ),
+                              DropdownMenuItem(
+                                value: 8,
+                                child: Text(
+                                  "Outgoing Calls",
+                                ),
+                              ),
+                              DropdownMenuItem(
+                                value: 9,
+                                child: Text(
+                                  "Rejected Calls",
+                                ),
+                              ),
+                              DropdownMenuItem(
+                                value: 10,
+                                child: Text(
+                                  "Blocked Calls",
+                                ),
+                              ),
+                              DropdownMenuItem(
+                                value: 11,
+                                child: Text(
+                                  "Unknown Calls",
                                 ),
                               ),
                               DropdownMenuItem(
