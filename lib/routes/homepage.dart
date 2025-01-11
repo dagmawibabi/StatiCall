@@ -1,17 +1,14 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:call_log/call_log.dart';
 import 'package:callstats/routes/components/callstats.dart';
 import 'package:callstats/routes/components/getcalls.dart';
 import 'package:callstats/routes/components/searchBottomSheet.dart';
-import 'package:callstats/routes/drafts.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
 import 'components/detailedCallStat.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -181,7 +178,6 @@ class _HomePageState extends State<HomePage> {
               ? i['newestDate']
               : callHistoryOverview['newestDate'];
     }
-    print(callHistoryOverview);
   }
 
   // Classify call history
@@ -197,7 +193,9 @@ class _HomePageState extends State<HomePage> {
         try {
           c = c.substring(c.length - 9);
           d = d.substring(d.length - 9);
-        } catch (e) {}
+        } catch (e) {
+          //
+        }
 
         if (a == b && c == d) {
           exists = true;
@@ -294,13 +292,13 @@ class _HomePageState extends State<HomePage> {
     showModalBottomSheet(
       backgroundColor: Colors.transparent,
       context: context,
-      anchorPoint: Offset(100, 100),
+      anchorPoint: const Offset(100, 100),
       // isScrollControlled: true,
       isDismissible: true,
       enableDrag: true,
       builder: (context) {
         return Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20.0),
               topRight: Radius.circular(20.0),
@@ -336,7 +334,7 @@ class _HomePageState extends State<HomePage> {
     showModalBottomSheet(
       backgroundColor: Colors.transparent,
       context: context,
-      anchorPoint: Offset(0, 100),
+      anchorPoint: const Offset(0, 100),
       constraints:
           BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.8),
       isScrollControlled: true,
@@ -344,7 +342,7 @@ class _HomePageState extends State<HomePage> {
       enableDrag: true,
       builder: (context) {
         return Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20.0),
               topRight: Radius.circular(20.0),
@@ -369,14 +367,14 @@ class _HomePageState extends State<HomePage> {
         title: Row(
           children: [
             gotCalls
-                ? Icon(
+                ? const Icon(
                     Icons.call,
                   )
                 : Container(),
-            SizedBox(width: 10.0),
+            const SizedBox(width: 10.0),
             Text(
               gotCalls ? "StatiCall" : " ",
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.w400,
                 fontSize: 18.0,
               ),
@@ -402,26 +400,26 @@ class _HomePageState extends State<HomePage> {
                     showSearch();
                     // setState(() {});
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Ionicons.search_outline,
                     size: 20.0,
                   ),
                 ),
-                SizedBox(width: 10.0),
+                const SizedBox(width: 10.0),
               ]
             : [],
       ),
       body: gotCalls
-          ? (classifiedCallLogs.length == 0 && isSorting == false)
+          ? (classifiedCallLogs.isEmpty && isSorting == false)
               ? Center(
                   // Error Page - No calls
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Spacer(),
+                      const Spacer(),
                       Image.asset('assets/illustrations/4.png'),
-                      SizedBox(height: 20.0),
-                      Text(
+                      const SizedBox(height: 20.0),
+                      const Text(
                         "You have no call history",
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -429,33 +427,33 @@ class _HomePageState extends State<HomePage> {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      SizedBox(height: 10.0),
-                      Text(
+                      const SizedBox(height: 10.0),
+                      const Text(
                         "Make some calls and come back.",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 18.0,
                         ),
                       ),
-                      SizedBox(height: 10.0),
+                      const SizedBox(height: 10.0),
                       ElevatedButton(
                         style: ButtonStyle(
-                          fixedSize:
-                              MaterialStateProperty.all(Size(230.0, 45.0)),
+                          fixedSize: MaterialStateProperty.all(
+                              const Size(230.0, 45.0)),
                           backgroundColor:
                               MaterialStateProperty.all(Colors.grey[900]),
                         ),
                         onPressed: () {
                           getCallHistory();
                         },
-                        child: Text(
+                        child: const Text(
                           "I've made some calls",
                           style: TextStyle(
                             fontSize: 18.0,
                           ),
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                     ],
                   ),
                 )

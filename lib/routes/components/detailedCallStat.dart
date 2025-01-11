@@ -1,12 +1,12 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 class DetailedCallStats extends StatefulWidget {
-  const DetailedCallStats(
-      {Key? key, required this.curCall, required this.showNumber})
-      : super(key: key);
+  const DetailedCallStats({
+    super.key,
+    required this.curCall,
+    required this.showNumber,
+  });
   final Map curCall;
   final bool showNumber;
 
@@ -20,38 +20,38 @@ class _DetailedCallStatsState extends State<DetailedCallStats> {
     return ListView(
       children: [
         Container(
-          padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
+          padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
           decoration: BoxDecoration(
             color: Colors.grey[200],
             // border: Border.all(color: Colors.black),
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(20.0),
               topRight: Radius.circular(20.0),
             ),
           ),
           child: Column(
             children: [
-              SizedBox(height: 6.0),
-              Container(
+              const SizedBox(height: 6.0),
+              SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: Text(
                   widget.curCall["name"],
                   maxLines: 1,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
-              SizedBox(height: 4.0),
+              const SizedBox(height: 4.0),
               widget.showNumber
                   ? Text(
                       widget.curCall["number"],
-                      style: TextStyle(fontSize: 15.0),
+                      style: const TextStyle(fontSize: 15.0),
                     )
                   : Container(),
-              SizedBox(height: 6.0),
+              const SizedBox(height: 6.0),
               eachDetailDuration(
                 "Total Duration",
                 widget.curCall["totalDuration"].toString(),
@@ -84,7 +84,7 @@ class _DetailedCallStatsState extends State<DetailedCallStats> {
                     .substring(0, 10),
                 Icons.calendar_month_outlined,
               ),
-              SizedBox(height: 0.0),
+              const SizedBox(height: 0.0),
               // End
               Text(
                 " ",
@@ -93,7 +93,7 @@ class _DetailedCallStatsState extends State<DetailedCallStats> {
                   color: Colors.grey[400],
                 ),
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
             ],
           ),
         ),
@@ -102,144 +102,138 @@ class _DetailedCallStatsState extends State<DetailedCallStats> {
   }
 
   // Container
-  Container abc() {
-    return Container(
-      child: Column(children: [
-        // Graph
-        Text(
-          "Call Type Analysis",
-          style: TextStyle(
-            fontSize: 18.0,
-          ),
+  Widget abc() {
+    return Column(children: [
+      // Graph
+      const Text(
+        "Call Type Analysis",
+        style: TextStyle(
+          fontSize: 18.0,
         ),
-        SizedBox(height: 20.0),
-        Container(
-          width: 250.0,
-          height: 250.0,
-          padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
-          decoration: BoxDecoration(
-            color: Colors.grey[100],
-            boxShadow: [
-              BoxShadow(
-                color: Colors.white,
-                blurRadius: 15.0,
-                spreadRadius: 5.0,
-              )
-            ],
-            // border: Border.all(color: Colors.blueGrey),
-            borderRadius: BorderRadius.all(Radius.circular(300.0)),
-          ),
-          child: PieChart(
-            PieChartData(
-              sections: [
-                PieChartSectionData(
-                  color: Colors.pinkAccent,
-                  title: widget.curCall["numOfMissedCalls"].toString(),
-                  value: double.parse(
-                      widget.curCall["numOfMissedCalls"].toString()),
-                  titleStyle: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                PieChartSectionData(
-                  color: Colors.greenAccent,
-                  title: widget.curCall["numOfIncomingCalls"].toString(),
-                  value: double.parse(
-                      widget.curCall["numOfIncomingCalls"].toString()),
-                  titleStyle: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                PieChartSectionData(
-                  color: Colors.blue,
-                  title: widget.curCall["numOfOutgoingCalls"].toString(),
-                  value: double.parse(
-                      widget.curCall["numOfOutgoingCalls"].toString()),
-                  titleStyle: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                PieChartSectionData(
-                  color: Colors.red,
-                  title: widget.curCall["numOfRejectedCalls"].toString(),
-                  value: double.parse(
-                      widget.curCall["numOfRejectedCalls"].toString()),
-                  titleStyle: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                PieChartSectionData(
-                  color: Colors.black,
-                  title: widget.curCall["numOfBlockedCalls"].toString(),
-                  value: double.parse(
-                      widget.curCall["numOfBlockedCalls"].toString()),
-                  titleStyle: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                PieChartSectionData(
-                  color: Colors.cyanAccent,
-                  title: widget.curCall["numOfUnknownCalls"].toString(),
-                  value: double.parse(
-                      widget.curCall["numOfUnknownCalls"].toString()),
-                  titleStyle: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-          ),
+      ),
+      const SizedBox(height: 20.0),
+      Container(
+        width: 250.0,
+        height: 250.0,
+        padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
+        decoration: BoxDecoration(
+          color: Colors.grey[100],
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.white,
+              blurRadius: 15.0,
+              spreadRadius: 5.0,
+            )
+          ],
+          // border: Border.all(color: Colors.blueGrey),
+          borderRadius: const BorderRadius.all(Radius.circular(300.0)),
         ),
-        SizedBox(height: 20.0),
-        // Indicators
-        Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              graphIndicator(Colors.pinkAccent, "Missed"),
-              graphIndicator(Colors.greenAccent, "Incoming"),
-              graphIndicator(Colors.blue, "Outgoing"),
+        child: PieChart(
+          PieChartData(
+            sections: [
+              PieChartSectionData(
+                color: Colors.pinkAccent,
+                title: widget.curCall["numOfMissedCalls"].toString(),
+                value:
+                    double.parse(widget.curCall["numOfMissedCalls"].toString()),
+                titleStyle: const TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              PieChartSectionData(
+                color: Colors.greenAccent,
+                title: widget.curCall["numOfIncomingCalls"].toString(),
+                value: double.parse(
+                    widget.curCall["numOfIncomingCalls"].toString()),
+                titleStyle: const TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              PieChartSectionData(
+                color: Colors.blue,
+                title: widget.curCall["numOfOutgoingCalls"].toString(),
+                value: double.parse(
+                    widget.curCall["numOfOutgoingCalls"].toString()),
+                titleStyle: const TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              PieChartSectionData(
+                color: Colors.red,
+                title: widget.curCall["numOfRejectedCalls"].toString(),
+                value: double.parse(
+                    widget.curCall["numOfRejectedCalls"].toString()),
+                titleStyle: const TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              PieChartSectionData(
+                color: Colors.black,
+                title: widget.curCall["numOfBlockedCalls"].toString(),
+                value: double.parse(
+                    widget.curCall["numOfBlockedCalls"].toString()),
+                titleStyle: const TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              PieChartSectionData(
+                color: Colors.cyanAccent,
+                title: widget.curCall["numOfUnknownCalls"].toString(),
+                value: double.parse(
+                    widget.curCall["numOfUnknownCalls"].toString()),
+                titleStyle: const TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
             ],
           ),
         ),
-        SizedBox(height: 20.0),
-        Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              graphIndicator(Colors.red, "Rejected"),
-              graphIndicator(Colors.black, "Blocked"),
-              graphIndicator(Colors.cyanAccent, "Unknown"),
-            ],
-          ),
-        ),
-        SizedBox(height: 100.0),
-      ]),
-    );
+      ),
+      const SizedBox(height: 20.0),
+      // Indicators
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          graphIndicator(Colors.pinkAccent, "Missed"),
+          graphIndicator(Colors.greenAccent, "Incoming"),
+          graphIndicator(Colors.blue, "Outgoing"),
+        ],
+      ),
+      const SizedBox(height: 20.0),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          graphIndicator(Colors.red, "Rejected"),
+          graphIndicator(Colors.black, "Blocked"),
+          graphIndicator(Colors.cyanAccent, "Unknown"),
+        ],
+      ),
+      const SizedBox(height: 100.0),
+    ]);
   }
 
   // Date Detail
   Container dateDetail(
       String title, String firstVal, String secondVal, IconData icon) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
-      margin: EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
+      margin: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
       decoration: BoxDecoration(
         color: Colors.grey[200],
         // border: Border.all(color: Colors.black),
-        borderRadius: BorderRadius.all(
+        borderRadius: const BorderRadius.all(
           Radius.circular(10.0),
         ),
       ),
@@ -261,7 +255,7 @@ class _DetailedCallStatsState extends State<DetailedCallStats> {
                 padding: const EdgeInsets.only(left: 5.0),
                 child: Text(
                   title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 15.0,
                     fontWeight: FontWeight.w400,
                   ),
@@ -269,15 +263,18 @@ class _DetailedCallStatsState extends State<DetailedCallStats> {
               ),
             ],
           ),
-          SizedBox(height: 8.0),
+          const SizedBox(height: 8.0),
           // Values
           Container(
-            padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-            margin: EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+            padding: const EdgeInsets.symmetric(
+              vertical: 10.0,
+              horizontal: 10.0,
+            ),
+            margin: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
             decoration: BoxDecoration(
               color: Colors.grey[300],
               // border: Border.all(color: Colors.black),
-              borderRadius: BorderRadius.all(
+              borderRadius: const BorderRadius.all(
                 Radius.circular(10.0),
               ),
             ),
@@ -288,12 +285,12 @@ class _DetailedCallStatsState extends State<DetailedCallStats> {
                   children: [
                     Text(
                       firstVal,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 15.0,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    SizedBox(height: 2.0),
+                    const SizedBox(height: 2.0),
                     Text(
                       "from",
                       style: TextStyle(
@@ -307,12 +304,12 @@ class _DetailedCallStatsState extends State<DetailedCallStats> {
                   children: [
                     Text(
                       secondVal,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 15.0,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    SizedBox(height: 2.0),
+                    const SizedBox(height: 2.0),
                     Text(
                       "to",
                       style: TextStyle(
@@ -334,12 +331,12 @@ class _DetailedCallStatsState extends State<DetailedCallStats> {
   Container eachDetailDuration(String title, String firstVal, String secondVal,
       String thirdVal, IconData icon) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
-      margin: EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
+      margin: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
       decoration: BoxDecoration(
         color: Colors.grey[200],
         // border: Border.all(color: Colors.black),
-        borderRadius: BorderRadius.all(
+        borderRadius: const BorderRadius.all(
           Radius.circular(10.0),
         ),
       ),
@@ -361,7 +358,7 @@ class _DetailedCallStatsState extends State<DetailedCallStats> {
                 padding: const EdgeInsets.only(left: 2.0),
                 child: Text(
                   title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 15.0,
                     fontWeight: FontWeight.w400,
                   ),
@@ -369,15 +366,16 @@ class _DetailedCallStatsState extends State<DetailedCallStats> {
               ),
             ],
           ),
-          SizedBox(height: 6.0),
+          const SizedBox(height: 6.0),
           // Values
           Container(
-            padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-            margin: EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+            padding:
+                const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+            margin: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
             decoration: BoxDecoration(
               color: Colors.grey[300],
               // border: Border.all(color: Colors.black),
-              borderRadius: BorderRadius.all(
+              borderRadius: const BorderRadius.all(
                 Radius.circular(10.0),
               ),
             ),
@@ -388,7 +386,7 @@ class _DetailedCallStatsState extends State<DetailedCallStats> {
                   children: [
                     Text(
                       firstVal,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 17.0,
                         fontWeight: FontWeight.w500,
                       ),
@@ -406,7 +404,7 @@ class _DetailedCallStatsState extends State<DetailedCallStats> {
                   children: [
                     Text(
                       '${(((double.parse(secondVal) * 60) / 60).floor().toInt()).toString().padLeft(2, "0")}:${(((double.parse(secondVal) * 60) % 60).floor().toInt()).toString().padLeft(2, "0")}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 17.0,
                         fontWeight: FontWeight.w500,
                       ),
@@ -424,7 +422,7 @@ class _DetailedCallStatsState extends State<DetailedCallStats> {
                   children: [
                     Text(
                       '${(((double.parse(thirdVal) * 60) / 60).floor().toInt()).toString().padLeft(2, "0")}:${(((double.parse(thirdVal) * 60) % 60).floor().toInt()).toString().padLeft(2, "0")}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 17.0,
                         fontWeight: FontWeight.w500,
                       ),
@@ -451,7 +449,7 @@ class _DetailedCallStatsState extends State<DetailedCallStats> {
     return Container(
       width: 80.0,
       height: 60.0,
-      padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
       decoration: BoxDecoration(
         color: Colors.grey[100],
         boxShadow: [
@@ -462,7 +460,7 @@ class _DetailedCallStatsState extends State<DetailedCallStats> {
           )
         ],
         // border: Border.all(color: Colors.blueGrey),
-        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        borderRadius: const BorderRadius.all(Radius.circular(10.0)),
       ),
       child: Column(
         children: [
@@ -472,13 +470,13 @@ class _DetailedCallStatsState extends State<DetailedCallStats> {
             decoration: BoxDecoration(
               color: color,
               border: Border.all(color: Colors.blueGrey),
-              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              borderRadius: const BorderRadius.all(Radius.circular(10.0)),
             ),
           ),
-          SizedBox(height: 8.0),
+          const SizedBox(height: 8.0),
           Text(
             text,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 13.0,
             ),
           ),

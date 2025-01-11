@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'dart:math';
 
 import 'package:callstats/routes/components/eachCallStat.dart';
@@ -9,14 +7,15 @@ import 'package:flutter/material.dart';
 
 class CallStats extends StatefulWidget {
   const CallStats({
-    Key? key,
+    super.key,
     required this.rawCallLog,
     required this.classifiedCallLogs,
     required this.showNumber,
     required this.showDetail,
     required this.callHistoryOverview,
     required this.swapSort,
-  }) : super(key: key);
+  });
+
   final List classifiedCallLogs;
   final List rawCallLog;
   final bool showNumber;
@@ -33,311 +32,302 @@ class _CallStatsState extends State<CallStats> {
   int sortIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: widget.classifiedCallLogs.length,
-        itemBuilder: (context, index) {
-          return Column(
-            children: [
-              // Graph Title
-              index == 0
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 10.0, top: 5.0, bottom: 5.0),
-                              child: Icon(
-                                Icons.bar_chart,
-                                color: Colors.grey[600],
-                              ),
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: widget.classifiedCallLogs.length,
+      itemBuilder: (context, index) {
+        return Column(
+          children: [
+            // Graph Title
+            index == 0
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 10.0, top: 5.0, bottom: 5.0),
+                            child: Icon(
+                              Icons.bar_chart,
+                              color: Colors.grey[600],
                             ),
-                            SizedBox(width: 5.0),
-                            Text(
-                              "Graphs",
-                              style: TextStyle(
-                                fontSize: 14.0,
-                                color: Colors.grey[700],
-                              ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 12.0),
-                          child: Text(
-                            "${curPage + 1}/2",
+                          ),
+                          const SizedBox(width: 5.0),
+                          Text(
+                            "Graphs",
                             style: TextStyle(
-                              fontSize: 12.0,
+                              fontSize: 14.0,
                               color: Colors.grey[700],
                             ),
                           ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 12.0),
+                        child: Text(
+                          "${curPage + 1}/2",
+                          style: TextStyle(
+                            fontSize: 12.0,
+                            color: Colors.grey[700],
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                : Container(),
+            // Pages
+            index == 0
+                ? Container(
+                    height: 470.0,
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: PageView(
+                      onPageChanged: (value) {
+                        curPage = value;
+                        setState(() {});
+                      },
+                      children: [
+                        pieChart(),
+                        barGraph(),
+                      ],
+                    ),
+                  )
+                : Container(),
+            // Page Indicator
+            index == 0
+                ? Container(
+                    padding: const EdgeInsets.only(bottom: 30.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 5.0,
+                          height: 5.0,
+                          decoration: BoxDecoration(
+                            color: curPage == 0
+                                ? Colors.blueAccent
+                                : Colors.grey[400],
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(20.0),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 5.0),
+                        Container(
+                          width: 5.0,
+                          height: 5.0,
+                          decoration: BoxDecoration(
+                            color: curPage == 1
+                                ? Colors.blueAccent
+                                : Colors.grey[400],
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(20.0),
+                            ),
+                          ),
                         ),
                       ],
-                    )
-                  : Container(),
-              // Pages
-              index == 0
-                  ? Container(
-                      height: 470.0,
-                      padding: EdgeInsets.only(top: 8.0),
-                      child: PageView(
-                        onPageChanged: (value) {
-                          curPage = value;
-                          setState(() {});
-                        },
+                    ),
+                  )
+                : Container(),
+            // All Calls
+            index == 0
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
                         children: [
-                          pieChart(),
-                          barGraph(),
-                        ],
-                      ),
-                    )
-                  : Container(),
-              // Page Indicator
-              index == 0
-                  ? Container(
-                      padding: EdgeInsets.only(bottom: 30.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: 5.0,
-                            height: 5.0,
-                            decoration: BoxDecoration(
-                              color: curPage == 0
-                                  ? Colors.blueAccent
-                                  : Colors.grey[400],
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(20.0),
-                              ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 10.0, bottom: 5.0),
+                            child: Icon(
+                              Icons.person_outline,
+                              color: Colors.grey[600],
                             ),
                           ),
-                          SizedBox(width: 5.0),
-                          Container(
-                            width: 5.0,
-                            height: 5.0,
-                            decoration: BoxDecoration(
-                              color: curPage == 1
-                                  ? Colors.blueAccent
-                                  : Colors.grey[400],
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(20.0),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  : Container(),
-              // All Calls
-              index == 0
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 10.0, bottom: 5.0),
-                              child: Icon(
-                                Icons.person_outline,
-                                color: Colors.grey[600],
-                              ),
-                            ),
-                            SizedBox(width: 5.0),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 0.0, bottom: 5.0),
-                              child: Text(
-                                "All Calls",
-                                style: TextStyle(
-                                  fontSize: 15.0,
-                                  color: Colors.grey[700],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(right: 10.0, bottom: 5.0),
-                          child: DropdownButton(
-                            value: sortIndex,
-                            elevation: 0,
-                            icon: Padding(
-                              padding: const EdgeInsets.only(left: 5.0),
-                              child: Icon(
-                                Icons.sort,
+                          const SizedBox(width: 5.0),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 0.0, bottom: 5.0),
+                            child: Text(
+                              "All Calls",
+                              style: TextStyle(
+                                fontSize: 15.0,
                                 color: Colors.grey[700],
                               ),
                             ),
-                            isDense: true,
-                            style: TextStyle(
-                              fontSize: 14.0,
-                              color: Colors.grey[800],
-                            ),
-                            iconSize: 20.0,
-                            // itemHeight: 40.0,
-                            items: [
-                              DropdownMenuItem(
-                                value: 0,
-                                child: Text(
-                                  "All Calls",
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: 6,
-                                child: Text(
-                                  "Missed Calls",
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: 7,
-                                child: Text(
-                                  "Incoming Calls",
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: 8,
-                                child: Text(
-                                  "Outgoing Calls",
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: 9,
-                                child: Text(
-                                  "Rejected Calls",
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: 10,
-                                child: Text(
-                                  "Blocked Calls",
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: 11,
-                                child: Text(
-                                  "Unknown Calls",
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: 1,
-                                child: Text(
-                                  "Total Duration",
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: 2,
-                                child: Text(
-                                  "Max Duration",
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: 3,
-                                child: Text(
-                                  "Min Duration",
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: 4,
-                                child: Text(
-                                  "Oldest Date",
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: 5,
-                                child: Text(
-                                  "Newest Date",
-                                ),
-                              )
-                            ],
-                            onChanged: (dynamic value) {
-                              print(value);
-                              sortIndex = value;
-                              widget.swapSort(value);
-                            },
                           ),
-                        ),
-                      ],
-                    )
-                  : Container(),
-              EachCallStatCard(
-                curCall: widget.classifiedCallLogs[index],
-                index: index + 1,
-                showNumber: widget.showNumber,
-                showDetail: widget.showDetail,
-                allCalls: widget.callHistoryOverview,
-              ),
-              index == widget.classifiedCallLogs.length - 1
-                  ? Container(
-                      child: Column(children: [
-                        SizedBox(height: 150.0),
-                        // End
-                        Text(
-                          "End of Contacts",
+                        ],
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(right: 10.0, bottom: 5.0),
+                        child: DropdownButton(
+                          value: sortIndex,
+                          elevation: 0,
+                          icon: Padding(
+                            padding: const EdgeInsets.only(left: 5.0),
+                            child: Icon(
+                              Icons.sort,
+                              color: Colors.grey[700],
+                            ),
+                          ),
+                          isDense: true,
                           style: TextStyle(
                             fontSize: 14.0,
-                            color: Colors.grey[400],
+                            color: Colors.grey[800],
                           ),
+                          iconSize: 20.0,
+                          // itemHeight: 40.0,
+                          items: const [
+                            DropdownMenuItem(
+                              value: 0,
+                              child: Text(
+                                "All Calls",
+                              ),
+                            ),
+                            DropdownMenuItem(
+                              value: 6,
+                              child: Text(
+                                "Missed Calls",
+                              ),
+                            ),
+                            DropdownMenuItem(
+                              value: 7,
+                              child: Text(
+                                "Incoming Calls",
+                              ),
+                            ),
+                            DropdownMenuItem(
+                              value: 8,
+                              child: Text(
+                                "Outgoing Calls",
+                              ),
+                            ),
+                            DropdownMenuItem(
+                              value: 9,
+                              child: Text(
+                                "Rejected Calls",
+                              ),
+                            ),
+                            DropdownMenuItem(
+                              value: 10,
+                              child: Text(
+                                "Blocked Calls",
+                              ),
+                            ),
+                            DropdownMenuItem(
+                              value: 11,
+                              child: Text(
+                                "Unknown Calls",
+                              ),
+                            ),
+                            DropdownMenuItem(
+                              value: 1,
+                              child: Text(
+                                "Total Duration",
+                              ),
+                            ),
+                            DropdownMenuItem(
+                              value: 2,
+                              child: Text(
+                                "Max Duration",
+                              ),
+                            ),
+                            DropdownMenuItem(
+                              value: 3,
+                              child: Text(
+                                "Min Duration",
+                              ),
+                            ),
+                            DropdownMenuItem(
+                              value: 4,
+                              child: Text(
+                                "Oldest Date",
+                              ),
+                            ),
+                            DropdownMenuItem(
+                              value: 5,
+                              child: Text(
+                                "Newest Date",
+                              ),
+                            )
+                          ],
+                          onChanged: (dynamic value) {
+                            sortIndex = value;
+                            widget.swapSort(value);
+                          },
                         ),
-                        SizedBox(height: 50.0),
-                      ]),
-                    )
-                  : Container(),
-            ],
-          );
-        },
-      ),
+                      ),
+                    ],
+                  )
+                : Container(),
+            EachCallStatCard(
+              curCall: widget.classifiedCallLogs[index],
+              index: index + 1,
+              showNumber: widget.showNumber,
+              showDetail: widget.showDetail,
+              allCalls: widget.callHistoryOverview,
+            ),
+            index == widget.classifiedCallLogs.length - 1
+                ? Column(children: [
+                    const SizedBox(height: 150.0),
+                    // End
+                    Text(
+                      "End of Contacts",
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        color: Colors.grey[400],
+                      ),
+                    ),
+                    const SizedBox(height: 50.0),
+                  ])
+                : const SizedBox.shrink(),
+          ],
+        );
+      },
     );
   }
 
   // Bar Graph
-  Container barGraph() {
-    return Container(
-      child: Column(children: [
-        overViewGraph(widget.callHistoryOverview),
-        SizedBox(height: 20.0),
-        // Indicators
-        Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              GraphIndicators(color: Colors.pinkAccent, text: "Missed"),
-              GraphIndicators(color: Colors.greenAccent, text: "Incoming"),
-              GraphIndicators(color: Colors.blue, text: "Outgoing"),
-            ],
-          ),
-        ),
-        SizedBox(height: 20.0),
-        Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              GraphIndicators(color: Colors.red, text: "Rejected"),
-              GraphIndicators(color: Colors.black, text: "Blocked"),
-              GraphIndicators(color: Colors.cyanAccent, text: "Unknown"),
-            ],
-          ),
-        ),
-        SizedBox(height: 30.0),
-      ]),
-    );
+  Widget barGraph() {
+    return Column(children: [
+      overViewGraph(widget.callHistoryOverview),
+      const SizedBox(height: 20.0),
+      // Indicators
+      const Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          GraphIndicators(color: Colors.pinkAccent, text: "Missed"),
+          GraphIndicators(color: Colors.greenAccent, text: "Incoming"),
+          GraphIndicators(color: Colors.blue, text: "Outgoing"),
+        ],
+      ),
+      const SizedBox(height: 20.0),
+      const Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          GraphIndicators(color: Colors.red, text: "Rejected"),
+          GraphIndicators(color: Colors.black, text: "Blocked"),
+          GraphIndicators(color: Colors.cyanAccent, text: "Unknown"),
+        ],
+      ),
+      const SizedBox(height: 30.0),
+    ]);
   }
 
   // Overview Graph
-  Container overViewGraph(Map callHistoryOverview) {
-    return Container(
+  Widget overViewGraph(Map callHistoryOverview) {
+    return SizedBox(
       height: 270.0,
       width: 390.0,
       child: BarChart(
         BarChartData(
-          gridData:
-              FlGridData(drawVerticalLine: false, horizontalInterval: 100.0),
+          gridData: const FlGridData(
+            drawVerticalLine: false,
+            horizontalInterval: 100.0,
+          ),
           backgroundColor: Colors.grey[100],
-          titlesData: FlTitlesData(
+          titlesData: const FlTitlesData(
             topTitles: AxisTitles(
               axisNameWidget: Text(
                 "",
@@ -350,31 +340,27 @@ class _CallStatsState extends State<CallStats> {
             ),
           ),
           minY: 0,
-          maxY: double.parse((([
-                            int.parse(callHistoryOverview['totalNumOfCalls']
-                                .toString()),
-                            int.parse(
-                                callHistoryOverview['totalNumOfMissedCalls']
-                                    .toString()),
-                            int.parse(
-                                callHistoryOverview['totalNumOfIncomingCalls']
-                                    .toString()),
-                            int.parse(
-                                callHistoryOverview['totalNumOfOutgoingCalls']
-                                    .toString()),
-                            int.parse(
-                                callHistoryOverview['totalNumOfRejectedCalls']
-                                    .toString()),
-                            int.parse(
-                                callHistoryOverview['totalNumOfBlockedCalls']
-                                    .toString()),
-                            int.parse(
-                                callHistoryOverview['totalNumOfUnknownCalls']
-                                    .toString()),
-                          ].reduce(max)) +
-                          0)
-                      .toString())
-                  .roundToDouble() +
+          maxY: double.parse(
+                (
+                  ([
+                        int.parse(
+                            callHistoryOverview['totalNumOfCalls'].toString()),
+                        int.parse(callHistoryOverview['totalNumOfMissedCalls']
+                            .toString()),
+                        int.parse(callHistoryOverview['totalNumOfIncomingCalls']
+                            .toString()),
+                        int.parse(callHistoryOverview['totalNumOfOutgoingCalls']
+                            .toString()),
+                        int.parse(callHistoryOverview['totalNumOfRejectedCalls']
+                            .toString()),
+                        int.parse(callHistoryOverview['totalNumOfBlockedCalls']
+                            .toString()),
+                        int.parse(callHistoryOverview['totalNumOfUnknownCalls']
+                            .toString()),
+                      ].reduce(max)) +
+                      0,
+                ).toString(),
+              ).roundToDouble() +
               10,
           barGroups: [
             BarChartGroupData(
@@ -382,7 +368,7 @@ class _CallStatsState extends State<CallStats> {
               barRods: [
                 BarChartRodData(
                   // color: Colors.pinkAccent,
-                  gradient: LinearGradient(
+                  gradient: const LinearGradient(
                     colors: [
                       Colors.pinkAccent,
                       Colors.pink,
@@ -423,7 +409,7 @@ class _CallStatsState extends State<CallStats> {
                 BarChartRodData(
                   width: 12.0,
                   // color: Colors.blueAccent,
-                  gradient: LinearGradient(
+                  gradient: const LinearGradient(
                     colors: [
                       Colors.lightBlueAccent,
                       Colors.blueAccent,
@@ -480,21 +466,21 @@ class _CallStatsState extends State<CallStats> {
   }
 
   // PieGraph
-  Container pieChart() {
-    return Container(
-        child: Column(
+  Widget pieChart() {
+    return Column(
       children: [
-        SizedBox(height: 18.0),
+        const SizedBox(height: 18.0),
         Stack(
           alignment: AlignmentDirectional.center,
           children: [
             Container(
               width: 250.0,
               height: 250.0,
-              padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
               decoration: BoxDecoration(
                 color: Colors.grey[100],
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     color: Colors.white,
                     blurRadius: 15.0,
@@ -502,7 +488,7 @@ class _CallStatsState extends State<CallStats> {
                   )
                 ],
                 // border: Border.all(color: Colors.blueGrey),
-                borderRadius: BorderRadius.all(Radius.circular(300.0)),
+                borderRadius: const BorderRadius.all(Radius.circular(300.0)),
               ),
               child: PieChart(
                 PieChartData(
@@ -514,7 +500,7 @@ class _CallStatsState extends State<CallStats> {
                       value: double.parse(widget
                           .callHistoryOverview["totalNumOfMissedCalls"]
                           .toString()),
-                      titleStyle: TextStyle(
+                      titleStyle: const TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -528,7 +514,7 @@ class _CallStatsState extends State<CallStats> {
                       value: double.parse(widget
                           .callHistoryOverview["totalNumOfIncomingCalls"]
                           .toString()),
-                      titleStyle: TextStyle(
+                      titleStyle: const TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -542,7 +528,7 @@ class _CallStatsState extends State<CallStats> {
                       value: double.parse(widget
                           .callHistoryOverview["totalNumOfOutgoingCalls"]
                           .toString()),
-                      titleStyle: TextStyle(
+                      titleStyle: const TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -556,7 +542,7 @@ class _CallStatsState extends State<CallStats> {
                       value: double.parse(widget
                           .callHistoryOverview["totalNumOfRejectedCalls"]
                           .toString()),
-                      titleStyle: TextStyle(
+                      titleStyle: const TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -570,7 +556,7 @@ class _CallStatsState extends State<CallStats> {
                       value: double.parse(widget
                           .callHistoryOverview["totalNumOfBlockedCalls"]
                           .toString()),
-                      titleStyle: TextStyle(
+                      titleStyle: const TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -584,7 +570,7 @@ class _CallStatsState extends State<CallStats> {
                       value: double.parse(widget
                           .callHistoryOverview["totalNumOfUnknownCalls"]
                           .toString()),
-                      titleStyle: TextStyle(
+                      titleStyle: const TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -596,38 +582,34 @@ class _CallStatsState extends State<CallStats> {
             ),
             Text(
               widget.callHistoryOverview['totalNumOfCalls'].toString(),
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.w500,
               ),
             ),
           ],
         ),
-        SizedBox(height: 20.0),
+        const SizedBox(height: 20.0),
         // Indicators
-        Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              GraphIndicators(color: Colors.pinkAccent, text: "Missed"),
-              GraphIndicators(color: Colors.greenAccent, text: "Incoming"),
-              GraphIndicators(color: Colors.blue, text: "Outgoing"),
-            ],
-          ),
+        const Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            GraphIndicators(color: Colors.pinkAccent, text: "Missed"),
+            GraphIndicators(color: Colors.greenAccent, text: "Incoming"),
+            GraphIndicators(color: Colors.blue, text: "Outgoing"),
+          ],
         ),
-        SizedBox(height: 20.0),
-        Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              GraphIndicators(color: Colors.red, text: "Rejected"),
-              GraphIndicators(color: Colors.black, text: "Blocked"),
-              GraphIndicators(color: Colors.cyanAccent, text: "Unknown"),
-            ],
-          ),
+        const SizedBox(height: 20.0),
+        const Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            GraphIndicators(color: Colors.red, text: "Rejected"),
+            GraphIndicators(color: Colors.black, text: "Blocked"),
+            GraphIndicators(color: Colors.cyanAccent, text: "Unknown"),
+          ],
         ),
-        SizedBox(height: 30.0),
+        const SizedBox(height: 30.0),
       ],
-    ));
+    );
   }
 }

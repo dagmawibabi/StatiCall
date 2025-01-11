@@ -1,17 +1,16 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:callstats/routes/components/eachCallStat.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
 class SearchBottomSheet extends StatefulWidget {
   const SearchBottomSheet({
-    Key? key,
+    super.key,
     required this.searchFunction,
     required this.showDetail,
     required this.showNumber,
     required this.allCalls,
-  }) : super(key: key);
+  });
+
   final Function searchFunction;
   final Function showDetail;
   final bool showNumber;
@@ -30,7 +29,7 @@ class _SearchBottomSheetState extends State<SearchBottomSheet> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    super.initState();
     initSearch();
   }
 
@@ -39,13 +38,13 @@ class _SearchBottomSheetState extends State<SearchBottomSheet> {
     return ListView(
       children: [
         Container(
-          padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 15.0),
+          padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 15.0),
           color: Colors.grey[300],
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Search Label
-              Padding(
+              const Padding(
                 padding: EdgeInsets.only(left: 20.0),
                 child: Text(
                   "Search",
@@ -55,12 +54,12 @@ class _SearchBottomSheetState extends State<SearchBottomSheet> {
                   ), //3249ca
                 ),
               ),
-              SizedBox(height: 5.0),
+              const SizedBox(height: 5.0),
               // Search Input
               Container(
-                padding: EdgeInsets.only(left: 15.0),
+                padding: const EdgeInsets.only(left: 15.0),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                  borderRadius: const BorderRadius.all(Radius.circular(20.0)),
                   color: Colors.grey[200],
                 ),
                 child: Row(
@@ -68,29 +67,27 @@ class _SearchBottomSheetState extends State<SearchBottomSheet> {
                     Expanded(
                       child: TextField(
                         controller: searchController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: "Search names or phone number",
                           border: InputBorder.none,
                         ),
                         maxLines: 1,
                         onChanged: (value) {
                           results = widget.searchFunction(value);
-                          print(value);
-                          print(results.length);
                           setState(() {});
                         },
                       ),
                     ),
                     IconButton(
                       onPressed: () {},
-                      icon: Icon(
+                      icon: const Icon(
                         Ionicons.search_outline,
                       ),
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 15.0),
+              const SizedBox(height: 15.0),
               // Search Label
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -107,10 +104,10 @@ class _SearchBottomSheetState extends State<SearchBottomSheet> {
                   ),
                 ],
               ),
-              SizedBox(height: 5.0),
+              const SizedBox(height: 5.0),
               // Results
-              results.length == 0
-                  ? Container(
+              results.isEmpty
+                  ? SizedBox(
                       height: MediaQuery.of(context).size.height * 0.8,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -128,7 +125,7 @@ class _SearchBottomSheetState extends State<SearchBottomSheet> {
                         ],
                       ),
                     )
-                  : Container(
+                  : SizedBox(
                       height: MediaQuery.of(context).size.height,
                       child: ListView.builder(
                         shrinkWrap: true,

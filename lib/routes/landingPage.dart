@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class LandingPage extends StatefulWidget {
-  const LandingPage({Key? key}) : super(key: key);
+  const LandingPage({super.key});
 
   @override
   State<LandingPage> createState() => _LandingPageState();
@@ -18,7 +18,6 @@ class _LandingPageState extends State<LandingPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     load();
   }
@@ -26,20 +25,20 @@ class _LandingPageState extends State<LandingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 21, 20, 20),
+      backgroundColor: const Color.fromARGB(255, 21, 20, 20),
       body: Column(
         children: [
-          Spacer(),
-          Spacer(),
-          Spacer(),
+          const Spacer(),
+          const Spacer(),
+          const Spacer(),
           Center(
             child: Image.asset(
               'assets/icons/icon.png',
               width: 150.0,
             ),
           ),
-          Spacer(),
-          Spacer(),
+          const Spacer(),
+          const Spacer(),
           Column(
             children: [
               Text(
@@ -49,7 +48,7 @@ class _LandingPageState extends State<LandingPage> {
                   color: Colors.grey[800],
                 ),
               ),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 10.0),
               Text(
                 "Version 1.0.0",
                 style: TextStyle(
@@ -59,7 +58,7 @@ class _LandingPageState extends State<LandingPage> {
               ),
             ],
           ),
-          Spacer(),
+          const Spacer(),
         ],
       ),
     );
