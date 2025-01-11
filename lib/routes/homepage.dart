@@ -438,10 +438,10 @@ class _HomePageState extends State<HomePage> {
                       const SizedBox(height: 10.0),
                       ElevatedButton(
                         style: ButtonStyle(
-                          fixedSize: MaterialStateProperty.all(
-                              const Size(230.0, 45.0)),
+                          fixedSize:
+                              const WidgetStatePropertyAll(Size(230.0, 45.0)),
                           backgroundColor:
-                              MaterialStateProperty.all(Colors.grey[900]),
+                              WidgetStatePropertyAll(Colors.grey[900]),
                         ),
                         onPressed: () {
                           getCallHistory();
