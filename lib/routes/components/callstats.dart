@@ -340,27 +340,21 @@ class _CallStatsState extends State<CallStats> {
             ),
           ),
           minY: 0,
-          maxY: double.parse(
-                (
-                  ([
-                        int.parse(
-                            callHistoryOverview['totalNumOfCalls'].toString()),
-                        int.parse(callHistoryOverview['totalNumOfMissedCalls']
-                            .toString()),
-                        int.parse(callHistoryOverview['totalNumOfIncomingCalls']
-                            .toString()),
-                        int.parse(callHistoryOverview['totalNumOfOutgoingCalls']
-                            .toString()),
-                        int.parse(callHistoryOverview['totalNumOfRejectedCalls']
-                            .toString()),
-                        int.parse(callHistoryOverview['totalNumOfBlockedCalls']
-                            .toString()),
-                        int.parse(callHistoryOverview['totalNumOfUnknownCalls']
-                            .toString()),
-                      ].reduce(max)) +
-                      0,
-                ).toString(),
-              ).roundToDouble() +
+          maxY: [
+                int.parse(callHistoryOverview['totalNumOfCalls'].toString()),
+                int.parse(
+                    callHistoryOverview['totalNumOfMissedCalls'].toString()),
+                int.parse(
+                    callHistoryOverview['totalNumOfIncomingCalls'].toString()),
+                int.parse(
+                    callHistoryOverview['totalNumOfOutgoingCalls'].toString()),
+                int.parse(
+                    callHistoryOverview['totalNumOfRejectedCalls'].toString()),
+                int.parse(
+                    callHistoryOverview['totalNumOfBlockedCalls'].toString()),
+                int.parse(
+                    callHistoryOverview['totalNumOfUnknownCalls'].toString()),
+              ].reduce(max) +
               10,
           barGroups: [
             BarChartGroupData(
