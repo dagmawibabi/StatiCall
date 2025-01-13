@@ -1,5 +1,5 @@
-import 'package:callstats/routes/homepage.dart';
-import 'package:callstats/routes/landing_page.dart';
+import 'package:callstats/screens/homepage.dart';
+import 'package:callstats/screens/landing_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

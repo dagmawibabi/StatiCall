@@ -1,9 +1,10 @@
 import 'dart:math';
 
-import 'package:callstats/routes/components/each_call_stat.dart';
-import 'package:callstats/routes/components/graph_indicators.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+
+import 'package:callstats/routes/components/each_call_stat.dart';
+import 'package:callstats/routes/components/graph_indicators.dart';
 
 class CallStats extends StatefulWidget {
   const CallStats({
