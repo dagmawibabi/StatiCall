@@ -1,16 +1,14 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:callstats/routes/homepage.dart';
 import 'package:callstats/routes/landingPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -29,19 +27,19 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => LandingPage(),
-        'homePage': (context) => HomePage(),
+        '/': (context) => const LandingPage(),
+        'homePage': (context) => const HomePage(),
       },
       theme: ThemeData(
-        scaffoldBackgroundColor: Color(0xFFEEEEEE),
+        scaffoldBackgroundColor: const Color(0xFFEEEEEE),
         appBarTheme: AppBarTheme(
           backgroundColor: Colors.grey[200],
           elevation: 0.0,
-          titleTextStyle: TextStyle(
+          titleTextStyle: const TextStyle(
             color: Colors.black,
             fontSize: 20.0,
           ),
-          actionsIconTheme: IconThemeData(
+          actionsIconTheme: const IconThemeData(
             color: Colors.black,
           ),
           foregroundColor: Colors.black,

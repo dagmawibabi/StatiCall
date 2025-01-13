@@ -1,4 +1,5 @@
 // Globals
+// TODO: remove this file, it's unused
 import 'package:call_log/call_log.dart';
 
 Map callStats = {};
@@ -84,12 +85,14 @@ List filterCalls(List workingList) {
     for (dynamic uniqueCall in result) {
       String a = eachCall['number'].toString();
       String b = uniqueCall['number'].toString();
-      String c = eachCall['name'].toString();
-      String d = uniqueCall['name'].toString();
+      // String c = eachCall['name'].toString();
+      // String d = uniqueCall['name'].toString();
       try {
         a = eachCall['number'].substring(eachCall['number'].length - 9);
         b = uniqueCall['number'].substring(uniqueCall['number'].length - 9);
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
       if (a == b) {
         uniqueCall['duration'] += eachCall['duration'];
         uniqueCall['count'] += 1;
@@ -161,8 +164,8 @@ void getCallHistory() async {
     misseds++;
     allCalls.add(curCall);
   }
-  print(allActualCalls.length);
-  print(allCalls.length);
+  // print(allActualCalls.length);
+  // print(allCalls.length);
 
   // Filter Calls
   allCallStats = filterCalls(allCalls);
@@ -174,25 +177,25 @@ void getCallHistory() async {
   unknownCallStats = filterCalls(allUnknownCalls);
   blockedCallStats = filterCalls(allBlockedCalls);
 
-  print(actualCallStats.length);
-  print(allCallStats.length);
+  // print(actualCallStats.length);
+  // print(allCallStats.length);
 
   // Sort Calls
-  List a = [];
-  print(
-      '-----------------------------------------------------------------------------Outgoing Calls ${outgoingCallStats.length}');
-  a = findTopX(20, outgoingCallStats, "duration");
-  for (dynamic x in a) {
-    print(
-        '${x['name']} = ${x['number']} = ${x['totalDuration']} = ${x['count']}');
-  }
-  print(
-      '-----------------------------------------------------------------------------Incoming Calls ${incomingCallStats.length}');
-  a = findTopX(20, incomingCallStats, "duration");
-  for (dynamic x in a) {
-    print(
-        '${x['name']} = ${x['number']} = ${x['totalDuration']} = ${x['count']}');
-  }
+  // List a = [];
+  // print(
+  //     '-----------------------------------------------------------------------------Outgoing Calls ${outgoingCallStats.length}');
+  // a = findTopX(20, outgoingCallStats, "duration");
+  // for (dynamic x in a) {
+  //   print(
+  //       '${x['name']} = ${x['number']} = ${x['totalDuration']} = ${x['count']}');
+  // }
+  // print(
+  //     '-----------------------------------------------------------------------------Incoming Calls ${incomingCallStats.length}');
+  // a = findTopX(20, incomingCallStats, "duration");
+  // for (dynamic x in a) {
+  //   print(
+  //       '${x['name']} = ${x['number']} = ${x['totalDuration']} = ${x['count']}');
+  // }
   // print(
   //     '-----------------------------------------------------------------------------Missed Calls ${missedCallStats.length}');
   // a = findTopX(20, missedCallStats, "duration");
@@ -200,25 +203,25 @@ void getCallHistory() async {
   //   print(
   //       '${x['name']} = ${x['number']} = ${x['totalDuration']} = ${x['count']}');
   // }
-  print(
-      '-----------------------------------------------------------------------------Actual Calls ${actualCallStats.length}');
-  actualCallStats = [];
-  actualCallStats.addAll(incomingCallStats);
-  actualCallStats.addAll(outgoingCallStats);
-  a = filterCalls(actualCallStats);
-  a = findTopX(20, a, "duration");
-  for (dynamic x in a) {
-    print(
-        '${x['name']} = ${x['number']} = ${x['totalDuration']} = ${x['count']}');
-  }
-  print(
-      '-----------------------------------------------------------------------------All Calls ${allCallStats.length}');
-  a = findTopX(20, allCallStats, "duration");
+  // print(
+  //     '-----------------------------------------------------------------------------Actual Calls ${actualCallStats.length}');
+  // actualCallStats = [];
+  // actualCallStats.addAll(incomingCallStats);
+  // actualCallStats.addAll(outgoingCallStats);
+  // a = filterCalls(actualCallStats);
+  // a = findTopX(20, a, "duration");
+  // for (dynamic x in a) {
+  //   print(
+  //       '${x['name']} = ${x['number']} = ${x['totalDuration']} = ${x['count']}');
+  // }
+  // print(
+  //     '-----------------------------------------------------------------------------All Calls ${allCallStats.length}');
   // a = findTopX(20, allCallStats, "duration");
-  for (dynamic x in a) {
-    print(
-        '${x['name']} = ${x['number']} = ${x['totalDuration']} = ${x['count']}');
-  }
+  // // a = findTopX(20, allCallStats, "duration");
+  // for (dynamic x in a) {
+  //   print(
+  //       '${x['name']} = ${x['number']} = ${x['totalDuration']} = ${x['count']}');
+  // }
 
   // print(
   //     '-----------------------------------------------------------------------------All Rejected ${rejectedCallStats.length}');

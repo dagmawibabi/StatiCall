@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'dart:math';
 
 import 'package:callstats/routes/components/graohIndicators.dart';
@@ -8,11 +6,12 @@ import 'package:flutter/material.dart';
 
 class FullScreenDetail extends StatefulWidget {
   const FullScreenDetail({
-    Key? key,
+    super.key,
     required this.curCall,
     required this.showNumber,
     required this.allCalls,
-  }) : super(key: key);
+  });
+
   final Map curCall;
   final bool showNumber;
   final Map allCalls;
@@ -39,7 +38,7 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
               tag: {"name": widget.curCall["name"]},
               child: Text(
                 widget.curCall["name"],
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.w500,
                 ),
@@ -65,19 +64,19 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
         shrinkWrap: true,
         children: [
           Container(
-            padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
+            padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
             decoration: BoxDecoration(
               color: Colors.grey[200],
               // border: Border.all(color: Colors.black),
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(20.0),
                 topRight: Radius.circular(20.0),
               ),
             ),
             child: Column(
               children: [
-                SizedBox(height: 0.0),
-                Container(
+                const SizedBox(height: 0.0),
+                SizedBox(
                   height: 470.0,
                   child: PageView(
                     scrollDirection: Axis.horizontal,
@@ -92,79 +91,73 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                     ],
                   ),
                 ),
-                SizedBox(height: 0.0),
+                const SizedBox(height: 0.0),
                 // Page Indicator
-                Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 5.0,
-                        height: 5.0,
-                        decoration: BoxDecoration(
-                          color: curPage == 0
-                              ? Colors.blueAccent
-                              : Colors.grey[400],
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(20.0),
-                          ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 5.0,
+                      height: 5.0,
+                      decoration: BoxDecoration(
+                        color:
+                            curPage == 0 ? Colors.blueAccent : Colors.grey[400],
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(20.0),
                         ),
                       ),
-                      SizedBox(width: 5.0),
-                      Container(
-                        width: 5.0,
-                        height: 5.0,
-                        decoration: BoxDecoration(
-                          color: curPage == 1
-                              ? Colors.blueAccent
-                              : Colors.grey[400],
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(20.0),
-                          ),
+                    ),
+                    const SizedBox(width: 5.0),
+                    Container(
+                      width: 5.0,
+                      height: 5.0,
+                      decoration: BoxDecoration(
+                        color:
+                            curPage == 1 ? Colors.blueAccent : Colors.grey[400],
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(20.0),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                SizedBox(height: 10.0),
+                const SizedBox(height: 10.0),
                 // Duration Stats
-                Container(
-                  child: Column(children: [
-                    eachDetailDuration(
-                      "Total Duration",
-                      widget.curCall["totalDuration"].toString(),
-                      widget.curCall["totalDurationMinutes"].toString(),
-                      widget.curCall["totalDurationHours"].toString(),
-                      Icons.upgrade_outlined,
-                    ),
-                    eachDetailDuration(
-                      "Maximum Duration",
-                      widget.curCall["maxDuration"].toString(),
-                      widget.curCall["maxDurationMinutes"].toString(),
-                      widget.curCall["maxDurationHours"].toString(),
-                      Icons.unfold_more_sharp,
-                    ),
-                    eachDetailDuration(
-                      "Minimum Duration",
-                      widget.curCall["minDuration"].toString(),
-                      widget.curCall["minDurationMinutes"].toString(),
-                      widget.curCall["minDurationHours"].toString(),
-                      Icons.unfold_less_rounded,
-                    ),
-                    dateDetail(
-                      "Date Range",
-                      DateTime.fromMicrosecondsSinceEpoch(
-                        widget.curCall["oldestDate"] * 1000,
-                      ).toString().substring(0, 10),
-                      DateTime.fromMicrosecondsSinceEpoch(
-                              widget.curCall["newestDate"] * 1000)
-                          .toString()
-                          .substring(0, 10),
-                      Icons.calendar_month_outlined,
-                    ),
-                  ]),
-                ),
-                SizedBox(height: 50.0),
+                Column(children: [
+                  eachDetailDuration(
+                    "Total Duration",
+                    widget.curCall["totalDuration"].toString(),
+                    widget.curCall["totalDurationMinutes"].toString(),
+                    widget.curCall["totalDurationHours"].toString(),
+                    Icons.upgrade_outlined,
+                  ),
+                  eachDetailDuration(
+                    "Maximum Duration",
+                    widget.curCall["maxDuration"].toString(),
+                    widget.curCall["maxDurationMinutes"].toString(),
+                    widget.curCall["maxDurationHours"].toString(),
+                    Icons.unfold_more_sharp,
+                  ),
+                  eachDetailDuration(
+                    "Minimum Duration",
+                    widget.curCall["minDuration"].toString(),
+                    widget.curCall["minDurationMinutes"].toString(),
+                    widget.curCall["minDurationHours"].toString(),
+                    Icons.unfold_less_rounded,
+                  ),
+                  dateDetail(
+                    "Date Range",
+                    DateTime.fromMicrosecondsSinceEpoch(
+                      widget.curCall["oldestDate"] * 1000,
+                    ).toString().substring(0, 10),
+                    DateTime.fromMicrosecondsSinceEpoch(
+                            widget.curCall["newestDate"] * 1000)
+                        .toString()
+                        .substring(0, 10),
+                    Icons.calendar_month_outlined,
+                  ),
+                ]),
+                const SizedBox(height: 50.0),
                 // End
                 Text(
                   "End of Analysis",
@@ -173,7 +166,7 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                     color: Colors.grey[400],
                   ),
                 ),
-                SizedBox(height: 30.0),
+                const SizedBox(height: 30.0),
               ],
             ),
           ),
@@ -183,21 +176,21 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
   }
 
   // PieGraph
-  Container graph() {
-    return Container(
-        child: Column(
+  Widget graph() {
+    return Column(
       children: [
-        SizedBox(height: 18.0),
+        const SizedBox(height: 18.0),
         Stack(
           alignment: AlignmentDirectional.center,
           children: [
             Container(
               width: 250.0,
               height: 250.0,
-              padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
               decoration: BoxDecoration(
                 color: Colors.grey[100],
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     color: Colors.white,
                     blurRadius: 15.0,
@@ -205,7 +198,7 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                   )
                 ],
                 // border: Border.all(color: Colors.blueGrey),
-                borderRadius: BorderRadius.all(Radius.circular(300.0)),
+                borderRadius: const BorderRadius.all(Radius.circular(300.0)),
               ),
               child: PieChart(
                 PieChartData(
@@ -215,7 +208,7 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                       title: widget.curCall["numOfMissedCalls"].toString(),
                       value: double.parse(
                           widget.curCall["numOfMissedCalls"].toString()),
-                      titleStyle: TextStyle(
+                      titleStyle: const TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -226,7 +219,7 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                       title: widget.curCall["numOfIncomingCalls"].toString(),
                       value: double.parse(
                           widget.curCall["numOfIncomingCalls"].toString()),
-                      titleStyle: TextStyle(
+                      titleStyle: const TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -237,7 +230,7 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                       title: widget.curCall["numOfOutgoingCalls"].toString(),
                       value: double.parse(
                           widget.curCall["numOfOutgoingCalls"].toString()),
-                      titleStyle: TextStyle(
+                      titleStyle: const TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -248,7 +241,7 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                       title: widget.curCall["numOfRejectedCalls"].toString(),
                       value: double.parse(
                           widget.curCall["numOfRejectedCalls"].toString()),
-                      titleStyle: TextStyle(
+                      titleStyle: const TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -259,7 +252,7 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                       title: widget.curCall["numOfBlockedCalls"].toString(),
                       value: double.parse(
                           widget.curCall["numOfBlockedCalls"].toString()),
-                      titleStyle: TextStyle(
+                      titleStyle: const TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -270,7 +263,7 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                       title: widget.curCall["numOfUnknownCalls"].toString(),
                       value: double.parse(
                           widget.curCall["numOfUnknownCalls"].toString()),
-                      titleStyle: TextStyle(
+                      titleStyle: const TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -282,47 +275,41 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
             ),
             Text(
               widget.curCall['numOfAllCalls'].toString(),
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.w500,
               ),
             ),
           ],
         ),
-        SizedBox(height: 20.0),
+        const SizedBox(height: 20.0),
         // Indicators
-        Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              GraphIndicators(color: Colors.pinkAccent, text: "Missed"),
-              GraphIndicators(color: Colors.greenAccent, text: "Incoming"),
-              GraphIndicators(color: Colors.blue, text: "Outgoing"),
-            ],
-          ),
+        const Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            GraphIndicators(color: Colors.pinkAccent, text: "Missed"),
+            GraphIndicators(color: Colors.greenAccent, text: "Incoming"),
+            GraphIndicators(color: Colors.blue, text: "Outgoing"),
+          ],
         ),
-        SizedBox(height: 20.0),
-        Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              GraphIndicators(color: Colors.red, text: "Rejected"),
-              GraphIndicators(color: Colors.black, text: "Blocked"),
-              GraphIndicators(color: Colors.cyanAccent, text: "Unknown"),
-            ],
-          ),
+        const SizedBox(height: 20.0),
+        const Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            GraphIndicators(color: Colors.red, text: "Rejected"),
+            GraphIndicators(color: Colors.black, text: "Blocked"),
+            GraphIndicators(color: Colors.cyanAccent, text: "Unknown"),
+          ],
         ),
-        SizedBox(height: 30.0),
+        const SizedBox(height: 30.0),
       ],
-    ));
+    );
   }
 
   // Line Graph
-  Container lineGraph() {
-    return Container(
-      child: Text(
-        "",
-      ),
+  Widget lineGraph() {
+    return const Text(
+      "",
     );
   }
 
@@ -330,12 +317,12 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
   Container eachDetailDuration(String title, String firstVal, String secondVal,
       String thirdVal, IconData icon) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
-      margin: EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
+      margin: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
       decoration: BoxDecoration(
         color: Colors.grey[200],
         // border: Border.all(color: Colors.black),
-        borderRadius: BorderRadius.all(
+        borderRadius: const BorderRadius.all(
           Radius.circular(10.0),
         ),
       ),
@@ -357,7 +344,7 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                 padding: const EdgeInsets.only(left: 2.0),
                 child: Text(
                   title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w400,
                   ),
@@ -365,15 +352,16 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
               ),
             ],
           ),
-          SizedBox(height: 6.0),
+          const SizedBox(height: 6.0),
           // Values
           Container(
-            padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-            margin: EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+            padding:
+                const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+            margin: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
             decoration: BoxDecoration(
               color: Colors.grey[300],
               // border: Border.all(color: Colors.black),
-              borderRadius: BorderRadius.all(
+              borderRadius: const BorderRadius.all(
                 Radius.circular(10.0),
               ),
             ),
@@ -384,12 +372,12 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                   children: [
                     Text(
                       firstVal,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 17.0,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    SizedBox(height: 2.0),
+                    const SizedBox(height: 2.0),
                     Text(
                       "sec",
                       style: TextStyle(
@@ -403,12 +391,12 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                   children: [
                     Text(
                       '${(((double.parse(secondVal) * 60) / 60).floor().toInt()).toString().padLeft(2, "0")}:${(((double.parse(secondVal) * 60) % 60).floor().toInt()).toString().padLeft(2, "0")}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 17.0,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    SizedBox(height: 2.0),
+                    const SizedBox(height: 2.0),
                     Text(
                       "min",
                       style: TextStyle(
@@ -422,12 +410,12 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                   children: [
                     Text(
                       '${(((double.parse(thirdVal) * 60) / 60).floor().toInt()).toString().padLeft(2, "0")}:${(((double.parse(thirdVal) * 60) % 60).floor().toInt()).toString().padLeft(2, "0")}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 17.0,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    SizedBox(height: 2.0),
+                    const SizedBox(height: 2.0),
                     Text(
                       "hour",
                       style: TextStyle(
@@ -449,12 +437,12 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
   Container dateDetail(
       String title, String firstVal, String secondVal, IconData icon) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
-      margin: EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
+      margin: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
       decoration: BoxDecoration(
         color: Colors.grey[200],
         // border: Border.all(color: Colors.black),
-        borderRadius: BorderRadius.all(
+        borderRadius: const BorderRadius.all(
           Radius.circular(10.0),
         ),
       ),
@@ -476,7 +464,7 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                 padding: const EdgeInsets.only(left: 5.0),
                 child: Text(
                   title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w400,
                   ),
@@ -484,15 +472,16 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
               ),
             ],
           ),
-          SizedBox(height: 8.0),
+          const SizedBox(height: 8.0),
           // Values
           Container(
-            padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-            margin: EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+            padding:
+                const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+            margin: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
             decoration: BoxDecoration(
               color: Colors.grey[300],
               // border: Border.all(color: Colors.black),
-              borderRadius: BorderRadius.all(
+              borderRadius: const BorderRadius.all(
                 Radius.circular(10.0),
               ),
             ),
@@ -503,12 +492,12 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                   children: [
                     Text(
                       firstVal,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 17.0,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    SizedBox(height: 2.0),
+                    const SizedBox(height: 2.0),
                     Text(
                       "from",
                       style: TextStyle(
@@ -522,12 +511,12 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                   children: [
                     Text(
                       secondVal,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 17.0,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    SizedBox(height: 2.0),
+                    const SizedBox(height: 2.0),
                     Text(
                       "to",
                       style: TextStyle(
@@ -546,49 +535,45 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
   }
 
   // Bar Graph
-  Container barGraph() {
-    return Container(
-      child: Column(children: [
-        overViewGraph(widget.curCall, widget.allCalls),
-        SizedBox(height: 20.0),
-        // Indicators
-        Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              GraphIndicators(color: Colors.pinkAccent, text: "Missed"),
-              GraphIndicators(color: Colors.greenAccent, text: "Incoming"),
-              GraphIndicators(color: Colors.blue, text: "Outgoing"),
-            ],
-          ),
-        ),
-        SizedBox(height: 20.0),
-        Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              GraphIndicators(color: Colors.red, text: "Rejected"),
-              GraphIndicators(color: Colors.black, text: "Blocked"),
-              GraphIndicators(color: Colors.cyanAccent, text: "Unknown"),
-            ],
-          ),
-        ),
-        SizedBox(height: 30.0),
-      ]),
-    );
+  Widget barGraph() {
+    return Column(children: [
+      overViewGraph(widget.curCall, widget.allCalls),
+      const SizedBox(height: 20.0),
+      // Indicators
+      const Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          GraphIndicators(color: Colors.pinkAccent, text: "Missed"),
+          GraphIndicators(color: Colors.greenAccent, text: "Incoming"),
+          GraphIndicators(color: Colors.blue, text: "Outgoing"),
+        ],
+      ),
+      const SizedBox(height: 20.0),
+      const Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          GraphIndicators(color: Colors.red, text: "Rejected"),
+          GraphIndicators(color: Colors.black, text: "Blocked"),
+          GraphIndicators(color: Colors.cyanAccent, text: "Unknown"),
+        ],
+      ),
+      const SizedBox(height: 30.0),
+    ]);
   }
 
   // Overview Graph
-  Container overViewGraph(Map curCall, Map callHistoryOverview) {
-    return Container(
+  Widget overViewGraph(Map curCall, Map callHistoryOverview) {
+    return SizedBox(
       height: 270.0,
       width: 390.0,
       child: BarChart(
         BarChartData(
-          gridData:
-              FlGridData(drawVerticalLine: false, horizontalInterval: 100.0),
+          gridData: const FlGridData(
+            drawVerticalLine: false,
+            horizontalInterval: 100.0,
+          ),
           backgroundColor: Colors.grey[100],
-          titlesData: FlTitlesData(
+          titlesData: const FlTitlesData(
             topTitles: AxisTitles(
               axisNameWidget: Text(
                 "",
@@ -633,7 +618,7 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
               barRods: [
                 BarChartRodData(
                   // color: Colors.pinkAccent,
-                  gradient: LinearGradient(
+                  gradient: const LinearGradient(
                     colors: [
                       Colors.pinkAccent,
                       Colors.pink,
@@ -646,7 +631,7 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                 ),
                 BarChartRodData(
                   // color: Colors.pinkAccent,
-                  gradient: LinearGradient(
+                  gradient: const LinearGradient(
                     colors: [
                       Colors.pinkAccent,
                       Colors.pink,
@@ -700,7 +685,7 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                 BarChartRodData(
                   width: 12.0,
                   // color: Colors.blueAccent,
-                  gradient: LinearGradient(
+                  gradient: const LinearGradient(
                     colors: [
                       Colors.lightBlueAccent,
                       Colors.blueAccent,
@@ -713,7 +698,7 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                 BarChartRodData(
                   width: 12.0,
                   // color: Colors.blueAccent,
-                  gradient: LinearGradient(
+                  gradient: const LinearGradient(
                     colors: [
                       Colors.lightBlueAccent,
                       Colors.blueAccent,
@@ -773,8 +758,8 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                   width: 12.0,
                   color: Colors.cyanAccent,
                   toY: double.parse(
-                      (callHistoryOverview['totalNumOfUnknownCalls'])
-                          .toString()),
+                    (callHistoryOverview['totalNumOfUnknownCalls']).toString(),
+                  ),
                 ),
               ],
             ),

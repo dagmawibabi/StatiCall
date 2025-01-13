@@ -1,18 +1,15 @@
-// ignore_for_file: prefer_const_constructors
-
-import 'package:callstats/routes/components/detailedCallStat.dart';
 import 'package:callstats/routes/fullScreenDetails.dart';
 import 'package:flutter/material.dart';
 
 class EachCallStatCard extends StatefulWidget {
   const EachCallStatCard({
-    Key? key,
+    super.key,
     required this.curCall,
     required this.index,
     required this.showNumber,
     required this.showDetail,
     required this.allCalls,
-  }) : super(key: key);
+  });
   final Map curCall;
   final int index;
   final bool showNumber;
@@ -42,7 +39,6 @@ class _EachCallStatCardState extends State<EachCallStatCard> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     calculateOverallDuration();
   }
@@ -67,12 +63,14 @@ class _EachCallStatCardState extends State<EachCallStatCard> {
         );
       },
       child: Container(
-        padding: EdgeInsets.only(top: 8.0, bottom: 8.0, left: 8.0, right: 8.0),
-        margin: EdgeInsets.only(top: 2.0, bottom: 2.0, left: 5.0, right: 5.0),
+        padding:
+            const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 8.0, right: 8.0),
+        margin:
+            const EdgeInsets.only(top: 2.0, bottom: 2.0, left: 5.0, right: 5.0),
         decoration: BoxDecoration(
           color: Colors.grey[100],
           // border: Border.all(color: Colors.black),
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
         ),
         child: Column(
           children: [
@@ -80,7 +78,7 @@ class _EachCallStatCardState extends State<EachCallStatCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
+                SizedBox(
                   width: 220.0,
                   child: Hero(
                     key: UniqueKey(),
@@ -88,7 +86,7 @@ class _EachCallStatCardState extends State<EachCallStatCard> {
                     child: Text(
                       "${widget.index.toString()}. ${(widget.curCall['name'] == "" || widget.curCall['name'] == " " || widget.curCall['name'] == "null") ? "Unknown" : widget.curCall['name']}",
                       maxLines: 1,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.w500,
                       ),
@@ -102,24 +100,32 @@ class _EachCallStatCardState extends State<EachCallStatCard> {
                     : Container(),
               ],
             ),
-            SizedBox(height: 5.0),
+            const SizedBox(height: 5.0),
             // Number of calls
             Container(
-              padding:
-                  EdgeInsets.only(top: 8.0, bottom: 8.0, left: 8.0, right: 8.0),
-              margin:
-                  EdgeInsets.only(top: 2.0, bottom: 2.0, left: 0.0, right: 0.0),
+              padding: const EdgeInsets.only(
+                top: 8.0,
+                bottom: 8.0,
+                left: 8.0,
+                right: 8.0,
+              ),
+              margin: const EdgeInsets.only(
+                top: 2.0,
+                bottom: 2.0,
+                left: 0.0,
+                right: 0.0,
+              ),
               decoration: BoxDecoration(
                 color: Colors.grey[200],
                 // border: Border.all(color: Colors.black),
-                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
               ),
               child: Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         "Total Calls",
                       ),
                       Text(
@@ -127,12 +133,12 @@ class _EachCallStatCardState extends State<EachCallStatCard> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 4.0),
+                  const SizedBox(height: 4.0),
                   // Number of calls
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         "Overall Duration",
                       ),
                       Text(
