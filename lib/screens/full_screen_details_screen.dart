@@ -4,24 +4,38 @@ import 'package:callstats/routes/components/graph_indicators.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-class FullScreenDetail extends StatefulWidget {
-  const FullScreenDetail({
+class FullScreenDetailsScreen extends StatefulWidget {
+  static const routeName = '/full-screen-details';
+
+  const FullScreenDetailsScreen({
     super.key,
-    required this.curCall,
-    required this.showNumber,
-    required this.allCalls,
   });
 
-  final Map curCall;
-  final bool showNumber;
-  final Map allCalls;
-
   @override
-  State<FullScreenDetail> createState() => _FullScreenDetailState();
+  State<FullScreenDetailsScreen> createState() => _FullScreenDetailState();
 }
 
-class _FullScreenDetailState extends State<FullScreenDetail> {
+class _FullScreenDetailState extends State<FullScreenDetailsScreen> {
+  bool isInit = true;
+
+  late final Map curCall;
+  late final bool showNumber;
+  late final Map allCalls;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (isInit) {
+      final arguments = ModalRoute.of(context)!.settings.arguments as List;
+      curCall = arguments[0];
+      showNumber = arguments[1];
+      allCalls = arguments[2];
+      isInit = false;
+    }
+  }
+
   int curPage = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,22 +46,22 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: widget.showNumber ? 5.0 : 15.0),
+            SizedBox(height: showNumber ? 5.0 : 15.0),
             Hero(
               key: UniqueKey(),
-              tag: {"name": widget.curCall["name"]},
+              tag: {"name": curCall["name"]},
               child: Text(
-                widget.curCall["name"],
+                curCall["name"],
                 style: const TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.w500,
                 ),
               ),
             ),
-            SizedBox(height: widget.showNumber ? 2.0 : 10.0),
-            widget.showNumber
+            SizedBox(height: showNumber ? 2.0 : 10.0),
+            showNumber
                 ? Text(
-                    widget.curCall["number"],
+                    curCall["number"],
                     style: TextStyle(
                       fontSize: 12.0,
                       color: Colors.grey[800],
@@ -57,7 +71,7 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
           ],
         ),
         actions: [
-          SizedBox(width: widget.showNumber ? 0.0 : 50.0),
+          SizedBox(width: showNumber ? 0.0 : 50.0),
         ],
       ),
       body: ListView(
@@ -126,32 +140,32 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                 Column(children: [
                   eachDetailDuration(
                     "Total Duration",
-                    widget.curCall["totalDuration"].toString(),
-                    widget.curCall["totalDurationMinutes"].toString(),
-                    widget.curCall["totalDurationHours"].toString(),
+                    curCall["totalDuration"].toString(),
+                    curCall["totalDurationMinutes"].toString(),
+                    curCall["totalDurationHours"].toString(),
                     Icons.upgrade_outlined,
                   ),
                   eachDetailDuration(
                     "Maximum Duration",
-                    widget.curCall["maxDuration"].toString(),
-                    widget.curCall["maxDurationMinutes"].toString(),
-                    widget.curCall["maxDurationHours"].toString(),
+                    curCall["maxDuration"].toString(),
+                    curCall["maxDurationMinutes"].toString(),
+                    curCall["maxDurationHours"].toString(),
                     Icons.unfold_more_sharp,
                   ),
                   eachDetailDuration(
                     "Minimum Duration",
-                    widget.curCall["minDuration"].toString(),
-                    widget.curCall["minDurationMinutes"].toString(),
-                    widget.curCall["minDurationHours"].toString(),
+                    curCall["minDuration"].toString(),
+                    curCall["minDurationMinutes"].toString(),
+                    curCall["minDurationHours"].toString(),
                     Icons.unfold_less_rounded,
                   ),
                   dateDetail(
                     "Date Range",
                     DateTime.fromMicrosecondsSinceEpoch(
-                      widget.curCall["oldestDate"] * 1000,
+                      curCall["oldestDate"] * 1000,
                     ).toString().substring(0, 10),
                     DateTime.fromMicrosecondsSinceEpoch(
-                            widget.curCall["newestDate"] * 1000)
+                            curCall["newestDate"] * 1000)
                         .toString()
                         .substring(0, 10),
                     Icons.calendar_month_outlined,
@@ -205,9 +219,9 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                   sections: [
                     PieChartSectionData(
                       color: Colors.pinkAccent,
-                      title: widget.curCall["numOfMissedCalls"].toString(),
-                      value: double.parse(
-                          widget.curCall["numOfMissedCalls"].toString()),
+                      title: curCall["numOfMissedCalls"].toString(),
+                      value:
+                          double.parse(curCall["numOfMissedCalls"].toString()),
                       titleStyle: const TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
@@ -216,9 +230,9 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                     ),
                     PieChartSectionData(
                       color: Colors.greenAccent,
-                      title: widget.curCall["numOfIncomingCalls"].toString(),
+                      title: curCall["numOfIncomingCalls"].toString(),
                       value: double.parse(
-                          widget.curCall["numOfIncomingCalls"].toString()),
+                          curCall["numOfIncomingCalls"].toString()),
                       titleStyle: const TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
@@ -227,9 +241,9 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                     ),
                     PieChartSectionData(
                       color: Colors.blue,
-                      title: widget.curCall["numOfOutgoingCalls"].toString(),
+                      title: curCall["numOfOutgoingCalls"].toString(),
                       value: double.parse(
-                          widget.curCall["numOfOutgoingCalls"].toString()),
+                          curCall["numOfOutgoingCalls"].toString()),
                       titleStyle: const TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
@@ -238,9 +252,9 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                     ),
                     PieChartSectionData(
                       color: Colors.red,
-                      title: widget.curCall["numOfRejectedCalls"].toString(),
+                      title: curCall["numOfRejectedCalls"].toString(),
                       value: double.parse(
-                          widget.curCall["numOfRejectedCalls"].toString()),
+                          curCall["numOfRejectedCalls"].toString()),
                       titleStyle: const TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
@@ -249,9 +263,9 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                     ),
                     PieChartSectionData(
                       color: Colors.black,
-                      title: widget.curCall["numOfBlockedCalls"].toString(),
-                      value: double.parse(
-                          widget.curCall["numOfBlockedCalls"].toString()),
+                      title: curCall["numOfBlockedCalls"].toString(),
+                      value:
+                          double.parse(curCall["numOfBlockedCalls"].toString()),
                       titleStyle: const TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
@@ -260,9 +274,9 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
                     ),
                     PieChartSectionData(
                       color: Colors.cyanAccent,
-                      title: widget.curCall["numOfUnknownCalls"].toString(),
-                      value: double.parse(
-                          widget.curCall["numOfUnknownCalls"].toString()),
+                      title: curCall["numOfUnknownCalls"].toString(),
+                      value:
+                          double.parse(curCall["numOfUnknownCalls"].toString()),
                       titleStyle: const TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
@@ -274,7 +288,7 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
               ),
             ),
             Text(
-              widget.curCall['numOfAllCalls'].toString(),
+              curCall['numOfAllCalls'].toString(),
               style: const TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.w500,
@@ -537,7 +551,7 @@ class _FullScreenDetailState extends State<FullScreenDetail> {
   // Bar Graph
   Widget barGraph() {
     return Column(children: [
-      overViewGraph(widget.curCall, widget.allCalls),
+      overViewGraph(curCall, allCalls),
       const SizedBox(height: 20.0),
       // Indicators
       const Row(

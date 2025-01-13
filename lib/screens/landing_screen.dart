@@ -1,17 +1,20 @@
+import 'package:callstats/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
-class LandingPage extends StatefulWidget {
-  const LandingPage({super.key});
+class LandingScreen extends StatefulWidget {
+  static const routeName = '/landing';
+
+  const LandingScreen({super.key});
 
   @override
-  State<LandingPage> createState() => _LandingPageState();
+  State<LandingScreen> createState() => _LandingPageState();
 }
 
-class _LandingPageState extends State<LandingPage> {
+class _LandingPageState extends State<LandingScreen> {
   void load() {
     Future.delayed(const Duration(milliseconds: 1000), () {
       setState(() {
-        Navigator.pushReplacementNamed(context, 'homePage');
+        Navigator.pushReplacementNamed(context, HomeScreen.routeName);
       });
     });
   }

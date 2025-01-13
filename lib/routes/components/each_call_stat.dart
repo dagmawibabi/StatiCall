@@ -1,4 +1,4 @@
-import 'package:callstats/screens/full_screen_details.dart';
+import 'package:callstats/screens/full_screen_details_screen.dart';
 import 'package:flutter/material.dart';
 
 class EachCallStatCard extends StatefulWidget {
@@ -50,18 +50,14 @@ class _EachCallStatCardState extends State<EachCallStatCard> {
         // showDetail();
         widget.showDetail(widget.curCall);
       },
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => FullScreenDetail(
-              curCall: widget.curCall,
-              showNumber: widget.showNumber,
-              allCalls: widget.allCalls,
-            ),
-          ),
-        );
-      },
+      onTap: () => Navigator.of(context).pushNamed(
+        FullScreenDetailsScreen.routeName,
+        arguments: [
+          widget.curCall,
+          widget.showNumber,
+          widget.allCalls,
+        ],
+      ),
       child: Container(
         padding:
             const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 8.0, right: 8.0),

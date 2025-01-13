@@ -7,14 +7,16 @@ import 'package:ionicons/ionicons.dart';
 
 import '../routes/components/detailed_call_stat.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomeScreen extends StatefulWidget {
+  static const routeName = '/home';
+
+  const HomeScreen({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomeScreenState extends State<HomeScreen> {
   // Globals
   List classifiedCallLogs = [];
   List rawCallLog = [];

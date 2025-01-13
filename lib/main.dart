@@ -1,5 +1,6 @@
-import 'package:callstats/screens/homepage.dart';
-import 'package:callstats/screens/landing_page.dart';
+import 'package:callstats/screens/full_screen_details_screen.dart';
+import 'package:callstats/screens/home_screen.dart';
+import 'package:callstats/screens/landing_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -25,10 +26,12 @@ class _MyAppState extends State<MyApp> {
     );
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
+      initialRoute: LandingScreen.routeName,
       routes: {
-        '/': (context) => const LandingPage(),
-        'homePage': (context) => const HomePage(),
+        LandingScreen.routeName: (context) => const LandingScreen(),
+        HomeScreen.routeName: (context) => const HomeScreen(),
+        FullScreenDetailsScreen.routeName: (context) =>
+            const FullScreenDetailsScreen(),
       },
       theme: ThemeData(
         scaffoldBackgroundColor: const Color(0xFFEEEEEE),
