@@ -1,6 +1,5 @@
 import 'package:call_log/call_log.dart';
 import 'package:callstats/routes/components/callstats.dart';
-import 'package:callstats/routes/components/get_calls.dart';
 import 'package:callstats/routes/components/search_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
@@ -363,20 +362,24 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    getCallHistory();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
+        title: const Row(
           children: [
-            gotCalls
-                ? const Icon(
-                    Icons.call,
-                  )
-                : Container(),
-            const SizedBox(width: 10.0),
+            Icon(
+              Icons.call,
+            ),
+            SizedBox(width: 10.0),
             Text(
-              gotCalls ? "StatiCall" : " ",
-              style: const TextStyle(
+              "StatiCall",
+              style: TextStyle(
                 fontWeight: FontWeight.w400,
                 fontSize: 18.0,
               ),
@@ -467,8 +470,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   callHistoryOverview: callHistoryOverview,
                   swapSort: swapSort,
                 )
-          : GetCalls(
-              getCallHistory: getCallHistory,
+          : const Center(
+              child: CircularProgressIndicator(),
             ),
     );
   }

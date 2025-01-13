@@ -1,6 +1,7 @@
 import 'package:callstats/screens/full_screen_details_screen.dart';
 import 'package:callstats/screens/home_screen.dart';
 import 'package:callstats/screens/landing_screen.dart';
+import 'package:callstats/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -26,8 +27,9 @@ class _MyAppState extends State<MyApp> {
     );
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: LandingScreen.routeName,
+      initialRoute: SplashScreen.routeName,
       routes: {
+        SplashScreen.routeName: (context) => const SplashScreen(),
         LandingScreen.routeName: (context) => const LandingScreen(),
         HomeScreen.routeName: (context) => const HomeScreen(),
         FullScreenDetailsScreen.routeName: (context) =>
