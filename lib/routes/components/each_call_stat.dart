@@ -1,4 +1,4 @@
-import 'package:callstats/routes/fullScreenDetails.dart';
+import 'package:callstats/routes/full_screen_details.dart';
 import 'package:flutter/material.dart';
 
 class EachCallStatCard extends StatefulWidget {

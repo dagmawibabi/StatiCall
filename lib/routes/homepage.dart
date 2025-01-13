@@ -1,11 +1,11 @@
 import 'package:call_log/call_log.dart';
 import 'package:callstats/routes/components/callstats.dart';
-import 'package:callstats/routes/components/getcalls.dart';
-import 'package:callstats/routes/components/searchBottomSheet.dart';
+import 'package:callstats/routes/components/get_calls.dart';
+import 'package:callstats/routes/components/search_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
-import 'components/detailedCallStat.dart';
+import 'components/detailed_call_stat.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

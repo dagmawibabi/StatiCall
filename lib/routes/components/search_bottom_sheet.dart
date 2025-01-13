@@ -1,4 +1,4 @@
-import 'package:callstats/routes/components/eachCallStat.dart';
+import 'package:callstats/routes/components/each_call_stat.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
