@@ -1,20 +1,21 @@
 import 'package:callstats/widgets/graph_indicators.dart';
 import 'package:callstats/widgets/single_person_bar_chart_overview.dart';
+import 'package:callstats/widgets/single_person_duration_view.dart';
 import 'package:callstats/widgets/single_person_pie_chart.dart';
 import 'package:flutter/material.dart';
 
-class FullScreenDetailsScreen extends StatefulWidget {
-  static const routeName = '/full-screen-details';
+class SinglePersonCallStatsScreen extends StatefulWidget {
+  static const routeName = '/single-person-call-stats';
 
-  const FullScreenDetailsScreen({
+  const SinglePersonCallStatsScreen({
     super.key,
   });
 
   @override
-  State<FullScreenDetailsScreen> createState() => _FullScreenDetailState();
+  State<SinglePersonCallStatsScreen> createState() => _FullScreenDetailState();
 }
 
-class _FullScreenDetailState extends State<FullScreenDetailsScreen> {
+class _FullScreenDetailState extends State<SinglePersonCallStatsScreen> {
   bool isInit = true;
 
   late final Map curCall;
@@ -95,8 +96,7 @@ class _FullScreenDetailState extends State<FullScreenDetailsScreen> {
                     scrollDirection: Axis.horizontal,
                     pageSnapping: true,
                     onPageChanged: (value) {
-                      curPage = value;
-                      setState(() {});
+                      setState(() => curPage = value);
                     },
                     children: [
                       SinglePersonPieChart(
@@ -162,26 +162,26 @@ class _FullScreenDetailState extends State<FullScreenDetailsScreen> {
                 const SizedBox(height: 30.0),
                 // Duration Stats
                 Column(children: [
-                  eachDetailDuration(
-                    "Total Duration",
-                    curCall["totalDuration"].toString(),
-                    curCall["totalDurationMinutes"].toString(),
-                    curCall["totalDurationHours"].toString(),
-                    Icons.upgrade_outlined,
+                  SinglePersonDurationView(
+                    title: "Total Duration",
+                    inSeconds: curCall["totalDuration"].toString(),
+                    inMinutes: curCall["totalDurationMinutes"].toString(),
+                    inHours: curCall["totalDurationHours"].toString(),
+                    icon: Icons.upgrade_outlined,
                   ),
-                  eachDetailDuration(
-                    "Maximum Duration",
-                    curCall["maxDuration"].toString(),
-                    curCall["maxDurationMinutes"].toString(),
-                    curCall["maxDurationHours"].toString(),
-                    Icons.unfold_more_sharp,
+                  SinglePersonDurationView(
+                    title: "Maximum Duration",
+                    inSeconds: curCall["maxDuration"].toString(),
+                    inMinutes: curCall["maxDurationMinutes"].toString(),
+                    inHours: curCall["maxDurationHours"].toString(),
+                    icon: Icons.unfold_more_sharp,
                   ),
-                  eachDetailDuration(
-                    "Minimum Duration",
-                    curCall["minDuration"].toString(),
-                    curCall["minDurationMinutes"].toString(),
-                    curCall["minDurationHours"].toString(),
-                    Icons.unfold_less_rounded,
+                  SinglePersonDurationView(
+                    title: "Minimum Duration",
+                    inSeconds: curCall["minDuration"].toString(),
+                    inMinutes: curCall["minDurationMinutes"].toString(),
+                    inHours: curCall["minDurationHours"].toString(),
+                    icon: Icons.unfold_less_rounded,
                   ),
                   dateDetail(
                     "Date Range",
@@ -205,126 +205,6 @@ class _FullScreenDetailState extends State<FullScreenDetailsScreen> {
                   ),
                 ),
                 const SizedBox(height: 30.0),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // Duration Triplets
-  Container eachDetailDuration(String title, String firstVal, String secondVal,
-      String thirdVal, IconData icon) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
-      margin: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
-      decoration: BoxDecoration(
-        color: Colors.grey[200],
-        // border: Border.all(color: Colors.black),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(10.0),
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          // Title
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 0.0),
-                child: Icon(
-                  icon,
-                  size: 21.0,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 2.0),
-                child: Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 6.0),
-          // Values
-          Container(
-            padding:
-                const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-            margin: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
-            decoration: BoxDecoration(
-              color: Colors.grey[300],
-              // border: Border.all(color: Colors.black),
-              borderRadius: const BorderRadius.all(
-                Radius.circular(10.0),
-              ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Column(
-                  children: [
-                    Text(
-                      firstVal,
-                      style: const TextStyle(
-                        fontSize: 17.0,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    const SizedBox(height: 2.0),
-                    Text(
-                      "sec",
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        color: Colors.grey[700],
-                      ),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Text(
-                      '${(((double.parse(secondVal) * 60) / 60).floor().toInt()).toString().padLeft(2, "0")}:${(((double.parse(secondVal) * 60) % 60).floor().toInt()).toString().padLeft(2, "0")}',
-                      style: const TextStyle(
-                        fontSize: 17.0,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    const SizedBox(height: 2.0),
-                    Text(
-                      "min",
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        color: Colors.grey[700],
-                      ),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Text(
-                      '${(((double.parse(thirdVal) * 60) / 60).floor().toInt()).toString().padLeft(2, "0")}:${(((double.parse(thirdVal) * 60) % 60).floor().toInt()).toString().padLeft(2, "0")}',
-                      style: const TextStyle(
-                        fontSize: 17.0,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    const SizedBox(height: 2.0),
-                    Text(
-                      "hour",
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        color: Colors.grey[700],
-                      ),
-                    ),
-                  ],
-                ),
               ],
             ),
           ),

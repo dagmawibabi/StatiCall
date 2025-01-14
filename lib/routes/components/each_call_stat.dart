@@ -1,4 +1,4 @@
-import 'package:callstats/screens/full_screen_details_screen.dart';
+import 'package:callstats/screens/single_person_call_stats_screen.dart';
 import 'package:flutter/material.dart';
 
 class EachCallStatCard extends StatefulWidget {
@@ -10,6 +10,7 @@ class EachCallStatCard extends StatefulWidget {
     required this.showDetail,
     required this.allCalls,
   });
+
   final Map curCall;
   final int index;
   final bool showNumber;
@@ -51,7 +52,7 @@ class _EachCallStatCardState extends State<EachCallStatCard> {
         widget.showDetail(widget.curCall);
       },
       onTap: () => Navigator.of(context).pushNamed(
-        FullScreenDetailsScreen.routeName,
+        SinglePersonCallStatsScreen.routeName,
         arguments: [
           widget.curCall,
           widget.showNumber,

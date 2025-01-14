@@ -1,4 +1,4 @@
-import 'package:callstats/screens/full_screen_details_screen.dart';
+import 'package:callstats/screens/single_person_call_stats_screen.dart';
 import 'package:callstats/screens/home_screen.dart';
 import 'package:callstats/screens/landing_screen.dart';
 import 'package:callstats/screens/splash_screen.dart';
@@ -32,8 +32,8 @@ class _MyAppState extends State<MyApp> {
         SplashScreen.routeName: (context) => const SplashScreen(),
         LandingScreen.routeName: (context) => const LandingScreen(),
         HomeScreen.routeName: (context) => const HomeScreen(),
-        FullScreenDetailsScreen.routeName: (context) =>
-            const FullScreenDetailsScreen(),
+        SinglePersonCallStatsScreen.routeName: (context) =>
+            const SinglePersonCallStatsScreen(),
       },
       theme: ThemeData(
         scaffoldBackgroundColor: const Color(0xFFEEEEEE),
