@@ -1,10 +1,9 @@
 import 'package:call_log/call_log.dart';
-import 'package:callstats/routes/components/callstats.dart';
-import 'package:callstats/routes/components/search_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
-
-import '../widgets/detailed_call_stat.dart';
+import 'package:callstats/widgets/home_widgets/callstats.dart';
+import 'package:callstats/widgets/home_widgets/search_bottom_sheet.dart';
+import 'package:callstats/widgets/home_widgets/detailed_call_stat.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/home';

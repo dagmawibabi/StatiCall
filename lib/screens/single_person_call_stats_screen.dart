@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:callstats/widgets/call_date_range_viewer.dart';
 import 'package:callstats/widgets/graph_indicators.dart';
-import 'package:callstats/widgets/single_person_bar_graph_overview.dart';
+import 'package:callstats/widgets/single_person_widgets/single_person_bar_graph_overview.dart';
 import 'package:callstats/widgets/single_person_duration_view.dart';
-import 'package:callstats/widgets/single_person_pie_chart.dart';
+import 'package:callstats/widgets/single_person_widgets/single_person_pie_chart.dart';
 
 class SinglePersonCallStatsScreen extends StatefulWidget {
   static const routeName = '/single-person-call-stats';

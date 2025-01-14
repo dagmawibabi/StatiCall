@@ -1,9 +1,9 @@
-import 'package:callstats/widgets/all_calls_bar_graph.dart';
-import 'package:callstats/widgets/all_calls_pie_chart.dart';
-import 'package:callstats/widgets/dropdown_sortby_selector.dart';
+import 'package:callstats/widgets/home_widgets/all_calls_bar_graph.dart';
+import 'package:callstats/widgets/home_widgets/all_calls_pie_chart.dart';
+import 'package:callstats/widgets/home_widgets/dropdown_sortby_selector.dart';
 import 'package:flutter/material.dart';
 
-import 'package:callstats/routes/components/each_call_stat.dart';
+import 'package:callstats/widgets/each_call_stat.dart';
 import 'package:callstats/widgets/graph_indicators.dart';
 
 class CallStats extends StatefulWidget {
