@@ -1,7 +1,6 @@
-import 'dart:math';
-
-import 'package:callstats/routes/components/graph_indicators.dart';
-import 'package:fl_chart/fl_chart.dart';
+import 'package:callstats/widgets/graph_indicators.dart';
+import 'package:callstats/widgets/single_person_bar_chart_overview.dart';
+import 'package:callstats/widgets/single_person_pie_chart.dart';
 import 'package:flutter/material.dart';
 
 class FullScreenDetailsScreen extends StatefulWidget {
@@ -91,7 +90,7 @@ class _FullScreenDetailState extends State<FullScreenDetailsScreen> {
               children: [
                 const SizedBox(height: 0.0),
                 SizedBox(
-                  height: 470.0,
+                  height: 280,
                   child: PageView(
                     scrollDirection: Axis.horizontal,
                     pageSnapping: true,
@@ -100,8 +99,13 @@ class _FullScreenDetailState extends State<FullScreenDetailsScreen> {
                       setState(() {});
                     },
                     children: [
-                      graph(),
-                      barGraph(),
+                      SinglePersonPieChart(
+                        curCall: curCall,
+                      ),
+                      SinglePersonBarChartOverview(
+                        curCall: curCall,
+                        callHistoryOverview: allCalls,
+                      ),
                     ],
                   ),
                 ),
@@ -135,7 +139,27 @@ class _FullScreenDetailState extends State<FullScreenDetailsScreen> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 10.0),
+                const SizedBox(height: 20.0),
+                // Indicators
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    GraphIndicators(color: Colors.pinkAccent, text: "Missed"),
+                    GraphIndicators(
+                        color: Colors.greenAccent, text: "Incoming"),
+                    GraphIndicators(color: Colors.blue, text: "Outgoing"),
+                  ],
+                ),
+                const SizedBox(height: 20.0),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    GraphIndicators(color: Colors.red, text: "Rejected"),
+                    GraphIndicators(color: Colors.black, text: "Blocked"),
+                    GraphIndicators(color: Colors.cyanAccent, text: "Unknown"),
+                  ],
+                ),
+                const SizedBox(height: 30.0),
                 // Duration Stats
                 Column(children: [
                   eachDetailDuration(
@@ -186,144 +210,6 @@ class _FullScreenDetailState extends State<FullScreenDetailsScreen> {
           ),
         ],
       ),
-    );
-  }
-
-  // PieGraph
-  Widget graph() {
-    return Column(
-      children: [
-        const SizedBox(height: 18.0),
-        Stack(
-          alignment: AlignmentDirectional.center,
-          children: [
-            Container(
-              width: 250.0,
-              height: 250.0,
-              padding:
-                  const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
-              decoration: BoxDecoration(
-                color: Colors.grey[100],
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.white,
-                    blurRadius: 15.0,
-                    spreadRadius: 5.0,
-                  )
-                ],
-                // border: Border.all(color: Colors.blueGrey),
-                borderRadius: const BorderRadius.all(Radius.circular(300.0)),
-              ),
-              child: PieChart(
-                PieChartData(
-                  sections: [
-                    PieChartSectionData(
-                      color: Colors.pinkAccent,
-                      title: curCall["numOfMissedCalls"].toString(),
-                      value:
-                          double.parse(curCall["numOfMissedCalls"].toString()),
-                      titleStyle: const TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    PieChartSectionData(
-                      color: Colors.greenAccent,
-                      title: curCall["numOfIncomingCalls"].toString(),
-                      value: double.parse(
-                          curCall["numOfIncomingCalls"].toString()),
-                      titleStyle: const TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    PieChartSectionData(
-                      color: Colors.blue,
-                      title: curCall["numOfOutgoingCalls"].toString(),
-                      value: double.parse(
-                          curCall["numOfOutgoingCalls"].toString()),
-                      titleStyle: const TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    PieChartSectionData(
-                      color: Colors.red,
-                      title: curCall["numOfRejectedCalls"].toString(),
-                      value: double.parse(
-                          curCall["numOfRejectedCalls"].toString()),
-                      titleStyle: const TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    PieChartSectionData(
-                      color: Colors.black,
-                      title: curCall["numOfBlockedCalls"].toString(),
-                      value:
-                          double.parse(curCall["numOfBlockedCalls"].toString()),
-                      titleStyle: const TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    PieChartSectionData(
-                      color: Colors.cyanAccent,
-                      title: curCall["numOfUnknownCalls"].toString(),
-                      value:
-                          double.parse(curCall["numOfUnknownCalls"].toString()),
-                      titleStyle: const TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Text(
-              curCall['numOfAllCalls'].toString(),
-              style: const TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 20.0),
-        // Indicators
-        const Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            GraphIndicators(color: Colors.pinkAccent, text: "Missed"),
-            GraphIndicators(color: Colors.greenAccent, text: "Incoming"),
-            GraphIndicators(color: Colors.blue, text: "Outgoing"),
-          ],
-        ),
-        const SizedBox(height: 20.0),
-        const Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            GraphIndicators(color: Colors.red, text: "Rejected"),
-            GraphIndicators(color: Colors.black, text: "Blocked"),
-            GraphIndicators(color: Colors.cyanAccent, text: "Unknown"),
-          ],
-        ),
-        const SizedBox(height: 30.0),
-      ],
-    );
-  }
-
-  // Line Graph
-  Widget lineGraph() {
-    return const Text(
-      "",
     );
   }
 
@@ -544,241 +430,6 @@ class _FullScreenDetailState extends State<FullScreenDetailsScreen> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  // Bar Graph
-  Widget barGraph() {
-    return Column(children: [
-      overViewGraph(curCall, allCalls),
-      const SizedBox(height: 20.0),
-      // Indicators
-      const Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          GraphIndicators(color: Colors.pinkAccent, text: "Missed"),
-          GraphIndicators(color: Colors.greenAccent, text: "Incoming"),
-          GraphIndicators(color: Colors.blue, text: "Outgoing"),
-        ],
-      ),
-      const SizedBox(height: 20.0),
-      const Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          GraphIndicators(color: Colors.red, text: "Rejected"),
-          GraphIndicators(color: Colors.black, text: "Blocked"),
-          GraphIndicators(color: Colors.cyanAccent, text: "Unknown"),
-        ],
-      ),
-      const SizedBox(height: 30.0),
-    ]);
-  }
-
-  // Overview Graph
-  Widget overViewGraph(Map curCall, Map callHistoryOverview) {
-    return SizedBox(
-      height: 270.0,
-      width: 390.0,
-      child: BarChart(
-        BarChartData(
-          gridData: const FlGridData(
-            drawVerticalLine: false,
-            horizontalInterval: 100.0,
-          ),
-          backgroundColor: Colors.grey[100],
-          titlesData: const FlTitlesData(
-            topTitles: AxisTitles(
-              axisNameWidget: Text(
-                "",
-              ),
-            ),
-            bottomTitles: AxisTitles(
-              axisNameWidget: Text(
-                "",
-              ),
-            ),
-          ),
-          minY: 0,
-          maxY: double.parse((([
-                            int.parse(callHistoryOverview['totalNumOfCalls']
-                                .toString()),
-                            int.parse(
-                                callHistoryOverview['totalNumOfMissedCalls']
-                                    .toString()),
-                            int.parse(
-                                callHistoryOverview['totalNumOfIncomingCalls']
-                                    .toString()),
-                            int.parse(
-                                callHistoryOverview['totalNumOfOutgoingCalls']
-                                    .toString()),
-                            int.parse(
-                                callHistoryOverview['totalNumOfRejectedCalls']
-                                    .toString()),
-                            int.parse(
-                                callHistoryOverview['totalNumOfBlockedCalls']
-                                    .toString()),
-                            int.parse(
-                                callHistoryOverview['totalNumOfUnknownCalls']
-                                    .toString()),
-                          ].reduce(max)) +
-                          0)
-                      .toString())
-                  .roundToDouble() +
-              10,
-          barGroups: [
-            BarChartGroupData(
-              x: 2,
-              barRods: [
-                BarChartRodData(
-                  // color: Colors.pinkAccent,
-                  gradient: const LinearGradient(
-                    colors: [
-                      Colors.pinkAccent,
-                      Colors.pink,
-                    ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
-                  width: 12.0,
-                  toY: double.parse((curCall['numOfMissedCalls']).toString()),
-                ),
-                BarChartRodData(
-                  // color: Colors.pinkAccent,
-                  gradient: const LinearGradient(
-                    colors: [
-                      Colors.pinkAccent,
-                      Colors.pink,
-                    ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
-                  width: 12.0,
-                  toY: double.parse(
-                      (callHistoryOverview['totalNumOfMissedCalls'])
-                          .toString()),
-                ),
-              ],
-            ),
-            BarChartGroupData(
-              x: 2,
-              barRods: [
-                BarChartRodData(
-                  width: 12.0,
-                  // color: Colors.greenAccent,
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.greenAccent,
-                      Colors.greenAccent[400]!,
-                    ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
-                  toY: double.parse((curCall['numOfIncomingCalls']).toString()),
-                ),
-                BarChartRodData(
-                  width: 12.0,
-                  // color: Colors.greenAccent,
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.greenAccent,
-                      Colors.greenAccent[400]!,
-                    ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
-                  toY: double.parse(
-                      (callHistoryOverview['totalNumOfIncomingCalls'])
-                          .toString()),
-                ),
-              ],
-            ),
-            BarChartGroupData(
-              x: 2,
-              barRods: [
-                BarChartRodData(
-                  width: 12.0,
-                  // color: Colors.blueAccent,
-                  gradient: const LinearGradient(
-                    colors: [
-                      Colors.lightBlueAccent,
-                      Colors.blueAccent,
-                    ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
-                  toY: double.parse((curCall['numOfOutgoingCalls']).toString()),
-                ),
-                BarChartRodData(
-                  width: 12.0,
-                  // color: Colors.blueAccent,
-                  gradient: const LinearGradient(
-                    colors: [
-                      Colors.lightBlueAccent,
-                      Colors.blueAccent,
-                    ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
-                  toY: double.parse(
-                      (callHistoryOverview['totalNumOfOutgoingCalls'])
-                          .toString()),
-                ),
-              ],
-            ),
-            BarChartGroupData(
-              x: 2,
-              barRods: [
-                BarChartRodData(
-                  width: 12.0,
-                  color: Colors.red,
-                  toY: double.parse((curCall['numOfRejectedCalls']).toString()),
-                ),
-                BarChartRodData(
-                  width: 12.0,
-                  color: Colors.red,
-                  toY: double.parse(
-                      (callHistoryOverview['totalNumOfRejectedCalls'])
-                          .toString()),
-                ),
-              ],
-            ),
-            BarChartGroupData(
-              x: 2,
-              barRods: [
-                BarChartRodData(
-                  width: 12.0,
-                  color: Colors.black,
-                  toY: double.parse((curCall['numOfBlockedCalls']).toString()),
-                ),
-                BarChartRodData(
-                  width: 12.0,
-                  color: Colors.black,
-                  toY: double.parse(
-                      (callHistoryOverview['totalNumOfBlockedCalls'])
-                          .toString()),
-                ),
-              ],
-            ),
-            BarChartGroupData(
-              x: 2,
-              barRods: [
-                BarChartRodData(
-                  width: 12.0,
-                  color: Colors.cyanAccent,
-                  toY: double.parse((curCall['numOfUnknownCalls']).toString()),
-                ),
-                BarChartRodData(
-                  width: 12.0,
-                  color: Colors.cyanAccent,
-                  toY: double.parse(
-                    (callHistoryOverview['totalNumOfUnknownCalls']).toString(),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
       ),
     );
   }
