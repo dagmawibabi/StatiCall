@@ -1,8 +1,9 @@
+import 'package:flutter/material.dart';
+import 'package:callstats/widgets/call_date_range_viewer.dart';
 import 'package:callstats/widgets/graph_indicators.dart';
 import 'package:callstats/widgets/single_person_bar_chart_overview.dart';
 import 'package:callstats/widgets/single_person_duration_view.dart';
 import 'package:callstats/widgets/single_person_pie_chart.dart';
-import 'package:flutter/material.dart';
 
 class SinglePersonCallStatsScreen extends StatefulWidget {
   static const routeName = '/single-person-call-stats';
@@ -183,16 +184,14 @@ class _FullScreenDetailState extends State<SinglePersonCallStatsScreen> {
                     inHours: curCall["minDurationHours"].toString(),
                     icon: Icons.unfold_less_rounded,
                   ),
-                  dateDetail(
-                    "Date Range",
-                    DateTime.fromMicrosecondsSinceEpoch(
+                  CallDateRangeViewer(
+                    initialDate: DateTime.fromMicrosecondsSinceEpoch(
                       curCall["oldestDate"] * 1000,
                     ).toString().substring(0, 10),
-                    DateTime.fromMicrosecondsSinceEpoch(
+                    finalDate: DateTime.fromMicrosecondsSinceEpoch(
                             curCall["newestDate"] * 1000)
                         .toString()
                         .substring(0, 10),
-                    Icons.calendar_month_outlined,
                   ),
                 ]),
                 const SizedBox(height: 50.0),
@@ -205,107 +204,6 @@ class _FullScreenDetailState extends State<SinglePersonCallStatsScreen> {
                   ),
                 ),
                 const SizedBox(height: 30.0),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // Date Detail
-  Container dateDetail(
-      String title, String firstVal, String secondVal, IconData icon) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
-      margin: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
-      decoration: BoxDecoration(
-        color: Colors.grey[200],
-        // border: Border.all(color: Colors.black),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(10.0),
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          // Title
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 4.0),
-                child: Icon(
-                  icon,
-                  size: 17.0,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 5.0),
-                child: Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8.0),
-          // Values
-          Container(
-            padding:
-                const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-            margin: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
-            decoration: BoxDecoration(
-              color: Colors.grey[300],
-              // border: Border.all(color: Colors.black),
-              borderRadius: const BorderRadius.all(
-                Radius.circular(10.0),
-              ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Column(
-                  children: [
-                    Text(
-                      firstVal,
-                      style: const TextStyle(
-                        fontSize: 17.0,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    const SizedBox(height: 2.0),
-                    Text(
-                      "from",
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        color: Colors.grey[700],
-                      ),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Text(
-                      secondVal,
-                      style: const TextStyle(
-                        fontSize: 17.0,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    const SizedBox(height: 2.0),
-                    Text(
-                      "to",
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        color: Colors.grey[700],
-                      ),
-                    ),
-                  ],
-                ),
               ],
             ),
           ),

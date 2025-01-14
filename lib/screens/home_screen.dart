@@ -4,7 +4,7 @@ import 'package:callstats/routes/components/search_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
-import '../routes/components/detailed_call_stat.dart';
+import '../widgets/detailed_call_stat.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/home';

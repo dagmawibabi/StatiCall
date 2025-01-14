@@ -1,5 +1,5 @@
-import 'package:callstats/screens/single_person_call_stats_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:callstats/screens/single_person_call_stats_screen.dart';
 
 class EachCallStatCard extends StatefulWidget {
   const EachCallStatCard({
@@ -46,9 +46,8 @@ class _EachCallStatCardState extends State<EachCallStatCard> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onLongPress: () {
-        // showDetail();
         widget.showDetail(widget.curCall);
       },
       onTap: () => Navigator.of(context).pushNamed(
@@ -100,18 +99,8 @@ class _EachCallStatCardState extends State<EachCallStatCard> {
             const SizedBox(height: 5.0),
             // Number of calls
             Container(
-              padding: const EdgeInsets.only(
-                top: 8.0,
-                bottom: 8.0,
-                left: 8.0,
-                right: 8.0,
-              ),
-              margin: const EdgeInsets.only(
-                top: 2.0,
-                bottom: 2.0,
-                left: 0.0,
-                right: 0.0,
-              ),
+              padding: const EdgeInsets.all(8),
+              margin: const EdgeInsets.symmetric(vertical: 2),
               decoration: BoxDecoration(
                 color: Colors.grey[200],
                 // border: Border.all(color: Colors.black),
