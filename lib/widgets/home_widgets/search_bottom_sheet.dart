@@ -7,14 +7,10 @@ class SearchBottomSheet extends StatefulWidget {
     super.key,
     required this.searchFunction,
     required this.showDetail,
-    required this.showNumber,
-    required this.allCalls,
   });
 
   final Function searchFunction;
   final Function showDetail;
-  final bool showNumber;
-  final Map allCalls;
 
   @override
   State<SearchBottomSheet> createState() => _SearchBottomSheetState();

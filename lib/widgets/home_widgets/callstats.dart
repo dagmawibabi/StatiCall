@@ -81,15 +81,9 @@ class _CallStatsState extends State<CallStats> {
                         curPage = value;
                         setState(() {});
                       },
-                      children: [
-                        AllCallsPieChart(
-                          callHistoryOverview:
-                              callStatsProvider.callHistoryOverview,
-                        ),
-                        AllCallsBarGraph(
-                          callHistoryOverview:
-                              callStatsProvider.callHistoryOverview,
-                        ),
+                      children: const [
+                        AllCallsPieChart(),
+                        AllCallsBarGraph(),
                       ],
                     ),
                   ),

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:callstats/providers/call_stats_provider.dart';
 import 'package:callstats/widgets/call_date_range_viewer.dart';
 import 'package:callstats/widgets/graph_indicators.dart';
 import 'package:callstats/widgets/single_person_widgets/single_person_bar_graph_overview.dart';
@@ -20,8 +23,6 @@ class _FullScreenDetailState extends State<SinglePersonCallStatsScreen> {
   bool isInit = true;
 
   late final Map curCall;
-  late final bool showNumber;
-  late final Map allCalls;
 
   @override
   void didChangeDependencies() {
@@ -29,8 +30,6 @@ class _FullScreenDetailState extends State<SinglePersonCallStatsScreen> {
     if (isInit) {
       final arguments = ModalRoute.of(context)!.settings.arguments as List;
       curCall = arguments[0];
-      showNumber = arguments[1];
-      allCalls = arguments[2];
       isInit = false;
     }
   }
@@ -39,6 +38,8 @@ class _FullScreenDetailState extends State<SinglePersonCallStatsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final callStatsProvider = Provider.of<CallStatsProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
@@ -47,7 +48,9 @@ class _FullScreenDetailState extends State<SinglePersonCallStatsScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: showNumber ? 5.0 : 15.0),
+            SizedBox(
+              height: callStatsProvider.showNumber ? 5.0 : 15.0,
+            ),
             Hero(
               key: UniqueKey(),
               tag: {"name": curCall["name"]},
@@ -59,8 +62,8 @@ class _FullScreenDetailState extends State<SinglePersonCallStatsScreen> {
                 ),
               ),
             ),
-            SizedBox(height: showNumber ? 2.0 : 10.0),
-            showNumber
+            SizedBox(height: callStatsProvider.showNumber ? 2.0 : 10.0),
+            callStatsProvider.showNumber
                 ? Text(
                     curCall["number"],
                     style: TextStyle(
@@ -72,7 +75,7 @@ class _FullScreenDetailState extends State<SinglePersonCallStatsScreen> {
           ],
         ),
         actions: [
-          SizedBox(width: showNumber ? 0.0 : 50.0),
+          SizedBox(width: callStatsProvider.showNumber ? 0.0 : 50.0),
         ],
       ),
       body: ListView(
@@ -105,7 +108,6 @@ class _FullScreenDetailState extends State<SinglePersonCallStatsScreen> {
                       ),
                       SinglePersonBarGraphOverview(
                         curCall: curCall,
-                        callHistoryOverview: allCalls,
                       ),
                     ],
                   ),

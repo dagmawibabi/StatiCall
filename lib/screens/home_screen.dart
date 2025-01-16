@@ -86,8 +86,6 @@ class _HomeScreenState extends State<HomeScreen> {
           child: SearchBottomSheet(
             searchFunction: searchFunction,
             showDetail: showDetail,
-            allCalls: callStatsProvider.callHistoryOverview,
-            showNumber: callStatsProvider.showNumber,
           ),
         );
       },

@@ -1,20 +1,23 @@
 import 'dart:math';
 
+import 'package:callstats/providers/call_stats_provider.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SinglePersonBarGraphOverview extends StatelessWidget {
   final Map curCall;
-  final Map callHistoryOverview;
 
   const SinglePersonBarGraphOverview({
     super.key,
     required this.curCall,
-    required this.callHistoryOverview,
   });
 
   @override
   Widget build(BuildContext context) {
+    final callStatsProvider = Provider.of<CallStatsProvider>(context);
+    final callHistoryOverview = callStatsProvider.callHistoryOverview;
+
     return SizedBox(
       height: 270.0,
       width: 390.0,
