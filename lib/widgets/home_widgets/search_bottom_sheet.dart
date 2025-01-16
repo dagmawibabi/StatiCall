@@ -132,11 +132,10 @@ class _SearchBottomSheetState extends State<SearchBottomSheet> {
                         itemCount: results.length,
                         itemBuilder: (context, index) {
                           return EachCallStatCard(
-                              curCall: results[index],
-                              index: index + 1,
-                              showNumber: widget.showNumber,
-                              showDetail: widget.showDetail,
-                              allCalls: widget.allCalls);
+                            curCall: results[index],
+                            index: index + 1,
+                            showDetail: widget.showDetail,
+                          );
                         },
                       ),
                     )

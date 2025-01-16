@@ -196,14 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 )
-              : CallStats(
-                  rawCallLog: callStatsProvider.rawCallLog,
-                  classifiedCallLogs: callStatsProvider.classifiedCallLogs,
-                  showNumber: callStatsProvider.showNumber,
-                  showDetail: showDetail,
-                  callHistoryOverview: callStatsProvider.callHistoryOverview,
-                  swapSort: callStatsProvider.swapSort,
-                )
+              : CallStats(showDetail: showDetail)
           : const Center(
               child: CircularProgressIndicator(),
             ),
