@@ -105,6 +105,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    const wrappedButtonWidth = 100.0;
+    const wrappedButtonHeight = 40.0;
+    const wrappedButtonBorderWidth = 4.0;
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -144,10 +148,45 @@ class _HomeScreenState extends State<HomeScreen> {
                     size: 20.0,
                   ),
                 ),
-                ElevatedButton(
-                  child: const Text('Wrapped'),
-                  onPressed: () => Navigator.of(context).pushNamed(
-                    WrappedScreen.routeName,
+                Container(
+                  width: wrappedButtonWidth + (2 * wrappedButtonBorderWidth),
+                  height: wrappedButtonHeight + (2 * wrappedButtonBorderWidth),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    gradient: const LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Color(0xFF9C27B0),
+                        Color(0xFFE040FB),
+                        Color(0xFF7C4DFF),
+                        Color(0xFF651FFF),
+                      ],
+                    ),
+                  ),
+                  child: Container(
+                    padding: const EdgeInsets.all(wrappedButtonBorderWidth),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Theme.of(context).primaryColor,
+                        foregroundColor:
+                            Theme.of(context).colorScheme.onPrimary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        fixedSize: const Size(
+                          wrappedButtonWidth,
+                          wrappedButtonHeight,
+                        ),
+                      ),
+                      child: const Text('Wrapped'),
+                      onPressed: () => Navigator.of(context).pushNamed(
+                        WrappedScreen.routeName,
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(width: 10.0),
