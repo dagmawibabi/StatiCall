@@ -3,6 +3,8 @@ import 'package:callstats/screens/single_person_call_stats_screen.dart';
 import 'package:callstats/screens/home_screen.dart';
 import 'package:callstats/screens/landing_screen.dart';
 import 'package:callstats/screens/splash_screen.dart';
+import 'package:callstats/screens/wrapped_screen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -38,6 +40,7 @@ class _MyAppState extends State<MyApp> {
           HomeScreen.routeName: (context) => const HomeScreen(),
           SinglePersonCallStatsScreen.routeName: (context) =>
               const SinglePersonCallStatsScreen(),
+          WrappedScreen.routeName: (context) => const WrappedScreen(),
         },
         theme: ThemeData(
           scaffoldBackgroundColor: const Color(0xFFEEEEEE),

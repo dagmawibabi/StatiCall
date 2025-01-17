@@ -1,4 +1,5 @@
 import 'package:callstats/providers/call_stats_provider.dart';
+import 'package:callstats/screens/wrapped_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
@@ -141,6 +142,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: const Icon(
                     Ionicons.search_outline,
                     size: 20.0,
+                  ),
+                ),
+                ElevatedButton(
+                  child: const Text('Wrapped'),
+                  onPressed: () => Navigator.of(context).pushNamed(
+                    WrappedScreen.routeName,
                   ),
                 ),
                 const SizedBox(width: 10.0),
