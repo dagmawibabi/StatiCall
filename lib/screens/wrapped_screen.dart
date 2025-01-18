@@ -20,8 +20,8 @@ class WrappedScreen extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Color(0xFFFF5F6D), // Soft red-pink
-              Color(0xFFFFC371), // Light golden-yellow
+              Color(0xFFFF5F6D),
+              Color(0xFFFFC371),
             ],
           ),
         ),
@@ -42,7 +42,6 @@ class WrappedScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    // Total Calls Number (Bold and Highlighted)
                     Text(
                       '${yearWrapped!.totalCalls}',
                       style: const TextStyle(
@@ -52,7 +51,6 @@ class WrappedScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 30.0),
-                    // Total Calls Label
                     Text(
                       'Total Calls Made',
                       style: TextStyle(
@@ -63,25 +61,18 @@ class WrappedScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20.0),
-
-                    // Call Icon with a softer color
                     Icon(
                       Ionicons.call_outline,
-                      size: 64.0, // Smaller for minimalism
+                      size: 64.0,
                       color: Colors.white.withValues(alpha: 0.8),
                     ),
-
                     const SizedBox(height: 8.0),
-
-                    // Divider Line
                     Container(
                       width: 100.0,
                       height: 1.5,
                       color: Colors.white.withValues(alpha: 0.5),
                     ),
                     const SizedBox(height: 30.0),
-
-                    // Motivational or Contextual Text
                     Text(
                       'You\'ve stayed connected through the year!',
                       textAlign: TextAlign.center,

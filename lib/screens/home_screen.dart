@@ -182,7 +182,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           wrappedButtonHeight,
                         ),
                       ),
-                      child: const Text('Wrapped'),
+                      child: const FittedBox(
+                        child: Text('Wrapped'),
+                      ),
                       onPressed: () => Navigator.of(context).pushNamed(
                         WrappedScreen.routeName,
                       ),

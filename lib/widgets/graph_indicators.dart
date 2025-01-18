@@ -13,8 +13,6 @@ class GraphIndicators extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 80.0,
-      height: 60.0,
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
       decoration: BoxDecoration(
         color: Colors.grey[100],
@@ -40,10 +38,12 @@ class GraphIndicators extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8.0),
-          Text(
-            text,
-            style: const TextStyle(
-              fontSize: 13.0,
+          FittedBox(
+            child: Text(
+              text,
+              style: const TextStyle(
+                fontSize: 13.0,
+              ),
             ),
           ),
         ],
