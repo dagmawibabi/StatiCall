@@ -1,4 +1,5 @@
 import 'package:callstats/providers/call_stats_provider.dart';
+import 'package:callstats/providers/year_wrapped_provider.dart';
 import 'package:callstats/screens/single_person_call_stats_screen.dart';
 import 'package:callstats/screens/home_screen.dart';
 import 'package:callstats/screens/landing_screen.dart';
@@ -29,8 +30,15 @@ class _MyAppState extends State<MyApp> {
         statusBarIconBrightness: Brightness.dark,
       ),
     );
-    return ChangeNotifierProvider(
-      create: (_) => CallStatsProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => CallStatsProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => YearWrappedProvider(),
+        ),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         initialRoute: SplashScreen.routeName,
