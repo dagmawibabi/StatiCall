@@ -8,22 +8,24 @@ class YearWrappedProvider with ChangeNotifier {
   YearWrapped? get yearWrapped => _yearWrapped;
 
   void initialize() async {
-    List<CallLogEntry>? callLog;
-
-    callLog = (await CallLog.query(
-      dateTimeFrom: DateTime(2024),
-      dateTimeTo: DateTime(
-        2024,
-        DateTime.december,
-        31,
+    final callLog = (
+      await CallLog.query(
+        dateTimeFrom: DateTime(2024),
+        dateTimeTo: DateTime(2024, DateTime.december, 31),
       ),
-    ))
-        .toList();
+    ).$1.toList();
 
     final totalCalls = callLog.length;
+    int totalCallDuration = 0;
 
-    _yearWrapped = YearWrapped(totalCalls: totalCalls);
+    for (var callLogEntry in callLog) {
+      totalCallDuration += callLogEntry.duration ?? 0;
+    }
 
+    _yearWrapped = YearWrapped(
+      totalCalls: totalCalls,
+      totalCallDuration: totalCallDuration,
+    );
     notifyListeners();
   }
 }
