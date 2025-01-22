@@ -39,8 +39,8 @@ class WrappedScreen extends StatelessWidget {
             final pages = <Widget>[
               totalCallsViewer(yearWrapped!.totalCalls),
               totalDurationViewer(yearWrapped.totalCallDuration),
-              longestCallViewer(yearWrapped.longestCall)
-              // shortest call page
+              longestCallViewer(yearWrapped.longestCall),
+              shortestCallViewer(yearWrapped.shortestCall),
             ];
 
             return PageView.builder(
@@ -199,6 +199,75 @@ class WrappedScreen extends StatelessWidget {
       children: [
         const Text(
           'Longest Call',
+          style: TextStyle(
+            fontSize: 24.0,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        const SizedBox(height: 20.0),
+        Icon(
+          Ionicons.call_outline,
+          size: 64.0,
+          color: Colors.white.withValues(alpha: 0.8),
+        ),
+        const SizedBox(height: 20.0),
+        Text(
+          name,
+          style: const TextStyle(
+            fontSize: 20.0,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
+        ),
+        const SizedBox(height: 10.0),
+        Text(
+          phoneNumber,
+          style: TextStyle(
+            fontSize: 16.0,
+            color: Colors.white.withValues(alpha: 0.7),
+          ),
+        ),
+        const SizedBox(height: 10.0),
+        Text(
+          '${duration.inHours.toString().padLeft(2, '0')}:${duration.inMinutes.remainder(60).toString().padLeft(2, '0')}:${duration.inSeconds.remainder(60).toString().padLeft(2, '0')}',
+          style: const TextStyle(
+            fontSize: 50.0,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        if (date != null) const SizedBox(height: 10.0),
+        if (date != null)
+          Text(
+            'Date: ${date.toLocal().toString().split(' ')[0]}',
+            style: TextStyle(
+              fontSize: 16.0,
+              color: Colors.white.withValues(alpha: 0.7),
+            ),
+          ),
+      ],
+    );
+  }
+
+  Widget shortestCallViewer(CallLogEntry shortestCall) {
+    String name = shortestCall.name ?? 'Unknown';
+    String phoneNumber = shortestCall.number ?? 'Unknown';
+    Duration duration = Duration(
+      seconds: shortestCall.duration ?? 0,
+    );
+    DateTime? date = shortestCall.timestamp == null
+        ? null
+        : DateTime.fromMillisecondsSinceEpoch(
+            shortestCall.timestamp!,
+          );
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const Text(
+          'Shortest Call',
           style: TextStyle(
             fontSize: 24.0,
             fontWeight: FontWeight.bold,
