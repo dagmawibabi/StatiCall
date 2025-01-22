@@ -39,8 +39,11 @@ class WrappedScreen extends StatelessWidget {
             final pages = <Widget>[
               totalCallsViewer(yearWrapped!.totalCalls),
               totalDurationViewer(yearWrapped.totalCallDuration),
-              longestCallViewer(yearWrapped.longestCall),
-              shortestCallViewer(yearWrapped.shortestCall),
+              callViewer(callLog: yearWrapped.longestCall, isLongestCall: true),
+              callViewer(
+                callLog: yearWrapped.shortestCall,
+                isLongestCall: false,
+              ),
             ];
 
             return PageView.builder(
@@ -181,25 +184,33 @@ class WrappedScreen extends StatelessWidget {
     );
   }
 
-  Widget longestCallViewer(CallLogEntry longestCall) {
-    String name = longestCall.name ?? 'Unknown';
-    String phoneNumber = longestCall.number ?? 'Unknown';
+  Widget callViewer({
+    required CallLogEntry callLog,
+    required bool isLongestCall,
+  }) {
+    final title = isLongestCall ? 'Longest Call' : 'Shortest Call';
+    final description = isLongestCall
+        ? 'Your longest conversation this year!'
+        : 'Your shortest call this year!';
+
+    String name = callLog.name ?? 'Unknown';
+    String phoneNumber = callLog.number ?? 'Unknown';
     Duration duration = Duration(
-      seconds: longestCall.duration ?? 0,
+      seconds: callLog.duration ?? 0,
     );
-    DateTime? date = longestCall.timestamp == null
+    DateTime? date = callLog.timestamp == null
         ? null
         : DateTime.fromMillisecondsSinceEpoch(
-            longestCall.timestamp!,
+            callLog.timestamp!,
           );
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const Text(
-          'Longest Call',
-          style: TextStyle(
+        Text(
+          title,
+          style: const TextStyle(
             fontSize: 24.0,
             fontWeight: FontWeight.bold,
             color: Colors.white,
@@ -246,75 +257,16 @@ class WrappedScreen extends StatelessWidget {
               color: Colors.white.withValues(alpha: 0.7),
             ),
           ),
-      ],
-    );
-  }
-
-  Widget shortestCallViewer(CallLogEntry shortestCall) {
-    String name = shortestCall.name ?? 'Unknown';
-    String phoneNumber = shortestCall.number ?? 'Unknown';
-    Duration duration = Duration(
-      seconds: shortestCall.duration ?? 0,
-    );
-    DateTime? date = shortestCall.timestamp == null
-        ? null
-        : DateTime.fromMillisecondsSinceEpoch(
-            shortestCall.timestamp!,
-          );
-
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const Text(
-          'Shortest Call',
-          style: TextStyle(
-            fontSize: 24.0,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-        const SizedBox(height: 20.0),
-        Icon(
-          Ionicons.call_outline,
-          size: 64.0,
-          color: Colors.white.withValues(alpha: 0.8),
-        ),
         const SizedBox(height: 20.0),
         Text(
-          name,
-          style: const TextStyle(
-            fontSize: 20.0,
-            fontWeight: FontWeight.w600,
-            color: Colors.white,
-          ),
-        ),
-        const SizedBox(height: 10.0),
-        Text(
-          phoneNumber,
+          description,
+          textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 16.0,
             color: Colors.white.withValues(alpha: 0.7),
+            height: 1.4,
           ),
         ),
-        const SizedBox(height: 10.0),
-        Text(
-          '${duration.inHours.toString().padLeft(2, '0')}:${duration.inMinutes.remainder(60).toString().padLeft(2, '0')}:${duration.inSeconds.remainder(60).toString().padLeft(2, '0')}',
-          style: const TextStyle(
-            fontSize: 50.0,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-        if (date != null) const SizedBox(height: 10.0),
-        if (date != null)
-          Text(
-            'Date: ${date.toLocal().toString().split(' ')[0]}',
-            style: TextStyle(
-              fontSize: 16.0,
-              color: Colors.white.withValues(alpha: 0.7),
-            ),
-          ),
       ],
     );
   }
