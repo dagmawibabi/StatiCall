@@ -1,3 +1,4 @@
+import 'package:call_log/call_log.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ionicons/ionicons.dart';
@@ -38,6 +39,8 @@ class WrappedScreen extends StatelessWidget {
             final pages = <Widget>[
               totalCallsViewer(yearWrapped!.totalCalls),
               totalDurationViewer(yearWrapped.totalCallDuration),
+              longestCallViewer(yearWrapped.longestCall)
+              // shortest call page
             ];
 
             return PageView.builder(
@@ -174,6 +177,75 @@ class WrappedScreen extends StatelessWidget {
             ],
           ),
         ),
+      ],
+    );
+  }
+
+  Widget longestCallViewer(CallLogEntry longestCall) {
+    String name = longestCall.name ?? 'Unknown';
+    String phoneNumber = longestCall.number ?? 'Unknown';
+    Duration duration = Duration(
+      seconds: longestCall.duration ?? 0,
+    );
+    DateTime? date = longestCall.timestamp == null
+        ? null
+        : DateTime.fromMillisecondsSinceEpoch(
+            longestCall.timestamp!,
+          );
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const Text(
+          'Longest Call',
+          style: TextStyle(
+            fontSize: 24.0,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        const SizedBox(height: 20.0),
+        Icon(
+          Ionicons.call_outline,
+          size: 64.0,
+          color: Colors.white.withValues(alpha: 0.8),
+        ),
+        const SizedBox(height: 20.0),
+        Text(
+          name,
+          style: const TextStyle(
+            fontSize: 20.0,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
+        ),
+        const SizedBox(height: 10.0),
+        Text(
+          phoneNumber,
+          style: TextStyle(
+            fontSize: 16.0,
+            color: Colors.white.withValues(alpha: 0.7),
+          ),
+        ),
+        const SizedBox(height: 10.0),
+        Text(
+          '${duration.inHours.toString().padLeft(2, '0')}:${duration.inMinutes.remainder(60).toString().padLeft(2, '0')}:${duration.inSeconds.remainder(60).toString().padLeft(2, '0')}',
+          style: const TextStyle(
+            fontSize: 50.0,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        if (date != null) const SizedBox(height: 10.0),
+        if (date != null)
+          Text(
+            'Date: ${date.toLocal().toString().split(' ')[0]}',
+            style: TextStyle(
+              fontSize: 16.0,
+              color: Colors.white.withValues(alpha: 0.7),
+            ),
+          ),
       ],
     );
   }
