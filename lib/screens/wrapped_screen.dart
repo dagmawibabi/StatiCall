@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:call_log/call_log.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -5,10 +7,56 @@ import 'package:ionicons/ionicons.dart';
 
 import 'package:callstats/providers/year_wrapped_provider.dart';
 
-class WrappedScreen extends StatelessWidget {
+class WrappedScreen extends StatefulWidget {
   static const routeName = '/wrapped';
 
   const WrappedScreen({super.key});
+
+  @override
+  State<WrappedScreen> createState() => _WrappedScreenState();
+}
+
+class _WrappedScreenState extends State<WrappedScreen> {
+  late List<Color> gradient;
+
+  final backgroundGradients = const [
+    [
+      Color(0xFF7FFFD4),
+      Color(0xFF00CED1),
+    ],
+    [
+      Color(0xFF373737),
+      Color(0xFF191919),
+    ],
+    [
+      Color(0xFF4169E1),
+      Color(0xFF1E90FF),
+    ],
+    [
+      Color(0xFF7CFC00),
+      Color(0xFF7CFC00),
+      Color(0xFF00FA9A),
+    ],
+    [
+      Color(0xFFF06292),
+      Color(0xFFFF80CB),
+    ],
+    [
+      Color(0xFFFF5F6D),
+      Color(0xFFFFC371),
+    ],
+  ];
+
+  List<Color> get randomGradient {
+    final random = Random();
+    return backgroundGradients[random.nextInt(backgroundGradients.length)];
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    gradient = backgroundGradients[0];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,14 +64,11 @@ class WrappedScreen extends StatelessWidget {
 
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [
-              Color(0xFFFF5F6D),
-              Color(0xFFFFC371),
-            ],
+            colors: gradient,
           ),
         ),
         child: Builder(
@@ -49,6 +94,11 @@ class WrappedScreen extends StatelessWidget {
 
             return PageView.builder(
               itemCount: pages.length,
+              onPageChanged: (_) {
+                setState(() {
+                  gradient = randomGradient;
+                });
+              },
               itemBuilder: (ctx, index) => Center(
                 child: SingleChildScrollView(
                   child: pages[index],
