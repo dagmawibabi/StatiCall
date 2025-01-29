@@ -20,6 +20,7 @@ class WrappedScreen extends StatefulWidget {
 
 class _WrappedScreenState extends State<WrappedScreen> {
   late List<Color> gradient;
+  int selectedPageIndex = 0;
 
   final backgroundGradients = const [
     [
@@ -98,18 +99,46 @@ class _WrappedScreenState extends State<WrappedScreen> {
               ),
             ];
 
-            return PageView.builder(
-              itemCount: pages.length,
-              onPageChanged: (_) {
-                setState(() {
-                  gradient = randomGradient;
-                });
-              },
-              itemBuilder: (ctx, index) => Center(
-                child: SingleChildScrollView(
-                  child: pages[index],
+            return Stack(
+              children: [
+                PageView.builder(
+                  itemCount: pages.length,
+                  onPageChanged: (pageIndex) {
+                    setState(() {
+                      selectedPageIndex = pageIndex;
+                      gradient = randomGradient;
+                    });
+                  },
+                  itemBuilder: (ctx, index) => Center(
+                    child: SingleChildScrollView(
+                      child: pages[index],
+                    ),
+                  ),
                 ),
-              ),
+                // indicate the index of the current page
+                Positioned(
+                  bottom: 16,
+                  left: 0,
+                  right: 0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(pages.length, (index) {
+                      return AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        margin: const EdgeInsets.symmetric(horizontal: 4),
+                        height: 8,
+                        width: selectedPageIndex == index ? 24 : 8,
+                        decoration: BoxDecoration(
+                          color: selectedPageIndex == index
+                              ? Colors.white
+                              : Colors.white38,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      );
+                    }),
+                  ),
+                ),
+              ],
             );
           },
         ),
