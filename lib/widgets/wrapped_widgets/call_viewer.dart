@@ -1,6 +1,8 @@
 import 'package:call_log/call_log.dart';
+import 'package:callstats/providers/call_stats_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:provider/provider.dart';
 
 class CallViewer extends StatelessWidget {
   final CallLogEntry callLog;
@@ -30,6 +32,8 @@ class CallViewer extends StatelessWidget {
             callLog.timestamp!,
           );
 
+    final showNumber = Provider.of<CallStatsProvider>(context).showNumber;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -57,14 +61,15 @@ class CallViewer extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        const SizedBox(height: 10.0),
-        Text(
-          phoneNumber,
-          style: TextStyle(
-            fontSize: 16.0,
-            color: Colors.white.withValues(alpha: 0.7),
+        if (showNumber) const SizedBox(height: 10.0),
+        if (showNumber)
+          Text(
+            phoneNumber,
+            style: TextStyle(
+              fontSize: 16.0,
+              color: Colors.white.withValues(alpha: 0.7),
+            ),
           ),
-        ),
         const SizedBox(height: 10.0),
         Text(
           '${duration.inHours.toString().padLeft(2, '0')}:${duration.inMinutes.remainder(60).toString().padLeft(2, '0')}:${duration.inSeconds.remainder(60).toString().padLeft(2, '0')}',
