@@ -146,8 +146,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 IconButton(
                   tooltip: '',
-                  onPressed: () => Navigator.of(context).pushNamed(
-                    WrappedScreen.routeName,
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) {
+                        return const IntroScreen();
+                      },
+                    ),
                   ),
                   icon: const Icon(Ionicons.contract),
                 ),
@@ -206,6 +210,60 @@ class _HomeScreenState extends State<HomeScreen> {
           : const Center(
               child: CircularProgressIndicator(),
             ),
+    );
+  }
+}
+
+class IntroScreen extends StatelessWidget {
+  const IntroScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.blueAccent, Colors.purpleAccent],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const Text(
+                  'Welcome to your 2024 Wrapped!',
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 20),
+                const Text(
+                  'Discover new insights and enjoy your experience.',
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 40),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pushNamed(
+                      WrappedScreen.routeName,
+                    );
+                  },
+                  child: const Text('Get Started'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
