@@ -1,4 +1,4 @@
-import 'package:callstats/routes/components/eachCallStat.dart';
+import 'package:callstats/widgets/each_call_stat.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
@@ -7,14 +7,10 @@ class SearchBottomSheet extends StatefulWidget {
     super.key,
     required this.searchFunction,
     required this.showDetail,
-    required this.showNumber,
-    required this.allCalls,
   });
 
   final Function searchFunction;
   final Function showDetail;
-  final bool showNumber;
-  final Map allCalls;
 
   @override
   State<SearchBottomSheet> createState() => _SearchBottomSheetState();
@@ -132,11 +128,10 @@ class _SearchBottomSheetState extends State<SearchBottomSheet> {
                         itemCount: results.length,
                         itemBuilder: (context, index) {
                           return EachCallStatCard(
-                              curCall: results[index],
-                              index: index + 1,
-                              showNumber: widget.showNumber,
-                              showDetail: widget.showDetail,
-                              allCalls: widget.allCalls);
+                            curCall: results[index],
+                            index: index + 1,
+                            showDetail: widget.showDetail,
+                          );
                         },
                       ),
                     )

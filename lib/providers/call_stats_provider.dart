@@ -1,28 +1,15 @@
 import 'package:call_log/call_log.dart';
-import 'package:callstats/routes/components/callstats.dart';
-import 'package:callstats/routes/components/getcalls.dart';
-import 'package:callstats/routes/components/searchBottomSheet.dart';
-import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
+import 'package:flutter/foundation.dart';
 
-import 'components/detailedCallStat.dart';
-
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
+class CallStatsProvider with ChangeNotifier {
   // Globals
-  List classifiedCallLogs = [];
-  List rawCallLog = [];
-  bool gotCalls = false;
-  bool showNumber = false;
-  bool isSorting = false;
-  int sortIndex = 0;
-  List sortTypes = [
+  List _classifiedCallLogs = [];
+  List _rawCallLog = [];
+  bool _gotCalls = false;
+  bool _showNumber = false;
+  bool _isSorting = false;
+  int _sortIndex = 0;
+  final _sortTypes = [
     'numOfAllCalls',
     'totalDuration',
     'maxDuration',
@@ -36,7 +23,7 @@ class _HomePageState extends State<HomePage> {
     'numOfBlockedCalls',
     'numOfUnknownCalls',
   ];
-  Map callHistoryOverview = {
+  Map _callHistoryOverview = {
     "totalMinDuration": 0.0,
     "totalMinDurationMin": 0.0,
     "totalMinDurationHour": 0.0,
@@ -57,11 +44,25 @@ class _HomePageState extends State<HomePage> {
     "newestDate": 0,
   };
 
+  Map get callHistoryOverview => _callHistoryOverview;
+  List get classifiedCallLogs => _classifiedCallLogs;
+  List get rawCallLog => _rawCallLog;
+  bool get gotCalls => _gotCalls;
+  bool get showNumber => _showNumber;
+  bool get isSorting => _isSorting;
+  int get sortIndex => _sortIndex;
+  List get sortTypes => _sortTypes;
+
+  void toggleNumberVisibility() {
+    _showNumber = !_showNumber;
+    notifyListeners();
+  }
+
   // Reset
   void reset() {
-    classifiedCallLogs = [];
-    rawCallLog = [];
-    callHistoryOverview = {
+    _classifiedCallLogs = [];
+    _rawCallLog = [];
+    _callHistoryOverview = {
       "totalMinDuration": 0.0,
       "totalMinDurationMin": 0.0,
       "totalMinDurationHour": 0.0,
@@ -135,10 +136,8 @@ class _HomePageState extends State<HomePage> {
     // Sort
     sort(sortTypes[sortIndex]);
 
-    // Start
-    setState(() {
-      gotCalls = true;
-    });
+    _gotCalls = true;
+    notifyListeners();
   }
 
   // Get Call History Overview
@@ -282,192 +281,8 @@ class _HomePageState extends State<HomePage> {
   // Sort Button
   void swapSort(int sortInd) {
     getCallHistory();
-    sortIndex = sortInd;
-    isSorting = true;
-    setState(() {});
-  }
-
-  // Detailed Stat
-  void showDetail(curCall) {
-    showModalBottomSheet(
-      backgroundColor: Colors.transparent,
-      context: context,
-      anchorPoint: const Offset(100, 100),
-      // isScrollControlled: true,
-      isDismissible: true,
-      enableDrag: true,
-      builder: (context) {
-        return Container(
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20.0),
-              topRight: Radius.circular(20.0),
-            ),
-          ),
-          clipBehavior: Clip.hardEdge,
-          child: DetailedCallStats(
-            curCall: curCall,
-            showNumber: showNumber,
-          ),
-        );
-      },
-    );
-  }
-
-  // Search
-  List searchFunction(String searchTerm) {
-    List result = [];
-    for (dynamic i in classifiedCallLogs) {
-      if (i['name']
-              .toString()
-              .toLowerCase()
-              .contains(searchTerm.toLowerCase()) ||
-          i['number'].toString().contains(searchTerm.toLowerCase())) {
-        result.add(i);
-      }
-    }
-    return result;
-  }
-
-  // Search Stat
-  void showSearch() {
-    showModalBottomSheet(
-      backgroundColor: Colors.transparent,
-      context: context,
-      anchorPoint: const Offset(0, 100),
-      constraints:
-          BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.8),
-      isScrollControlled: true,
-      isDismissible: true,
-      enableDrag: true,
-      builder: (context) {
-        return Container(
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20.0),
-              topRight: Radius.circular(20.0),
-            ),
-          ),
-          clipBehavior: Clip.hardEdge,
-          child: SearchBottomSheet(
-            searchFunction: searchFunction,
-            showDetail: showDetail,
-            allCalls: callHistoryOverview,
-            showNumber: showNumber,
-          ),
-        );
-      },
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: [
-            gotCalls
-                ? const Icon(
-                    Icons.call,
-                  )
-                : Container(),
-            const SizedBox(width: 10.0),
-            Text(
-              gotCalls ? "StatiCall" : " ",
-              style: const TextStyle(
-                fontWeight: FontWeight.w400,
-                fontSize: 18.0,
-              ),
-            ),
-          ],
-        ),
-        actions: gotCalls
-            ? [
-                IconButton(
-                  onPressed: () {
-                    showNumber = !showNumber;
-                    setState(() {});
-                  },
-                  icon: Icon(
-                    size: 22.0,
-                    showNumber
-                        ? Ionicons.eye_off_outline
-                        : Ionicons.eye_outline,
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    showSearch();
-                    // setState(() {});
-                  },
-                  icon: const Icon(
-                    Ionicons.search_outline,
-                    size: 20.0,
-                  ),
-                ),
-                const SizedBox(width: 10.0),
-              ]
-            : [],
-      ),
-      body: gotCalls
-          ? (classifiedCallLogs.isEmpty && isSorting == false)
-              ? Center(
-                  // Error Page - No calls
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Spacer(),
-                      Image.asset('assets/illustrations/4.png'),
-                      const SizedBox(height: 20.0),
-                      const Text(
-                        "You have no call history",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      const SizedBox(height: 10.0),
-                      const Text(
-                        "Make some calls and come back.",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 18.0,
-                        ),
-                      ),
-                      const SizedBox(height: 10.0),
-                      ElevatedButton(
-                        style: ButtonStyle(
-                          fixedSize:
-                              const WidgetStatePropertyAll(Size(230.0, 45.0)),
-                          backgroundColor:
-                              WidgetStatePropertyAll(Colors.grey[900]),
-                        ),
-                        onPressed: () {
-                          getCallHistory();
-                        },
-                        child: const Text(
-                          "I've made some calls",
-                          style: TextStyle(
-                            fontSize: 18.0,
-                          ),
-                        ),
-                      ),
-                      const Spacer(),
-                    ],
-                  ),
-                )
-              : CallStats(
-                  rawCallLog: rawCallLog,
-                  classifiedCallLogs: classifiedCallLogs,
-                  showNumber: showNumber,
-                  showDetail: showDetail,
-                  callHistoryOverview: callHistoryOverview,
-                  swapSort: swapSort,
-                )
-          : GetCalls(
-              getCallHistory: getCallHistory,
-            ),
-    );
+    _sortIndex = sortInd;
+    _isSorting = true;
+    notifyListeners();
   }
 }
