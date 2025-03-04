@@ -144,16 +144,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     size: 20.0,
                   ),
                 ),
-                IconButton(
-                  tooltip: '',
-                  onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) {
-                        return const IntroScreen();
-                      },
+                Tooltip(
+                  message: '2024 Wrapped',
+                  child: TextButton(
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const IntroScreen()),
+                    ),
+                    child: SizedBox.fromSize(
+                      size: Size(35, 35),
+                      child: Image.asset('assets/images/happy-new-year.png'),
                     ),
                   ),
-                  icon: const Icon(Ionicons.contract),
                 ),
                 const SizedBox(width: 10.0),
               ]

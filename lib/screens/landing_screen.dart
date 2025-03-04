@@ -60,9 +60,13 @@ class LandingScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 10.0),
                 ElevatedButton(
-                  style: ButtonStyle(
-                    fixedSize: const WidgetStatePropertyAll(Size(230.0, 45.0)),
-                    backgroundColor: WidgetStatePropertyAll(Colors.grey[900]),
+                  style: ElevatedButton.styleFrom(
+                    fixedSize: Size(230.0, 45.0),
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.grey[900],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                   ),
                   onPressed: () => Navigator.of(context).pushNamed(
                     HomeScreen.routeName,
