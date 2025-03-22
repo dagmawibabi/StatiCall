@@ -52,6 +52,15 @@ class CallStatsProvider with ChangeNotifier {
   bool get isSorting => _isSorting;
   int get sortIndex => _sortIndex;
   List get sortTypes => _sortTypes;
+  DateTime? _startDate = DateTime.now().subtract(const Duration(days: 1));
+  DateTime? _endDate = DateTime.now();
+
+  void setStartAndEndDate(DateTime? startDate, DateTime? endDate) {
+    _startDate = startDate;
+    _endDate = endDate;
+
+    getCallHistory();
+  }
 
   void toggleNumberVisibility() {
     _showNumber = !_showNumber;
@@ -89,7 +98,11 @@ class CallStatsProvider with ChangeNotifier {
     // Reset
     reset();
     // Get contact history
-    dynamic callHistory = await CallLog.query();
+    dynamic callHistory = await CallLog.query(
+      dateTimeFrom: _startDate,
+      dateTimeTo: _endDate,
+    );
+
     // Convert to working list
     callHistory = callHistory.toList();
     for (int i = 0; i < callHistory.length; i++) {

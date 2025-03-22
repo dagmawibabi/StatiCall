@@ -148,7 +148,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   message: '2024 Wrapped',
                   child: TextButton(
                     onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_) => const IntroScreen()),
+                      MaterialPageRoute(
+                        builder: (_) => const WrappedIntroScreen(),
+                      ),
                     ),
                     child: SizedBox.fromSize(
                       size: Size(35, 35),
@@ -215,8 +217,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class IntroScreen extends StatelessWidget {
-  const IntroScreen({super.key});
+class WrappedIntroScreen extends StatelessWidget {
+  const WrappedIntroScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

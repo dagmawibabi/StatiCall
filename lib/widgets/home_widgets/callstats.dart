@@ -2,6 +2,7 @@ import 'package:callstats/providers/call_stats_provider.dart';
 import 'package:callstats/widgets/home_widgets/all_calls_bar_graph.dart';
 import 'package:callstats/widgets/home_widgets/all_calls_pie_chart.dart';
 import 'package:callstats/widgets/home_widgets/dropdown_sortby_selector.dart';
+import 'package:callstats/widgets/home_widgets/duration_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -34,6 +35,7 @@ class _CallStatsState extends State<CallStats> {
           itemBuilder: (context, index) {
             return Column(
               children: [
+                if (index == 0) const DurationSelector(),
                 // Graph Title
                 if (index == 0)
                   Row(
@@ -129,7 +131,9 @@ class _CallStatsState extends State<CallStats> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           GraphIndicators(
-                              color: Colors.pinkAccent, text: "Missed"),
+                            color: Colors.pinkAccent,
+                            text: "Missed",
+                          ),
                           GraphIndicators(
                             color: Colors.greenAccent,
                             text: "Incoming",
