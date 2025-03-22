@@ -2,45 +2,28 @@ import 'package:callstats/providers/call_stats_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class DurationSelector extends StatefulWidget {
+class DurationSelector extends StatelessWidget {
   const DurationSelector({super.key});
 
-  @override
-  State<DurationSelector> createState() => _DurationSelectorState();
-}
+  void _swapDuration(int index, {required BuildContext context}) {
+    final callStatsProvider = Provider.of<CallStatsProvider>(
+      context,
+      listen: false,
+    );
+    final durationType = callStatsProvider.durationType;
 
-class _DurationSelectorState extends State<DurationSelector> {
-  late int _durationIndex;
-  late final CallStatsProvider callStatsProvider;
+    if (durationType == DurationType.values[index]) return;
 
-  @override
-  void initState() {
-    super.initState();
-    _durationIndex = 0;
-
-    callStatsProvider = Provider.of<CallStatsProvider>(context, listen: false);
-  }
-
-  void _swapDuration(int index) {
     switch (index) {
       case 1:
-        callStatsProvider.setStartAndEndDate(
-          DateTime.now().subtract(const Duration(days: 7)),
-          DateTime.now(),
-        );
+        callStatsProvider.setDurationType(DurationType.week);
         break;
       case 2:
-        callStatsProvider.setStartAndEndDate(null, null);
+        callStatsProvider.setDurationType(DurationType.allTime);
         break;
       default:
-        callStatsProvider.setStartAndEndDate(
-          DateTime.now().subtract(const Duration(days: 1)),
-          DateTime.now(),
-        );
+        callStatsProvider.setDurationType(DurationType.today);
     }
-    setState(() {
-      _durationIndex = index;
-    });
   }
 
   @override
@@ -51,18 +34,26 @@ class _DurationSelectorState extends State<DurationSelector> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _buildDurationButton('Today', 0),
+          _buildDurationButton('Today', 0, context: context),
           const SizedBox(width: 12),
-          _buildDurationButton('This Week', 1),
+          _buildDurationButton('This Week', 1, context: context),
           const SizedBox(width: 12),
-          _buildDurationButton('All Time', 2),
+          _buildDurationButton('All Time', 2, context: context),
         ],
       ),
     );
   }
 
-  Widget _buildDurationButton(String label, int index) {
-    final isSelected = _durationIndex == index;
+  Widget _buildDurationButton(
+    String label,
+    int index, {
+    required BuildContext context,
+  }) {
+    final callStatsProvider = Provider.of<CallStatsProvider>(
+      context,
+    );
+    final isSelected =
+        callStatsProvider.durationType == DurationType.values[index];
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
@@ -88,7 +79,7 @@ class _DurationSelectorState extends State<DurationSelector> {
               ? Colors.black.withValues(alpha: 0.1)
               : Colors.transparent,
         ),
-        onPressed: () => _swapDuration(index),
+        onPressed: () => _swapDuration(index, context: context),
         child: Text(
           label,
           style: TextStyle(

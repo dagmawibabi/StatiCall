@@ -1,6 +1,8 @@
 import 'package:call_log/call_log.dart';
 import 'package:flutter/foundation.dart';
 
+enum DurationType { today, week, allTime }
+
 class CallStatsProvider with ChangeNotifier {
   // Globals
   List _classifiedCallLogs = [];
@@ -52,13 +54,12 @@ class CallStatsProvider with ChangeNotifier {
   bool get isSorting => _isSorting;
   int get sortIndex => _sortIndex;
   List get sortTypes => _sortTypes;
-  DateTime? _startDate = DateTime.now().subtract(const Duration(days: 1));
-  DateTime? _endDate = DateTime.now();
+  DurationType get durationType => _durationType;
 
-  void setStartAndEndDate(DateTime? startDate, DateTime? endDate) {
-    _startDate = startDate;
-    _endDate = endDate;
+  DurationType _durationType = DurationType.today;
 
+  void setDurationType(DurationType durationType) {
+    _durationType = durationType;
     getCallHistory();
   }
 
@@ -95,12 +96,29 @@ class CallStatsProvider with ChangeNotifier {
 
   // Fetch call history from device
   void getCallHistory() async {
+    DateTime? startDate, endDate;
+
+    switch (durationType) {
+      case DurationType.today:
+        startDate = DateTime.now().subtract(const Duration(days: 1));
+        endDate = DateTime.now();
+        break;
+      case DurationType.week:
+        startDate = DateTime.now().subtract(const Duration(days: 7));
+        endDate = DateTime.now();
+        break;
+      case DurationType.allTime:
+        startDate = null;
+        endDate = null;
+        break;
+    }
     // Reset
     reset();
+
     // Get contact history
     dynamic callHistory = await CallLog.query(
-      dateTimeFrom: _startDate,
-      dateTimeTo: _endDate,
+      dateTimeFrom: startDate,
+      dateTimeTo: endDate,
     );
 
     // Convert to working list
@@ -143,11 +161,11 @@ class CallStatsProvider with ChangeNotifier {
     // Classify
     classify();
 
-    // Overview
-    getOverview();
-
     // Sort
     sort(sortTypes[sortIndex]);
+
+    // Overview
+    getOverview();
 
     _gotCalls = true;
     notifyListeners();
@@ -293,9 +311,9 @@ class CallStatsProvider with ChangeNotifier {
 
   // Sort Button
   void swapSort(int sortInd) {
-    getCallHistory();
     _sortIndex = sortInd;
     _isSorting = true;
+    getCallHistory();
     notifyListeners();
   }
 }

@@ -23,12 +23,13 @@ class CallStats extends StatefulWidget {
 
 class _CallStatsState extends State<CallStats> {
   int curPage = 0;
-  int sortIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Consumer<CallStatsProvider>(
       builder: (ctx, callStatsProvider, _) {
+        int sortIndex = callStatsProvider.sortIndex;
+
         return ListView.builder(
           shrinkWrap: true,
           itemCount: callStatsProvider.classifiedCallLogs.length,
