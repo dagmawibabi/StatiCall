@@ -34,7 +34,7 @@ class DurationSelector extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _buildDurationButton('Today', 0, context: context),
+          _buildDurationButton('24 Hours', 0, context: context),
           const SizedBox(width: 12),
           _buildDurationButton('This Week', 1, context: context),
           const SizedBox(width: 12),

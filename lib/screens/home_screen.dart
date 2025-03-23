@@ -1,5 +1,5 @@
 import 'package:callstats/providers/call_stats_provider.dart';
-import 'package:callstats/screens/wrapped_screen.dart';
+import 'package:callstats/screens/wrapped_intro_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
@@ -144,18 +144,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     size: 20.0,
                   ),
                 ),
-                Tooltip(
-                  message: '2024 Wrapped',
-                  child: TextButton(
-                    onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => const WrappedIntroScreen(),
-                      ),
-                    ),
-                    child: SizedBox.fromSize(
-                      size: Size(35, 35),
-                      child: Image.asset('assets/images/happy-new-year.png'),
-                    ),
+                IconButton(
+                  icon: const Icon(Icons.calendar_month_outlined),
+                  tooltip: '30 days Wrapped',
+                  onPressed: () => Navigator.of(context).pushNamed(
+                    WrappedIntroScreen.routeName,
                   ),
                 ),
                 const SizedBox(width: 10.0),
@@ -213,60 +206,6 @@ class _HomeScreenState extends State<HomeScreen> {
           : const Center(
               child: CircularProgressIndicator(),
             ),
-    );
-  }
-}
-
-class WrappedIntroScreen extends StatelessWidget {
-  const WrappedIntroScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.blueAccent, Colors.purpleAccent],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text(
-                  'Welcome to your 2024 Wrapped!',
-                  style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 20),
-                const Text(
-                  'Discover new insights and enjoy your experience.',
-                  style: TextStyle(fontSize: 18, color: Colors.white),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 40),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).pushNamed(
-                      WrappedScreen.routeName,
-                    );
-                  },
-                  child: const Text('Get Started'),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
     );
   }
 }
