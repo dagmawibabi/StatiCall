@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:callstats/background_gradients.dart';
 import 'package:callstats/screens/wrapped_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -10,9 +13,10 @@ class WrappedIntroScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.blueAccent, Colors.purpleAccent],
+            colors: BACKGROUND_GRADIENTS[
+                Random().nextInt(BACKGROUND_GRADIENTS.length)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),

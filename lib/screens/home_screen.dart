@@ -145,7 +145,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.calendar_month_outlined),
+                  icon: const Icon(
+                    Ionicons.gift_outline,
+                    size: 20.0,
+                  ),
                   tooltip: '30 days Wrapped',
                   onPressed: () => Navigator.of(context).pushNamed(
                     WrappedIntroScreen.routeName,
