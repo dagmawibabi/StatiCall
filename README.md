@@ -56,7 +56,7 @@
 Clone the repository:
 
 ```bash
-  git clone https://github.com/yourusername/staticall.git
+  git clone https://github.com/dagmawibabi/StatiCall.git
   cd staticall
 ```
 
@@ -78,20 +78,23 @@ Run the app:
 
 ### 📊 **Dashboard & Statistics**
 <p align="center">
-  <img src="screenshots/Screenshot_20250324-092603.png" alt="Intro Screen" width="300" style="border-radius: 10px; margin: 10px;" />
-  <img src="screenshots/Screenshot_20250324-092541.png" alt="Duration Selector" width="300" style="border-radius: 10px; margin: 10px;" />
+  <img src="screenshots\Screenshot_20250325-225236.png" alt="24 Hours analysis" width="300" style="border-radius: 10px; margin: 10px;" />
+  <img src="screenshots\Screenshot_20250325-225241.png" alt="Weekly Analysis" width="300" style="border-radius: 10px; margin: 10px;" />
+  <img src="screenshots\Screenshot_20250325-225247.png" alt="Weekly Analysis" width="300" style="border-radius: 10px; margin: 10px;" />
 </p>
 
-### 🔍 **Daily, Weekly and All Time analytics**
+### 🔍 **Monthly Wrapped Feature**
 <p align="center">
-  <img src="screenshots/Screenshot_20250324-092521.png" alt="Call Stats" width="300" style="border-radius: 10px; margin: 10px;" />
-  <img src="screenshots/Screenshot_20250324-092527.png" alt="Search" width="300" style="border-radius: 10px; margin: 10px;" />
+  <img src="screenshots\Screenshot_20250325-225320.png" alt="Wrapped Intro" width="300" style="border-radius: 10px; margin: 10px;" />
+  <img src="screenshots\Screenshot_20250325-225336.png" alt="Wrapped Feature" width="300" style="border-radius: 10px; margin: 10px;" />
+  <img src="screenshots\Screenshot_20250325-225341.png" alt="Wrapped Feature" width="300" style="border-radius: 10px; margin: 10px;" />
 </p>
 
-### 📞 **Intro and Monthly Wrapped**
+### 📞 **Intro and More**
 <p align="center">
-  <img src="screenshots/Screenshot_20250324-092516.png" alt="Dashboard" width="300" style="border-radius: 10px; margin: 10px;" />
-  <img src="screenshots/Screenshot_20250324-092549.png" alt="Call Details" width="300" style="border-radius: 10px; margin: 10px;" />
+  <img src="screenshots\Screenshot_20250325-225427.png" alt="App Intro" width="300" style="border-radius: 10px; margin: 10px;" />
+  <img src="screenshots\Screenshot_20250325-225409.png" alt="Analysis per user" width="300" style="border-radius: 10px; margin: 10px;" />
+  <img src="screenshots\Screenshot_20250325-225417.png" alt="Search Calls" width="300" style="border-radius: 10px; margin: 10px;" />
 </p>
 
 ---
