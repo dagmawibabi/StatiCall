@@ -59,18 +59,13 @@ class DurationSelector extends StatelessWidget {
       duration: const Duration(milliseconds: 200),
       child: TextButton(
         style: TextButton.styleFrom(
-          backgroundColor: isSelected
-              ? Theme.of(context).primaryColor.withValues(alpha: 0.1)
-              : Colors.white,
-          foregroundColor:
-              isSelected ? Theme.of(context).primaryColor : Colors.black,
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
           elevation: isSelected ? 2 : 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
             side: BorderSide(
-              color: isSelected
-                  ? Theme.of(context).primaryColor
-                  : Colors.grey[300]!,
+              color: isSelected ? Colors.grey[600]! : Colors.grey[300]!,
               width: 1.5,
             ),
           ),

@@ -52,12 +52,25 @@ class _HomeScreenState extends State<HomeScreen> {
     List result = [];
     final classifiedCallLogs = callStatsProvider.classifiedCallLogs;
 
+    String normalizedSearchTerm = searchTerm;
+
+    if (normalizedSearchTerm.startsWith('251') &&
+        normalizedSearchTerm.length > 3) {
+      normalizedSearchTerm = normalizedSearchTerm.replaceFirst('251', '');
+    } else if (normalizedSearchTerm.startsWith('0') &&
+        normalizedSearchTerm.length > 1) {
+      normalizedSearchTerm = normalizedSearchTerm.replaceFirst('0', '');
+    } else if (normalizedSearchTerm.startsWith('+251') &&
+        normalizedSearchTerm.length > 4) {
+      normalizedSearchTerm = normalizedSearchTerm.replaceFirst('+251', '');
+    }
+
     for (dynamic i in classifiedCallLogs) {
       if (i['name']
               .toString()
               .toLowerCase()
-              .contains(searchTerm.toLowerCase()) ||
-          i['number'].toString().contains(searchTerm.toLowerCase())) {
+              .contains(normalizedSearchTerm.toLowerCase()) ||
+          i['number'].toString().contains(normalizedSearchTerm.toLowerCase())) {
         result.add(i);
       }
     }

@@ -126,9 +126,9 @@ class _CallStatsState extends State<CallStats> {
                     ),
                   ),
                 if (index == 0)
-                  const Column(
+                  Column(
                     children: [
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           GraphIndicators(
@@ -142,19 +142,25 @@ class _CallStatsState extends State<CallStats> {
                           GraphIndicators(color: Colors.blue, text: "Outgoing"),
                         ],
                       ),
-                      SizedBox(height: 20.0),
+                      const SizedBox(height: 20.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          GraphIndicators(color: Colors.red, text: "Rejected"),
-                          GraphIndicators(color: Colors.black, text: "Blocked"),
                           GraphIndicators(
+                            color: Colors.red.shade800,
+                            text: "Rejected",
+                          ),
+                          const GraphIndicators(
+                            color: Colors.black,
+                            text: "Blocked",
+                          ),
+                          const GraphIndicators(
                             color: Colors.cyanAccent,
                             text: "Unknown",
                           ),
                         ],
                       ),
-                      SizedBox(height: 30.0),
+                      const SizedBox(height: 30.0),
                     ],
                   ),
                 // All Calls
