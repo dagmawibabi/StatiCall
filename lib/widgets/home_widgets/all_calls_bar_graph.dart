@@ -118,7 +118,7 @@ class AllCallsBarGraph extends StatelessWidget {
                 barRods: [
                   BarChartRodData(
                     width: 12.0,
-                    color: Colors.red,
+                    color: Colors.red.shade800,
                     toY: double.parse(
                         (callHistoryOverview['totalNumOfRejectedCalls'])
                             .toString()),

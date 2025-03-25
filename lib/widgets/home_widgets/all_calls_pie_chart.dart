@@ -77,7 +77,7 @@ class AllCallsPieChart extends StatelessWidget {
                       ),
                     ),
                     PieChartSectionData(
-                      color: Colors.red,
+                      color: Colors.red.shade800,
                       title: callHistoryOverview["totalNumOfRejectedCalls"]
                           .toString(),
                       value: double.parse(

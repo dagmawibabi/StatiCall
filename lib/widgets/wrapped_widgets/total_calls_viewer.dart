@@ -44,7 +44,7 @@ class TotalCallsViewer extends StatelessWidget {
         ),
         const SizedBox(height: 30.0),
         Text(
-          'You\'ve stayed connected through the year!',
+          'You\'ve stayed connected all month!',
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 16.0,

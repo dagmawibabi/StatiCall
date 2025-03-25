@@ -4,6 +4,7 @@ import 'package:callstats/screens/single_person_call_stats_screen.dart';
 import 'package:callstats/screens/home_screen.dart';
 import 'package:callstats/screens/landing_screen.dart';
 import 'package:callstats/screens/splash_screen.dart';
+import 'package:callstats/screens/wrapped_intro_screen.dart';
 import 'package:callstats/screens/wrapped_screen.dart';
 
 import 'package:flutter/material.dart';
@@ -43,12 +44,13 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         initialRoute: SplashScreen.routeName,
         routes: {
-          SplashScreen.routeName: (context) => const SplashScreen(),
-          LandingScreen.routeName: (context) => const LandingScreen(),
-          HomeScreen.routeName: (context) => const HomeScreen(),
-          SinglePersonCallStatsScreen.routeName: (context) =>
+          SplashScreen.routeName: (_) => const SplashScreen(),
+          LandingScreen.routeName: (_) => const LandingScreen(),
+          HomeScreen.routeName: (_) => const HomeScreen(),
+          SinglePersonCallStatsScreen.routeName: (_) =>
               const SinglePersonCallStatsScreen(),
-          WrappedScreen.routeName: (context) => const WrappedScreen(),
+          WrappedIntroScreen.routeName: (_) => const WrappedIntroScreen(),
+          WrappedScreen.routeName: (_) => const WrappedScreen(),
         },
         theme: ThemeData(
           scaffoldBackgroundColor: const Color(0xFFEEEEEE),

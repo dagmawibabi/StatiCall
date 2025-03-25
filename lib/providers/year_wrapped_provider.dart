@@ -10,8 +10,8 @@ class YearWrappedProvider with ChangeNotifier {
   void initialize() async {
     final callLog = (
       await CallLog.query(
-        dateTimeFrom: DateTime(2024),
-        dateTimeTo: DateTime(2024, DateTime.december, 31),
+        dateTimeFrom: DateTime.now().subtract(const Duration(days: 30)),
+        dateTimeTo: DateTime.now(),
       ),
     ).$1.toList();
 

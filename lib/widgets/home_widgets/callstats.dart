@@ -2,6 +2,7 @@ import 'package:callstats/providers/call_stats_provider.dart';
 import 'package:callstats/widgets/home_widgets/all_calls_bar_graph.dart';
 import 'package:callstats/widgets/home_widgets/all_calls_pie_chart.dart';
 import 'package:callstats/widgets/home_widgets/dropdown_sortby_selector.dart';
+import 'package:callstats/widgets/home_widgets/duration_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,18 +23,20 @@ class CallStats extends StatefulWidget {
 
 class _CallStatsState extends State<CallStats> {
   int curPage = 0;
-  int sortIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Consumer<CallStatsProvider>(
       builder: (ctx, callStatsProvider, _) {
+        int sortIndex = callStatsProvider.sortIndex;
+
         return ListView.builder(
           shrinkWrap: true,
           itemCount: callStatsProvider.classifiedCallLogs.length,
           itemBuilder: (context, index) {
             return Column(
               children: [
+                if (index == 0) const DurationSelector(),
                 // Graph Title
                 if (index == 0)
                   Row(
@@ -123,13 +126,15 @@ class _CallStatsState extends State<CallStats> {
                     ),
                   ),
                 if (index == 0)
-                  const Column(
+                  Column(
                     children: [
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           GraphIndicators(
-                              color: Colors.pinkAccent, text: "Missed"),
+                            color: Colors.pinkAccent,
+                            text: "Missed",
+                          ),
                           GraphIndicators(
                             color: Colors.greenAccent,
                             text: "Incoming",
@@ -137,19 +142,25 @@ class _CallStatsState extends State<CallStats> {
                           GraphIndicators(color: Colors.blue, text: "Outgoing"),
                         ],
                       ),
-                      SizedBox(height: 20.0),
+                      const SizedBox(height: 20.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          GraphIndicators(color: Colors.red, text: "Rejected"),
-                          GraphIndicators(color: Colors.black, text: "Blocked"),
                           GraphIndicators(
+                            color: Colors.red.shade800,
+                            text: "Rejected",
+                          ),
+                          const GraphIndicators(
+                            color: Colors.black,
+                            text: "Blocked",
+                          ),
+                          const GraphIndicators(
                             color: Colors.cyanAccent,
                             text: "Unknown",
                           ),
                         ],
                       ),
-                      SizedBox(height: 30.0),
+                      const SizedBox(height: 30.0),
                     ],
                   ),
                 // All Calls

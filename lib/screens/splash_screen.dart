@@ -53,7 +53,7 @@ class _LandingPageState extends State<SplashScreen> {
               ),
               const SizedBox(height: 10.0),
               Text(
-                "Version 1.0.0",
+                "Version 2.0.0",
                 style: TextStyle(
                   fontSize: 12.0,
                   color: Colors.grey[900],

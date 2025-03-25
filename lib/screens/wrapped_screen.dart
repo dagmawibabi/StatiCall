@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:callstats/background_gradients.dart';
 import 'package:callstats/widgets/wrapped_widgets/busiest_day_viewer.dart';
 import 'package:callstats/widgets/wrapped_widgets/call_viewer.dart';
 import 'package:callstats/widgets/wrapped_widgets/total_calls_viewer.dart';
@@ -19,46 +20,17 @@ class WrappedScreen extends StatefulWidget {
 }
 
 class _WrappedScreenState extends State<WrappedScreen> {
-  late List<Color> gradient;
+  late final int initialBackgroundIndex;
+  late int currentBackgroundIndex;
   int selectedPageIndex = 0;
-
-  final backgroundGradients = const [
-    [
-      Color(0xFF7FFFD4),
-      Color(0xFF00CED1),
-    ],
-    [
-      Color(0xFF373737),
-      Color(0xFF191919),
-    ],
-    [
-      Color(0xFF4169E1),
-      Color(0xFF1E90FF),
-    ],
-    [
-      Color(0xFF7CFC00),
-      Color(0xFF7CFC00),
-      Color(0xFF00FA9A),
-    ],
-    [
-      Color(0xFFF06292),
-      Color(0xFFFF80CB),
-    ],
-    [
-      Color(0xFFFF5F6D),
-      Color(0xFFFFC371),
-    ],
-  ];
-
-  List<Color> get randomGradient {
-    final random = Random();
-    return backgroundGradients[random.nextInt(backgroundGradients.length)];
-  }
 
   @override
   void initState() {
     super.initState();
-    gradient = backgroundGradients[0];
+
+    final random = Random();
+    initialBackgroundIndex = random.nextInt(BACKGROUND_GRADIENTS.length);
+    currentBackgroundIndex = initialBackgroundIndex;
   }
 
   @override
@@ -71,7 +43,8 @@ class _WrappedScreenState extends State<WrappedScreen> {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: gradient,
+            colors: BACKGROUND_GRADIENTS[
+                currentBackgroundIndex % BACKGROUND_GRADIENTS.length],
           ),
         ),
         child: Builder(
@@ -106,7 +79,8 @@ class _WrappedScreenState extends State<WrappedScreen> {
                   onPageChanged: (pageIndex) {
                     setState(() {
                       selectedPageIndex = pageIndex;
-                      gradient = randomGradient;
+                      currentBackgroundIndex =
+                          initialBackgroundIndex + pageIndex;
                     });
                   },
                   itemBuilder: (ctx, index) => Center(

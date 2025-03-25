@@ -64,7 +64,7 @@ class SinglePersonPieChart extends StatelessWidget {
                   ),
                 ),
                 PieChartSectionData(
-                  color: Colors.red,
+                  color: Colors.red.shade800,
                   title: curCall["numOfRejectedCalls"].toString(),
                   value: double.parse(curCall["numOfRejectedCalls"].toString()),
                   titleStyle: const TextStyle(

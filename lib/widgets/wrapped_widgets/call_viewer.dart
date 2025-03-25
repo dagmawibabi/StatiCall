@@ -18,8 +18,8 @@ class CallViewer extends StatelessWidget {
   Widget build(BuildContext context) {
     final title = isLongestCall ? 'Longest Call' : 'Shortest Call';
     final description = isLongestCall
-        ? 'Your longest conversation this year!'
-        : 'Your shortest call this year!';
+        ? 'Your longest conversation in the last 30 days!'
+        : 'Your shortest call in the last 30 days!';
 
     String name = callLog.name ?? 'Unknown';
     String phoneNumber = callLog.number ?? 'Unknown';

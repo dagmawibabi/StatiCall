@@ -55,9 +55,10 @@ class _FullScreenDetailState extends State<SinglePersonCallStatsScreen> {
               key: UniqueKey(),
               tag: {"name": curCall["name"]},
               child: Text(
-                curCall["name"],
+                "${(curCall['name'] == "" || curCall['name'] == " " || curCall['name'] == "null") ? "Unknown" : curCall['name']}",
+                maxLines: 1,
                 style: const TextStyle(
-                  fontSize: 18.0,
+                  fontSize: 16.0,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -154,12 +155,21 @@ class _FullScreenDetailState extends State<SinglePersonCallStatsScreen> {
                   ],
                 ),
                 const SizedBox(height: 20.0),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    GraphIndicators(color: Colors.red, text: "Rejected"),
-                    GraphIndicators(color: Colors.black, text: "Blocked"),
-                    GraphIndicators(color: Colors.cyanAccent, text: "Unknown"),
+                    GraphIndicators(
+                      color: Colors.red.shade800,
+                      text: "Rejected",
+                    ),
+                    const GraphIndicators(
+                      color: Colors.black,
+                      text: "Blocked",
+                    ),
+                    const GraphIndicators(
+                      color: Colors.cyanAccent,
+                      text: "Unknown",
+                    ),
                   ],
                 ),
                 const SizedBox(height: 30.0),

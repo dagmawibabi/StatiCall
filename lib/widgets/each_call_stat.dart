@@ -39,11 +39,12 @@ class _EachCallStatCardState extends State<EachCallStatCard> {
   @override
   void initState() {
     super.initState();
-    calculateOverallDuration();
   }
 
   @override
   Widget build(BuildContext context) {
+    calculateOverallDuration();
+
     return Consumer<CallStatsProvider>(
         builder: (context, callStatsProvider, _) {
       return InkWell(
