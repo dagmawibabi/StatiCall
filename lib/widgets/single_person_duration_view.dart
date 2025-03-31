@@ -70,7 +70,7 @@ class SinglePersonDurationView extends StatelessWidget {
                 Column(
                   children: [
                     Text(
-                      inSeconds,
+                      '${(((double.parse(inHours) * 60) / 60).floor().toInt()).toString().padLeft(2, "0")}:${(((double.parse(inHours) * 60) % 60).floor().toInt()).toString().padLeft(2, "0")}',
                       style: const TextStyle(
                         fontSize: 17.0,
                         fontWeight: FontWeight.w500,
@@ -78,7 +78,7 @@ class SinglePersonDurationView extends StatelessWidget {
                     ),
                     const SizedBox(height: 2.0),
                     Text(
-                      "sec",
+                      "In hour",
                       style: TextStyle(
                         fontSize: 14.0,
                         color: Colors.grey[700],
@@ -97,7 +97,7 @@ class SinglePersonDurationView extends StatelessWidget {
                     ),
                     const SizedBox(height: 2.0),
                     Text(
-                      "min",
+                      "In min",
                       style: TextStyle(
                         fontSize: 14.0,
                         color: Colors.grey[700],
@@ -108,7 +108,7 @@ class SinglePersonDurationView extends StatelessWidget {
                 Column(
                   children: [
                     Text(
-                      '${(((double.parse(inHours) * 60) / 60).floor().toInt()).toString().padLeft(2, "0")}:${(((double.parse(inHours) * 60) % 60).floor().toInt()).toString().padLeft(2, "0")}',
+                      inSeconds,
                       style: const TextStyle(
                         fontSize: 17.0,
                         fontWeight: FontWeight.w500,
@@ -116,7 +116,7 @@ class SinglePersonDurationView extends StatelessWidget {
                     ),
                     const SizedBox(height: 2.0),
                     Text(
-                      "hour",
+                      "In sec",
                       style: TextStyle(
                         fontSize: 14.0,
                         color: Colors.grey[700],
